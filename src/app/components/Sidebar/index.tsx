@@ -44,7 +44,6 @@ export function Sidebar() {
           </div>
         </div>
         <CollapsibleTrigger
-          asChild
           className="rounded-md p-1 text-zinc-700 hover:bg-zinc-300 lg:hidden"
           onClick={toggle}
         >
