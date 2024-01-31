@@ -11,6 +11,9 @@ const config: Config = {
       gridTemplateRows: {
         body: 'minmax(5rem, 6rem) 1fr',
       },
+      fontFamily: {
+        mirza: ['var(--font-mirza)'],
+      },
     },
   },
   plugins: [],

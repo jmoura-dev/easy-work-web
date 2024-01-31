@@ -32,7 +32,7 @@ export function Sidebar() {
   }
 
   return (
-    <Collapsible className="fixed left-0 right-0 top-0 z-20 flex flex-col p-4 bg-violet-50 data-[state=open]:bottom-0 lg:bottom-0 lg:right-auto lg:h-auto lg:w-80 lg:border-r">
+    <Collapsible className="fixed left-0 right-0 top-0 z-20 flex flex-col bg-violet-50 p-4 data-[state=open]:bottom-0 lg:bottom-0 lg:right-auto lg:h-auto lg:w-80 lg:border-r">
       <div className="mb-8 flex items-center justify-between border-b border-zinc-400 pb-6">
         <div className="flex items-center gap-2">
           <Computer className="h-10 w-8 rounded bg-zinc-200 px-1 text-zinc-700" />

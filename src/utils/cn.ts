@@ -1,3 +1,5 @@
-export const cn = (...classNames: (string | undefined | false | null)[]): string => {
-  return classNames.filter(Boolean).join(' ');
-};
+export const cn = (
+  ...classNames: (string | undefined | false | null)[]
+): string => {
+  return classNames.filter(Boolean).join(' ')
+}

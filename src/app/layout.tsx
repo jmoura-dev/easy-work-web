@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Mirza } from 'next/font/google'
 import './globals.css'
-import { Sidebar } from './components/Sidebar'
 
 const inter = Inter({ subsets: ['latin'] })
+const mirza = Mirza({
+  subsets: ['latin'],
+  variable: '--font-mirza',
+  weight: ['400', '600'],
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,15 +20,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="antialiased">
-      <body className={inter.className}>
-        <div className="grid min-h-screen grid-rows-body lg:grid-cols-body bg-violet-50">
-          <Sidebar />
-          <main className="px-4 pb-12 pt-24 row-start-2 lg:col-start-2 bg-violet-50 min-h-screen overflow-x-hidden">
-            {children}
-          </main>
-        </div>
-      </body>
+    <html lang="en" className={(inter.className, mirza.variable)}>
+      <body className="antialiased">{children}</body>
     </html>
   )
 }
