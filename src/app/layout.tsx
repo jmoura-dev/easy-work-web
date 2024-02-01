@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={(inter.className, mirza.variable)}>
-      <body className="antialiased">{children}</body>
+      <body className="light antialiased">{children}</body>
     </html>
   )
 }

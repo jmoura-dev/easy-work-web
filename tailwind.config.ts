@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
+  darkMode: 'class',
   content: ['./src/**/*.tsx'],
   theme: {
     container: {},
@@ -13,6 +14,18 @@ const config: Config = {
       },
       fontFamily: {
         mirza: ['var(--font-mirza)'],
+      },
+      width: {
+        tabletScreen: 'minmax(30rem, 40rem)',
+      },
+      keyframes: {
+        slideDownAndFade: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+      },
+      animation: {
+        slideDownAndFade: 'slideDownAndFade 0.3s linear',
       },
     },
   },
