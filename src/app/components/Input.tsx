@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentProps } from 'react'
+import { ComponentProps, InputHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type InputPrefixProps = ComponentProps<'div'>
@@ -9,16 +9,22 @@ export function Prefix(props: InputPrefixProps) {
   return <div {...props} />
 }
 
-type InputControlProps = ComponentProps<'input'>
+type InputControlProps = InputHTMLAttributes<HTMLInputElement>
 
-export function Control(props: InputControlProps) {
-  return (
-    <input
-      className="flex-1 border-0 bg-transparent p-0 text-zinc-900 placeholder-zinc-600 outline-none placeholder:text-zinc-400"
-      {...props}
-    />
-  )
-}
+const Control = forwardRef<HTMLInputElement, InputControlProps>(
+  (props, ref) => {
+    return (
+      <input
+        ref={ref}
+        className="flex-1 border-0 bg-transparent p-0 text-zinc-900 placeholder-zinc-600 outline-none placeholder:text-zinc-400"
+        {...props}
+      />
+    )
+  },
+)
+
+Control.displayName = 'Control'
+export { Control }
 
 export type InputRootProps = ComponentProps<'div'>
 
