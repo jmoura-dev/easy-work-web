@@ -15,8 +15,6 @@ import Link from 'next/link'
 export default function SignUp() {
   const [buttonValue, setButtonValue] = useState('')
 
-  console.log(buttonValue)
-
   function handleSelectClient() {
     if (buttonValue === 'client') {
       setButtonValue('')

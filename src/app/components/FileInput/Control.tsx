@@ -1,11 +1,11 @@
 'use client'
 
-import { ChangeEvent, ComponentProps } from 'react'
+import { ChangeEvent, InputHTMLAttributes, forwardRef } from 'react'
 import { useFileInput } from './Root'
 
-type ControlProps = ComponentProps<'input'>
+type ControlProps = InputHTMLAttributes<HTMLInputElement>
 
-export function Control({ ...props }: ControlProps) {
+const Control = forwardRef<HTMLInputElement, ControlProps>((props, ref) => {
   const { id, onFilesSelected } = useFileInput()
 
   function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
@@ -20,6 +20,7 @@ export function Control({ ...props }: ControlProps) {
 
   return (
     <input
+      ref={ref}
       type="file"
       className="sr-only"
       id={id}
@@ -27,4 +28,7 @@ export function Control({ ...props }: ControlProps) {
       {...props}
     />
   )
-}
+})
+
+Control.displayName = 'Control'
+export { Control }

@@ -2,7 +2,7 @@
 
 import * as Input from '@/app/components/Input'
 import * as FileInput from '@/app/components/FileInput'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LockKeyhole, Mail } from 'lucide-react'
@@ -13,24 +13,23 @@ import Link from 'next/link'
 
 const registerClientSchema = z.object({
   name: z.string(),
-  avatar: z.string().optional(),
   email: z.string().email(),
   password: z.string(),
   about: z.string().optional(),
   price_per_hour: z.coerce.number().min(5).optional(),
   occupation_area: z.string(),
-  available_for_contract: z.boolean().optional().default(false),
+  available_for_contract: z.string().optional().default('false'),
 })
 
 type RegisterClientSchema = z.infer<typeof registerClientSchema>
 
 export default function RegisterClient() {
-  const { register, handleSubmit } = useForm<RegisterClientSchema>({
+  const { register, handleSubmit, control } = useForm<RegisterClientSchema>({
     resolver: zodResolver(registerClientSchema),
   })
 
   function registerNewClient(data: RegisterClientSchema) {
-    console.log(data.name)
+    console.log(data)
   }
 
   return (
@@ -43,8 +42,8 @@ export default function RegisterClient() {
         Encontre as melhores oportunidades como desenvolvedor
       </h1>
       <form
-        className="flex flex-col gap-5 divide-y divide-zinc-200"
         onSubmit={handleSubmit(registerNewClient)}
+        className="flex flex-col gap-5 divide-y divide-zinc-200"
       >
         <div className="flex flex-col gap-2 ">
           <label className="text-sm font-medium text-zinc-700" htmlFor="name">
@@ -53,7 +52,6 @@ export default function RegisterClient() {
           <Input.Root>
             <Input.Control
               placeholder="Ex: Jackson Moura"
-              id="name"
               {...register('name')}
             />
           </Input.Root>
@@ -97,14 +95,25 @@ export default function RegisterClient() {
           <div className="flex flex-col gap-2 border-t pt-5 lg:border-none">
             <label
               className="text-sm font-medium text-zinc-700"
-              htmlFor="occupation_area"
+              htmlFor="available_for_contract"
             >
               Disponível para contrato(CLT/PJ)?
             </label>
-            <Select placeholder="Selecione..." {...register('occupation_area')}>
-              <SelectItem text="Sim, estou disponível!" value="contrato" />
-              <SelectItem text="Não, apenas freelancer!" value="freelancer" />
-            </Select>
+            <Controller
+              name="available_for_contract"
+              control={control}
+              render={({ field: { ref, onChange, value } }) => (
+                <Select
+                  ref={ref}
+                  onValueChange={onChange}
+                  value={value}
+                  placeholder="Selecione..."
+                >
+                  <SelectItem text="Sim, estou disponível!" value="true" />
+                  <SelectItem text="Não, apenas freelancer!" value="false" />
+                </Select>
+              )}
+            />
           </div>
         </div>
 
@@ -116,11 +125,23 @@ export default function RegisterClient() {
             >
               Área de atuação
             </label>
-            <Select placeholder="Selecione..." {...register('occupation_area')}>
-              <SelectItem text="FullStack" value="fullstack" />
-              <SelectItem text="Front-end" value="frontend" />
-              <SelectItem text="Back-end" value="backend" />
-            </Select>
+
+            <Controller
+              name="occupation_area"
+              control={control}
+              render={({ field: { onChange, ref, value } }) => (
+                <Select
+                  ref={ref}
+                  onValueChange={onChange}
+                  value={value}
+                  placeholder="Selecione..."
+                >
+                  <SelectItem text="FullStack" value="fullstack" />
+                  <SelectItem text="Front-end" value="frontend" />
+                  <SelectItem text="Back-end" value="backend" />
+                </Select>
+              )}
+            />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -171,7 +192,7 @@ export default function RegisterClient() {
               Fale um pouco sobre você
             </span>
           </label>
-          <Textarea id="bio" maxLength={150} />
+          <Textarea id="bio" maxLength={150} {...register('about')} />
         </div>
 
         <footer className="flex items-center justify-end gap-12 pt-5">
