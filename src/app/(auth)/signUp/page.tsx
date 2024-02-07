@@ -11,6 +11,7 @@ import { motion } from 'framer-motion'
 
 import { ToggleGroup, ToggleGroupItem } from '@/app/components/ui/toggle-group'
 import Link from 'next/link'
+import { ButtonLogo } from '@/app/components/ButtonLogo'
 
 export default function SignUp() {
   const [buttonValue, setButtonValue] = useState('')
@@ -33,10 +34,7 @@ export default function SignUp() {
 
   return (
     <div className="m-auto flex h-screen max-w-5xl flex-col gap-5 px-8 py-8 md:gap-10">
-      <div className="flex flex-col font-mirza text-2xl font-semibold text-violet-500">
-        <span>Easy</span>
-        <span className="-mt-4 ml-3">Work</span>
-      </div>
+      <ButtonLogo />
 
       <h1 className="mt-8 font-mirza text-3xl font-semibold text-zinc-800">
         Registre-se como cliente ou desenvolvedor

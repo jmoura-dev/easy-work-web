@@ -8,6 +8,8 @@ const config: Config = {
     extend: {
       gridTemplateColumns: {
         body: 'minmax(15rem, 20rem) 1fr',
+        developer: '70% 30%',
+        client: '30% 70%',
       },
       gridTemplateRows: {
         body: 'minmax(5rem, 6rem) 1fr',

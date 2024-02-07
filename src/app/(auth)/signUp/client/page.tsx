@@ -15,6 +15,7 @@ import {
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
 import { api } from '@/utils/api'
+import { ButtonLogo } from '@/app/components/ButtonLogo'
 
 const registerCompanySchema = z.object({
   name: z.string(),
@@ -51,16 +52,11 @@ export default function RegisterCompany() {
       site_url: data.site_url,
     }
     await api.post('/companies', dataCompany)
-
-    alert('Registration successful')
   }
 
   return (
     <div className="m-auto flex h-full max-w-5xl flex-col gap-5 px-8 py-8 md:gap-10">
-      <div className="flex flex-col font-mirza text-2xl font-semibold text-violet-500">
-        <span>Easy</span>
-        <span className="-mt-4 ml-3">Work</span>
-      </div>
+      <ButtonLogo />
       <h1 className="mt-4 font-mirza text-3xl font-semibold text-zinc-800">
         Encontre o desenvolvedor ideal para seu projeto ou empresa
       </h1>
