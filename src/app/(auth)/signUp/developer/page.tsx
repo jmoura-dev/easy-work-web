@@ -10,26 +10,46 @@ import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
+import { api } from '@/utils/api'
 
-const registerClientSchema = z.object({
+const registerDeveloperSchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(6),
   about: z.string().optional(),
   price_per_hour: z.coerce.number().min(5).optional(),
   occupation_area: z.string(),
   available_for_contract: z.string().optional().default('false'),
 })
 
-type RegisterClientSchema = z.infer<typeof registerClientSchema>
+type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
 
-export default function RegisterClient() {
-  const { register, handleSubmit, control } = useForm<RegisterClientSchema>({
-    resolver: zodResolver(registerClientSchema),
+export default function RegisterDeveloper() {
+  const { register, handleSubmit, control } = useForm<RegisterDeveloperSchema>({
+    resolver: zodResolver(registerDeveloperSchema),
   })
 
-  function registerNewClient(data: RegisterClientSchema) {
-    console.log(data)
+  async function registerNewDeveloper(data: RegisterDeveloperSchema) {
+    const dataUser = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      about: data.about,
+    }
+    const response = await api.post('/users', dataUser)
+    console.log(response)
+
+    const isAvailableForContract = data.available_for_contract === 'true'
+
+    const dataDeveloper = {
+      userId: response.data.userId,
+      available_for_contract: isAvailableForContract,
+      occupation_area: data.occupation_area,
+      price_per_hour: data.price_per_hour,
+    }
+    await api.post('/developers', dataDeveloper)
+
+    console.log('Developer registered')
   }
 
   return (
@@ -42,7 +62,7 @@ export default function RegisterClient() {
         Encontre as melhores oportunidades como desenvolvedor
       </h1>
       <form
-        onSubmit={handleSubmit(registerNewClient)}
+        onSubmit={handleSubmit(registerNewDeveloper)}
         className="flex flex-col gap-5 divide-y divide-zinc-200"
       >
         <div className="flex flex-col gap-2 ">
