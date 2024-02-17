@@ -10,13 +10,15 @@ import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
-import { api } from '@/utils/api'
+import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
 
 const registerDeveloperSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3, { message: 'O nome precisa ter ao menos 3 letras.' }),
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z
+    .string()
+    .min(6, { message: 'Digite no mínimo 6 caracteres para senha.' }),
   about: z.string().optional(),
   price_per_hour: z.coerce.number().min(5).optional(),
   occupation_area: z.string(),
@@ -26,7 +28,12 @@ const registerDeveloperSchema = z.object({
 type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
 
 export default function RegisterDeveloper() {
-  const { register, handleSubmit, control } = useForm<RegisterDeveloperSchema>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterDeveloperSchema>({
     resolver: zodResolver(registerDeveloperSchema),
   })
 
@@ -70,6 +77,11 @@ export default function RegisterDeveloper() {
               {...register('name')}
             />
           </Input.Root>
+          {errors.name && (
+            <span className="text-sm font-semibold text-red-800">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col gap-2 pt-5">
@@ -105,6 +117,11 @@ export default function RegisterDeveloper() {
                 {...register('password')}
               />
             </Input.Root>
+            {errors.password && (
+              <span className="text-sm font-semibold text-red-800">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
           <div className="flex flex-col gap-2 border-t pt-5 lg:border-none">
@@ -217,6 +234,7 @@ export default function RegisterDeveloper() {
           <button
             type="submit"
             className="w-32 rounded-md bg-green-400 py-2 font-semibold text-white hover:bg-green-500 disabled:cursor-not-allowed disabled:bg-green-950/40"
+            disabled={isSubmitting}
           >
             Registrar
           </button>

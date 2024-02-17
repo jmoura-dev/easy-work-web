@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Header } from './components/Header'
-import { SectionClient } from './components/SectionClient'
-import { SectionDeveloper } from './components/SectionDeveloper'
+import { Header } from '@/app/components/Header'
+import { SectionClient } from '@/app/components/SectionClient'
+import { SectionDeveloper } from '@/app/components/SectionDeveloper'
 
 export default function Home() {
   return (

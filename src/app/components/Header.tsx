@@ -3,7 +3,7 @@ import { ButtonLogo } from './ButtonLogo'
 
 export function Header() {
   return (
-    <header className="m-auto flex h-20 max-w-screen-2xl items-center justify-between border-b px-4">
+    <header className="m-auto flex h-20 w-full max-w-screen-2xl items-center justify-between border-b px-4">
       <ButtonLogo />
 
       <div className="flex items-center gap-5">

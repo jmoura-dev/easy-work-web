@@ -20,7 +20,7 @@ import { ButtonLogo } from '@/app/components/ButtonLogo'
 const registerCompanySchema = z.object({
   name: z.string(),
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(6, { message: 'Digite no mínimo 6 caracteres' }),
   about: z.string().optional(),
   cnpj: z.string().min(14),
   city: z.string().optional(),
@@ -31,7 +31,11 @@ const registerCompanySchema = z.object({
 type RegisterCompanySchema = z.infer<typeof registerCompanySchema>
 
 export default function RegisterCompany() {
-  const { register, handleSubmit } = useForm<RegisterCompanySchema>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<RegisterCompanySchema>({
     resolver: zodResolver(registerCompanySchema),
   })
 
@@ -227,6 +231,7 @@ export default function RegisterCompany() {
           <button
             type="submit"
             className="w-32 rounded-md bg-green-400 py-2 font-semibold text-white hover:bg-green-500 disabled:cursor-not-allowed disabled:bg-green-950/40"
+            disabled={isSubmitting}
           >
             Registrar
           </button>

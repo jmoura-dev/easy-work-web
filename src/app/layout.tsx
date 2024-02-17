@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Mirza } from 'next/font/google'
 import './globals.css'
+import NextAuthSessionProvider from '@/providers/sessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 const mirza = Mirza({
@@ -21,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={(inter.className, mirza.variable)}>
-      <body className="light antialiased">{children}</body>
+      <body className="light antialiased">
+        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+      </body>
     </html>
   )
 }

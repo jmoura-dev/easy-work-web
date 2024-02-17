@@ -5,7 +5,7 @@ export function SectionDeveloper() {
   return (
     <div className="md:grid-cols-developer mt-5 flex md:grid md:px-2">
       <div className="flex flex-col space-y-5 bg-violet-600 p-2 md:rounded-bl-lg md:rounded-tl-lg lg:items-center lg:justify-center">
-        <h2 className="border-b pb-1 font-mirza text-2xl font-semibold text-white">
+        <h2 className="border-b pb-1 font-mirza text-2xl font-semibold text-white md:pl-1">
           Para desenvolvedores
         </h2>
         <ul className="flex list-disc flex-col gap-5 pl-5 font-semibold text-zinc-200">
@@ -30,6 +30,7 @@ export function SectionDeveloper() {
         src={DeveloperLogo}
         alt=""
         className="hidden h-full object-cover md:flex"
+        priority
       />
     </div>
   )
