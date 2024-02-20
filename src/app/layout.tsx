@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter, Mirza } from 'next/font/google'
 import './globals.css'
 import NextAuthSessionProvider from '@/providers/sessionProvider'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 const mirza = Mirza({
@@ -23,7 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={(inter.className, mirza.variable)}>
       <body className="light antialiased">
-        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+        <NextAuthSessionProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </NextAuthSessionProvider>
       </body>
     </html>
   )

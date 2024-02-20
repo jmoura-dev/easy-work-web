@@ -25,9 +25,9 @@ export default function Home() {
           </h2>
           <p className="font-semibold text-zinc-700">
             Oferecer uma plataforma que conecta desenvolvedores a oportunidades
-            significativas, esperamos contribuir para o avanço da tecnologia e
-            impulsionar o desenvolvimento econômico e social. Estamos
-            comprometidos em criar um impacto positivo na vida dos
+            significativas. Com isso, esperamos contribuir para o avanço da
+            tecnologia e impulsionar o desenvolvimento econômico e social.
+            Estamos comprometidos em criar um impacto positivo na vida dos
             desenvolvedores e na comunidade em geral.
           </p>
         </div>

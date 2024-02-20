@@ -1,4 +1,5 @@
-import { LogOut } from 'lucide-react'
+import ButtonLogout from '../ButtonLogout'
+import Image from 'next/image'
 
 export interface ProfileProps {
   name: string
@@ -8,10 +9,12 @@ export interface ProfileProps {
 export function Profile({ name, email }: ProfileProps) {
   return (
     <div className="mt-4 flex items-center gap-3 border-t border-zinc-300 pb-1 pt-6">
-      <img
+      <Image
         src="https://github.com/jmoura-dev.png"
         alt="imagem de perfil"
-        className="h-12 w-12 rounded-full"
+        className="rounded-full"
+        width={50}
+        height={50}
       />
       <div className="flex flex-1 flex-col truncate">
         <span className="font-semibold text-zinc-800">{name}</span>
@@ -19,9 +22,7 @@ export function Profile({ name, email }: ProfileProps) {
           {email}
         </span>
       </div>
-      <button type="button" className="rounded-full">
-        <LogOut className="h-8 w-8 rounded-md p-1 text-zinc-500 hover:bg-zinc-200" />
-      </button>
+      <ButtonLogout />
     </div>
   )
 }

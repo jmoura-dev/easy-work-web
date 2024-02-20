@@ -13,9 +13,5 @@ export default async function DeveloperLayoutProps({
     redirect('/')
   }
 
-  if (session && session.user.companyId) {
-    redirect('/companies')
-  }
-
   return <>{children}</>
 }

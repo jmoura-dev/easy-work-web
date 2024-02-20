@@ -40,7 +40,7 @@ export default function SignIn() {
       console.error(result.error)
       return
     }
-    router.replace('/signUp')
+    router.replace('/dashboard')
   }
 
   return (

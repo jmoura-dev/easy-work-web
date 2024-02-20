@@ -14,7 +14,7 @@ import {
 } from 'lucide-react'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
-import { api } from '@/utils/api'
+import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
 
 const registerCompanySchema = z.object({
