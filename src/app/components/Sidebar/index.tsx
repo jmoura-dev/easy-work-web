@@ -33,7 +33,7 @@ export function Sidebar() {
 
   return (
     <Collapsible className="fixed left-0 right-0 top-0 z-20 flex flex-col bg-violet-50 p-4 data-[state=open]:bottom-0 lg:bottom-0 lg:right-auto lg:h-auto lg:w-80 lg:border-r">
-      <div className="mb-8 flex items-center justify-between border-b border-zinc-400 pb-6">
+      <div className="flex items-center justify-between border-b border-zinc-400 pb-6 lg:mb-8">
         <div className="flex items-center gap-2">
           <Computer className="h-10 w-8 rounded bg-zinc-200 px-1 text-zinc-700" />
           <div>
@@ -60,7 +60,7 @@ export function Sidebar() {
         className="flex flex-1 flex-col data-[state=closed]:hidden lg:data-[state=closed]:flex"
       >
         <nav className="flex flex-col">
-          <h2 className="mb-6 ml-3 w-14 border-b border-zinc-500 text-lg font-bold text-zinc-600">
+          <h2 className="mb-6 ml-3 mt-5 w-14 border-b border-zinc-500 text-lg font-bold text-zinc-600">
             Menu
           </h2>
           <NavItem icon={Home} title="Início" />

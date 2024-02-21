@@ -1,5 +1,6 @@
 import { Computer, User } from 'lucide-react'
 import { Tech } from './Tech'
+import Image from 'next/image'
 
 interface CardProps {
   name: string
@@ -24,12 +25,12 @@ export function Card({
     <div {...props} className="flex flex-1 flex-col gap-3 p-2">
       <div className="mb-2 flex items-start justify-center gap-4">
         {avatar_url ? (
-          <img src={avatar_url} alt="" />
+          <Image src={avatar_url} alt="" />
         ) : (
           <User className="h-10 w-10 rounded-full bg-violet-300 p-1 text-zinc-800" />
         )}
 
-        <span className="font-semibold text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800">
+        <span className="max-w-24 truncate font-semibold text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800">
           {name}
         </span>
       </div>

@@ -12,6 +12,7 @@ import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
 import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
+import { useRouter } from 'next/navigation'
 
 const registerDeveloperSchema = z.object({
   name: z.string().min(3, { message: 'O nome precisa ter ao menos 3 letras.' }),
@@ -28,6 +29,8 @@ const registerDeveloperSchema = z.object({
 type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
 
 export default function RegisterDeveloper() {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -55,6 +58,7 @@ export default function RegisterDeveloper() {
       price_per_hour: data.price_per_hour,
     }
     await api.post('/developers', dataDeveloper)
+    router.replace('/signIn')
   }
 
   return (
