@@ -21,7 +21,7 @@ const registerDeveloperSchema = z.object({
     .string()
     .min(6, { message: 'Digite no mínimo 6 caracteres para senha.' }),
   about: z.string().optional(),
-  price_per_hour: z.coerce.number().min(5).optional(),
+  price_per_hour: z.coerce.number().optional(),
   occupation_area: z.string(),
   available_for_contract: z.string().optional().default('false'),
 })

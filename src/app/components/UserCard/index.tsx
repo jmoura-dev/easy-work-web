@@ -1,4 +1,4 @@
-import { Computer, User } from 'lucide-react'
+import { Computer, User, Wallet } from 'lucide-react'
 import { Tech } from './Tech'
 import Image from 'next/image'
 
@@ -7,6 +7,7 @@ interface CardProps {
   avatar_url?: string
   price_per_hour?: number
   occupation_area: string
+  available_for_contract: boolean
   techs: {
     name: string
     id: number
@@ -18,40 +19,65 @@ export function Card({
   avatar_url,
   price_per_hour,
   occupation_area,
+  available_for_contract,
   techs,
   ...props
 }: CardProps) {
   return (
-    <div {...props} className="flex flex-1 flex-col gap-3 p-2">
+    <div {...props} className="flex flex-col gap-3 p-2 md:p-3 lg:p-4">
       <div className="mb-2 flex items-start justify-center gap-4">
         {avatar_url ? (
-          <Image src={avatar_url} alt="" />
+          <Image
+            src={avatar_url}
+            alt=""
+            className="h-10 w-10 rounded-full text-zinc-800 md:h-12 md:w-12 lg:h-14 lg:w-14"
+          />
         ) : (
-          <User className="h-10 w-10 rounded-full bg-violet-300 p-1 text-zinc-800" />
+          <User className="h-10 w-10 rounded-full bg-violet-300 p-1 text-zinc-800 md:h-12 md:w-12 lg:h-14 lg:w-14" />
         )}
 
-        <span className="max-w-24 truncate font-semibold text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800">
-          {name}
+        <span className="text-md flex  flex-col gap-0.5 truncate font-semibold ">
+          <div className="max-w-24 truncate text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800 lg:max-w-28 lg:text-xl">
+            {name}
+          </div>
+          <span className="flex items-center gap-1 rounded-md bg-zinc-300 px-1.5 py-0.5 text-sm text-violet-600">
+            <Computer className="h-4 w-4" />
+            {occupation_area}
+          </span>
         </span>
       </div>
 
-      <div className="flex justify-between">
-        <span className="flex items-center gap-1 rounded-md bg-zinc-500/70 px-1.5 py-0.5 text-sm text-violet-200">
-          <Computer className="h-4 w-4" />
-          {occupation_area}
+      <div className="flex flex-col items-center gap-0.5">
+        <span className="flex items-center justify-start gap-1 rounded-md bg-zinc-500/70 px-1.5 py-0.5 text-sm text-violet-200">
+          <Wallet className="h-4 w-4" />
+          {available_for_contract ? 'Freela/Contrato' : 'Apenas freelancer'}
         </span>
         <span className="flex items-center gap-1 rounded-md bg-zinc-500/70 px-1 py-0.5 text-sm text-violet-200">
-          R$: {price_per_hour?.toFixed(2)}
+          R$:{' '}
+          {price_per_hour ? price_per_hour.toFixed(2) + '/hr' : 'N/Informado'}
         </span>
       </div>
 
-      <div className="m-auto mt-1 flex flex-col gap-1 rounded-md bg-violet-400/20 p-1">
-        <span className="text-sm font-semibold text-zinc-700">Habilidades</span>
-        <ul className="flex flex-wrap justify-around gap-1">
-          {techs.length > 0 &&
-            techs.map((tech) => <Tech techName={tech.name} key={tech.id} />)}
-        </ul>
-      </div>
+      <ul className="mt-1 flex flex-wrap gap-1.5 lg:mt-3">
+        {techs.length > 0 ? (
+          <>
+            <li className="flex w-full flex-wrap justify-evenly">
+              {techs.slice(0, 2).map((tech) => (
+                <Tech techName={tech.name} key={tech.id} />
+              ))}
+            </li>
+            <li className="flex w-full flex-wrap justify-evenly">
+              {techs.slice(2, 4).map((tech) => (
+                <Tech techName={tech.name} key={tech.id} />
+              ))}
+            </li>
+          </>
+        ) : (
+          <p className="m-auto text-center text-sm font-semibold">
+            *Nenhuma habilidade adicionada
+          </p>
+        )}
+      </ul>
     </div>
   )
 }

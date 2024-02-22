@@ -15,6 +15,8 @@ import { Section } from '../components/Section'
 import { Search } from 'lucide-react'
 
 export default function Dashboard() {
+  console.log('aqui')
+
   const {
     data: developers,
     isLoading,
@@ -39,10 +41,10 @@ export default function Dashboard() {
   const { developersWithTechs } = developers
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <Input.Root
-        className="m-auto my-4 flex w-full max-w-80 items-center gap-2 rounded-2xl border border-zinc-300 px-3 py-2 shadow-sm focus-within:border-violet-400
-        focus-within:ring-4 focus-within:ring-violet-100 md:max-w-96 lg:max-w-4xl"
+        className="m-auto my-4 flex w-full max-w-80 items-center gap-2 rounded-2xl border border-zinc-300 px-3 py-2 shadow-sm focus-within:border-violet-400 focus-within:ring-4
+        focus-within:ring-violet-100 md:max-w-96 lg:mb-16 lg:max-w-2xl"
       >
         <Input.Prefix className="text-zinc-500">
           <Search />
@@ -54,7 +56,7 @@ export default function Dashboard() {
       </Input.Root>
 
       <Section title="Full-stacks">
-        <Carousel className="w-full max-w-sm bg-violet-50 lg:max-w-4xl">
+        <Carousel className="w-full bg-violet-100/60">
           <CarouselContent>
             {developersWithTechs &&
               (() => {
@@ -71,11 +73,12 @@ export default function Dashboard() {
                 return fullstackDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
-                    className="mr-2 min-w-52 max-w-56 basis-1/2 rounded-md bg-violet-200 pl-px shadow-sm lg:basis-1/4 lg:pl-0"
+                    className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
                     <Card
                       name={developer.userName}
                       techs={developer.techs}
+                      available_for_contract={developer.available_for_contract}
                       occupation_area={
                         developer.occupation_area.charAt(0).toUpperCase() +
                         developer.occupation_area.slice(1)
@@ -87,13 +90,13 @@ export default function Dashboard() {
                 ))
               })()}
           </CarouselContent>
-          <CarouselPrevious className="hidden" />
-          <CarouselNext className="hidden" />
+          <CarouselPrevious className="hidden lg:flex" />
+          <CarouselNext className="hidden lg:flex" />
         </Carousel>
       </Section>
 
       <Section title="Front-ends">
-        <Carousel className="w-full max-w-sm bg-violet-50 lg:max-w-4xl">
+        <Carousel className="w-full bg-violet-100/60">
           <CarouselContent>
             {developersWithTechs &&
               (() => {
@@ -110,7 +113,7 @@ export default function Dashboard() {
                 return frontendDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
-                    className="mr-2 min-w-52 max-w-56 basis-1/2 rounded-md bg-violet-200 pl-px shadow-sm lg:basis-1/4 lg:pl-0"
+                    className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
                     <Card
                       name={developer.userName}
@@ -119,6 +122,7 @@ export default function Dashboard() {
                         developer.occupation_area.charAt(0).toUpperCase() +
                         developer.occupation_area.slice(1)
                       }
+                      available_for_contract={developer.available_for_contract}
                       price_per_hour={developer.price_per_hour}
                       key={developer.developerId}
                     />
@@ -126,13 +130,13 @@ export default function Dashboard() {
                 ))
               })()}
           </CarouselContent>
-          <CarouselPrevious className="hidden" />
-          <CarouselNext className="hidden" />
+          <CarouselPrevious className="hidden lg:flex" />
+          <CarouselNext className="hidden lg:flex" />
         </Carousel>
       </Section>
 
       <Section title="Back-ends">
-        <Carousel className="w-full max-w-sm bg-violet-50 lg:max-w-4xl">
+        <Carousel className="bg-violet-100/60">
           <CarouselContent>
             {developersWithTechs &&
               (() => {
@@ -149,11 +153,12 @@ export default function Dashboard() {
                 return backendDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
-                    className="mr-2 min-w-52 max-w-56 basis-1/2 rounded-md bg-violet-200 pl-px shadow-sm lg:basis-1/4 lg:pl-0"
+                    className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
                     <Card
                       name={developer.userName}
                       techs={developer.techs}
+                      available_for_contract={developer.available_for_contract}
                       occupation_area={
                         developer.occupation_area.charAt(0).toUpperCase() +
                         developer.occupation_area.slice(1)
@@ -165,8 +170,8 @@ export default function Dashboard() {
                 ))
               })()}
           </CarouselContent>
-          <CarouselPrevious className="hidden" />
-          <CarouselNext className="hidden" />
+          <CarouselPrevious className="hidden lg:flex" />
+          <CarouselNext className="hidden lg:flex" />
         </Carousel>
       </Section>
     </div>
