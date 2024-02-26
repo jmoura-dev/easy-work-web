@@ -38,7 +38,7 @@ export function Card({
 
         <span className="text-md flex  flex-col gap-0.5 truncate font-semibold ">
           <div className="max-w-24 truncate text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800 lg:max-w-28 lg:text-xl">
-            {name}
+            {name && name.charAt(0).toUpperCase() + name.slice(1)}
           </div>
           <span className="flex items-center gap-1 rounded-md bg-zinc-300 px-1.5 py-0.5 text-sm text-violet-600">
             <Computer className="h-4 w-4" />
@@ -73,7 +73,7 @@ export function Card({
             </li>
           </>
         ) : (
-          <p className="m-auto text-center text-sm font-semibold">
+          <p className="m-auto text-center text-sm font-semibold text-zinc-800">
             *Nenhuma habilidade adicionada
           </p>
         )}

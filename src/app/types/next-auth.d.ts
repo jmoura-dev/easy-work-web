@@ -9,6 +9,8 @@ declare module 'next-auth' {
       about?: string
       developerId: string | null
       companyId: string | null
+      access_token: string
+      role: string
     }
   }
 }

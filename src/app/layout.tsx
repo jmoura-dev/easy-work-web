@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 const mirza = Mirza({
   subsets: ['latin'],
   variable: '--font-mirza',
-  weight: ['400', '600'],
+  weight: ['400', '600', '700'],
 })
 
 export const metadata: Metadata = {

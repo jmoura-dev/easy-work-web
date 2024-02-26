@@ -48,30 +48,34 @@ export function Sidebar() {
           onClick={toggle}
         >
           {isOpen ? (
-            <AlignJustify className="h-6 w-6 font-semibold text-zinc-600" />
+            <AlignJustify className="h-6 w-6 animate-slideDownAndFade font-semibold text-zinc-600" />
           ) : (
-            <X className="h-6 w-6 font-semibold text-zinc-600" />
+            <X className="h-6 w-6 animate-slideDownAndFade font-semibold text-zinc-600" />
           )}
         </CollapsibleTrigger>
       </div>
 
       <CollapsibleContent
         forceMount
-        className="flex flex-1 flex-col data-[state=closed]:hidden lg:data-[state=closed]:flex"
+        className="flex flex-1 animate-slideDownAndFade flex-col data-[state=closed]:hidden lg:data-[state=closed]:flex"
       >
         <nav className="flex flex-col">
           <h2 className="mb-6 ml-3 mt-5 w-14 border-b border-zinc-500 text-lg font-bold text-zinc-600">
             Menu
           </h2>
-          <NavItem icon={Home} title="Início" />
-          <NavItem icon={Briefcase} title="Vagas" />
-          <NavItem icon={WalletCards} title="Minhas candidaturas" />
-          <NavItem icon={Bell} title="Notificações" />
-          <NavItem icon={User} title="Perfil" />
+          <NavItem href="/" icon={Home} title="Início" />
+          <NavItem href="/jobs" icon={Briefcase} title="Vagas" />
+          <NavItem
+            href="/candidatures"
+            icon={WalletCards}
+            title="Minhas candidaturas"
+          />
+          <NavItem href="/notifications" icon={Bell} title="Notificações" />
+          <NavItem href="/profile" icon={User} title="Perfil" />
         </nav>
 
         <div className="mt-auto flex flex-col">
-          <NavItem icon={Settings} title="Configurações" />
+          <NavItem href="/" icon={Settings} title="Configurações" />
           <Profile name="Jackson Moura" email="jackson@email.com" />
         </div>
       </CollapsibleContent>

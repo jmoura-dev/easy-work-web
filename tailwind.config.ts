@@ -20,6 +20,9 @@ const config: Config = {
       width: {
         tabletScreen: 'minmax(30rem, 40rem)',
       },
+      fontSize: {
+        minimum: '10px',
+      },
       keyframes: {
         slideDownAndFade: {
           from: { opacity: '0' },

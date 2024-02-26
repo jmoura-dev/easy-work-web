@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { api } from '../../axios'
+import { getToken } from 'next-auth/jwt'
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -18,7 +19,6 @@ const nextAuthOptions: NextAuthOptions = {
           placeholder: 'Mínimo 6 caracteres',
         },
       },
-
       async authorize(credentials) {
         const data = {
           email: credentials?.email,
@@ -28,8 +28,10 @@ const nextAuthOptions: NextAuthOptions = {
         const response = await api.post('/sessions', data, {
           headers: { 'Content-Type': 'application/json' },
         })
-
-        const user = await response.data.user
+        const user = {
+          ...response.data.user,
+          access_token: response.data.access_token,
+        }
 
         if (user) {
           return user
@@ -41,6 +43,10 @@ const nextAuthOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/signIn',
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 60 * 60 * 24 * 2, // 2 days
   },
   callbacks: {
     async jwt({ token, user }) {

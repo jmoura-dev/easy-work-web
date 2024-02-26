@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
+import { nextAuthOptions } from '../../api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
 
-export default async function DeveloperLayoutProps({
+export default async function CompanyLayoutProps({
   children,
 }: {
   children: React.ReactNode

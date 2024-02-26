@@ -13,6 +13,7 @@ export function Profile({ name, email }: ProfileProps) {
         src="https://github.com/jmoura-dev.png"
         alt="imagem de perfil"
         className="rounded-full"
+        priority
         width={50}
         height={50}
       />

@@ -6,10 +6,10 @@ export interface NavItemProps extends ComponentProps<'a'> {
   icon: ElementType
 }
 
-export function NavItem({ title, icon: Icon, ...props }: NavItemProps) {
+export function NavItem({ href, title, icon: Icon, ...props }: NavItemProps) {
   return (
     <a
-      href=""
+      href={href}
       className="group flex items-center rounded px-3 py-2 hover:bg-violet-100"
       {...props}
     >

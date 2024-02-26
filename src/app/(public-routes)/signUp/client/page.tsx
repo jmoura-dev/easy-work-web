@@ -16,6 +16,7 @@ import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
 import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
+import { useRouter } from 'next/navigation'
 
 const registerCompanySchema = z.object({
   name: z.string(),
@@ -31,6 +32,8 @@ const registerCompanySchema = z.object({
 type RegisterCompanySchema = z.infer<typeof registerCompanySchema>
 
 export default function RegisterCompany() {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -56,6 +59,7 @@ export default function RegisterCompany() {
       site_url: data.site_url,
     }
     await api.post('/companies', dataCompany)
+    router.replace('/signIn')
   }
 
   return (

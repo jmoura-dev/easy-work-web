@@ -11,11 +11,12 @@ import * as Input from '@/app/components/Input'
 import { Card } from '@/app/components/UserCard'
 import { useQuery } from '@tanstack/react-query'
 import { getDevelopers } from '@/data/developers'
-import { Section } from '../components/Section'
+import { Section } from '../../components/Section'
 import { Search } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Dashboard() {
-  console.log('aqui')
+  const [developerFilterByName, setDeveloperFilterByName] = useState('')
 
   const {
     data: developers,
@@ -49,7 +50,11 @@ export default function Dashboard() {
         <Input.Prefix className="text-zinc-500">
           <Search />
         </Input.Prefix>
-        <Input.Control type="text" placeholder="Encontre um dev pelo nome" />
+        <Input.Control
+          type="text"
+          placeholder="Encontre um dev pelo nome"
+          onChange={(e) => setDeveloperFilterByName(e.target.value)}
+        />
         <button className="rounded-md bg-violet-500 px-2 py-1 text-sm font-semibold text-zinc-200 hover:bg-violet-600">
           Buscar
         </button>
@@ -63,14 +68,24 @@ export default function Dashboard() {
                 const fullstackDevelopers = developersWithTechs.filter(
                   (developer) => developer.occupation_area === 'fullstack',
                 )
-                if (fullstackDevelopers.length === 0) {
+                let filteredFullstackDevelopers = fullstackDevelopers
+
+                if (developerFilterByName !== '') {
+                  filteredFullstackDevelopers = fullstackDevelopers.filter(
+                    (developer) =>
+                      developer.userName.includes(
+                        developerFilterByName.toLowerCase(),
+                      ),
+                  )
+                }
+                if (filteredFullstackDevelopers.length === 0) {
                   return (
                     <p className="m-auto w-52 font-semibold text-violet-600">
                       Nenhum(a) DEV fullstack cadastrado(a) 😞
                     </p>
                   )
                 }
-                return fullstackDevelopers.map((developer) => (
+                return filteredFullstackDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
@@ -103,14 +118,24 @@ export default function Dashboard() {
                 const frontendDevelopers = developersWithTechs.filter(
                   (developer) => developer.occupation_area === 'frontend',
                 )
-                if (frontendDevelopers.length === 0) {
+                let filteredFrontendDevelopers = frontendDevelopers
+
+                if (developerFilterByName !== '') {
+                  filteredFrontendDevelopers = frontendDevelopers.filter(
+                    (developer) =>
+                      developer.userName.includes(
+                        developerFilterByName.toLowerCase(),
+                      ),
+                  )
+                }
+                if (filteredFrontendDevelopers.length === 0) {
                   return (
                     <p className="m-auto w-52 font-semibold text-violet-600">
                       Nenhum(a) DEV frontend cadastrado(a) 😞
                     </p>
                   )
                 }
-                return frontendDevelopers.map((developer) => (
+                return filteredFrontendDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
@@ -143,14 +168,24 @@ export default function Dashboard() {
                 const backendDevelopers = developersWithTechs.filter(
                   (developer) => developer.occupation_area === 'backend',
                 )
-                if (backendDevelopers.length === 0) {
+                let filteredBackendDevelopers = backendDevelopers
+
+                if (developerFilterByName !== '') {
+                  filteredBackendDevelopers = backendDevelopers.filter(
+                    (developer) =>
+                      developer.userName.includes(
+                        developerFilterByName.toLowerCase(),
+                      ),
+                  )
+                }
+                if (filteredBackendDevelopers.length === 0) {
                   return (
                     <p className="m-auto w-52 font-semibold text-violet-600">
                       Nenhum(a) DEV backend cadastrado(a) 😞
                     </p>
                   )
                 }
-                return backendDevelopers.map((developer) => (
+                return filteredBackendDevelopers.map((developer) => (
                   <CarouselItem
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
