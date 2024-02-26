@@ -12,8 +12,8 @@ import {
 
 export function JobAlert() {
   return (
-    <AlertDialog className="animate-slideDownAndFade">
-      <AlertDialogTrigger className="text-minimum rounded-md bg-gradient-to-r from-violet-900 to-violet-500/50 p-2 font-bold text-white hover:bg-violet-700">
+    <AlertDialog>
+      <AlertDialogTrigger className="rounded-md bg-gradient-to-r from-violet-900 to-violet-500/50 p-2 text-minimum font-bold text-white hover:bg-violet-700 xl:text-xs">
         CANDIDATAR-SE
       </AlertDialogTrigger>
       <AlertDialogContent>

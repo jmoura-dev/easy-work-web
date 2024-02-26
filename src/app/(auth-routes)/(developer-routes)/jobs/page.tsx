@@ -34,8 +34,8 @@ export default function Jobs() {
   const { jobs: allJobs } = jobs
 
   return (
-    <div>
-      <h1 className="mb-2 text-center font-mirza text-2xl font-semibold text-zinc-800">
+    <div className="xl:px-10">
+      <h1 className="mb-2 text-center font-mirza text-2xl font-semibold text-zinc-800 lg:text-3xl 2xl:text-4xl">
         Encontre a vaga que combina com você
       </h1>
 
@@ -52,7 +52,7 @@ export default function Jobs() {
         />
       </Input.Root>
 
-      <div className="flex flex-col gap-3 pt-4">
+      <div className="3xl:grid-cols-3 flex flex-col items-start gap-3 pt-4 md:grid md:grid-cols-2">
         <JobCard
           company="Contrata LTDA"
           created_at={new Date()}
@@ -63,6 +63,30 @@ export default function Jobs() {
           company="Moura serviços"
           created_at={new Date()}
           title="Desenvolvedor fullstack"
+          wage={1500}
+        />
+        <JobCard
+          company="Seja programador TI"
+          created_at={new Date()}
+          title="Desenvolvedor frontend"
+          wage={1500}
+        />
+        <JobCard
+          company="Seja programador TI"
+          created_at={new Date()}
+          title="Desenvolvedor frontend"
+          wage={1500}
+        />
+        <JobCard
+          company="Seja programador TI"
+          created_at={new Date()}
+          title="Desenvolvedor frontend"
+          wage={1500}
+        />
+        <JobCard
+          company="Seja programador TI"
+          created_at={new Date()}
+          title="Desenvolvedor frontend"
           wage={1500}
         />
         <JobCard

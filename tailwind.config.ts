@@ -20,8 +20,14 @@ const config: Config = {
       width: {
         tabletScreen: 'minmax(30rem, 40rem)',
       },
+      maxWidth: {
+        jobCard: '22.6rem',
+      },
       fontSize: {
         minimum: '10px',
+      },
+      screens: {
+        '3xl': '1700px',
       },
       keyframes: {
         slideDownAndFade: {
