@@ -19,7 +19,14 @@ export function JobAlert() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <p>Easy Work</p>
+            <div className="mb-5 flex w-full flex-col items-center justify-center rounded-md font-mirza text-2xl font-bold text-violet-500">
+              <span className="-ml-4">
+                E<span className="text-base font-normal">asy</span>
+              </span>
+              <span className="-mr-2 -mt-4">
+                W<span className="text-base font-normal">ork</span>
+              </span>
+            </div>
             Tem certeza que deseja aplicar para esta vaga?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -28,9 +35,9 @@ export function JobAlert() {
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-row items-start justify-between sm:justify-between">
           <AlertDialogAction className="bg-violet-600 hover:bg-violet-700">
-            Continue
+            Confirmar
           </AlertDialogAction>
-          <AlertDialogCancel className="m-0">Cancel</AlertDialogCancel>
+          <AlertDialogCancel className="m-0">Cancelar</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -20,6 +20,8 @@
     "axios": "^1.6.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "data-fns": "^1.1.0",
+    "date-fns": "^3.3.1",
     "embla-carousel-react": "8.0.0-rc20",
     "framer-motion": "^11.0.3",
     "lucide-react": "^0.314.0",
@@ -34,6 +36,7 @@
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
+    "@types/date-fns": "^2.6.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -8,6 +8,10 @@ interface GetJobsPropsResponse {
     companyName: string
     title: string
     description: string
+    workMode: string
+    workSchedule: string
+    remuneration: number
+    hoursPerWeek: number
     created_at: Date
   }[]
 }

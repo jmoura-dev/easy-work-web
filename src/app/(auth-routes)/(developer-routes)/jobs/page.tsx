@@ -52,50 +52,21 @@ export default function Jobs() {
         />
       </Input.Root>
 
-      <div className="3xl:grid-cols-3 flex flex-col items-start gap-3 pt-4 md:grid md:grid-cols-2">
-        <JobCard
-          company="Contrata LTDA"
-          created_at={new Date()}
-          title="Desenvolvedor backend"
-          wage={1500}
-        />
-        <JobCard
-          company="Moura serviços"
-          created_at={new Date()}
-          title="Desenvolvedor fullstack"
-          wage={1500}
-        />
-        <JobCard
-          company="Seja programador TI"
-          created_at={new Date()}
-          title="Desenvolvedor frontend"
-          wage={1500}
-        />
-        <JobCard
-          company="Seja programador TI"
-          created_at={new Date()}
-          title="Desenvolvedor frontend"
-          wage={1500}
-        />
-        <JobCard
-          company="Seja programador TI"
-          created_at={new Date()}
-          title="Desenvolvedor frontend"
-          wage={1500}
-        />
-        <JobCard
-          company="Seja programador TI"
-          created_at={new Date()}
-          title="Desenvolvedor frontend"
-          wage={1500}
-        />
-        <JobCard
-          company="Seja programador TI"
-          created_at={new Date()}
-          title="Desenvolvedor frontend"
-          wage={1500}
-        />
-      </div>
+      <ul className="flex flex-col items-start gap-3 pt-4 md:grid md:grid-cols-2 3xl:grid-cols-3">
+        {allJobs.length > 0 &&
+          allJobs.map((job) => (
+            <JobCard
+              key={job.id}
+              company={job.companyName}
+              created_at={job.created_at}
+              title={job.title.charAt(0).toUpperCase() + job.title.slice(1)}
+              remuneration={job.remuneration}
+              workMode={job.workMode}
+              workSchedule={job.workSchedule}
+              hoursPerWeek={job.hoursPerWeek}
+            />
+          ))}
+      </ul>
     </div>
   )
 }

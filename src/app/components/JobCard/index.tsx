@@ -1,17 +1,30 @@
 import { Banknote, Clock9, Hourglass, Laptop } from 'lucide-react'
 import { JobDetail } from './JobDetail'
 import { JobAlert } from './JobAlert'
+import { formatDistanceToNowStrict } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 
 export interface JobCardProps {
   title: string
   company: string
-  wage: number
+  workMode: string
+  workSchedule: string
+  remuneration: number
+  hoursPerWeek: number
   created_at: Date
 }
 
-export function JobCard({ title, company, wage, created_at }: JobCardProps) {
+export function JobCard({
+  title,
+  company,
+  workMode,
+  workSchedule,
+  remuneration,
+  hoursPerWeek,
+  created_at,
+}: JobCardProps) {
   return (
-    <div className="3xl:max-w-none m-auto flex w-full max-w-xl flex-col justify-evenly gap-2 rounded-lg border border-violet-800/60 bg-violet-200 p-3 shadow-md shadow-violet-400 lg:h-64 xl:h-72 2xl:h-80">
+    <div className="m-auto flex w-full max-w-xl flex-col justify-evenly gap-2 rounded-lg border border-violet-800/60 bg-violet-200 p-3 shadow-md shadow-violet-400 lg:h-64 xl:h-72 2xl:h-80 3xl:max-w-none">
       <div className="mb-5 flex gap-6">
         <div className="flex h-12 w-full max-w-14 flex-col items-center justify-center rounded-md bg-violet-600/70 pb-1 font-mirza text-2xl font-bold text-zinc-300">
           <span className="-ml-4">
@@ -33,19 +46,24 @@ export function JobCard({ title, company, wage, created_at }: JobCardProps) {
 
       <div className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <JobDetail icon={Laptop} name="Remoto" />
-          <JobDetail icon={Banknote} name={`R$:${wage}`} />
+          <JobDetail icon={Laptop} name={workMode} />
+          <JobDetail icon={Banknote} name={`R$:${remuneration}`} />
         </div>
         <div className="flex justify-between">
-          <JobDetail icon={Hourglass} name="Tempo integral" />
-          <JobDetail icon={Clock9} name="40 horas/semana" />
+          <JobDetail icon={Hourglass} name={workSchedule} />
+          <JobDetail icon={Clock9} name={`${hoursPerWeek} horas/semana`} />
         </div>
       </div>
 
       <footer className="mt-5 flex items-center justify-between">
         <JobAlert />
         <span className="text-minimum font-bold text-green-700 xl:text-xs">
-          CRIADO HÁ 6H ATRÁS
+          {String(
+            formatDistanceToNowStrict(new Date(created_at), {
+              addSuffix: true,
+              locale: ptBR,
+            }),
+          ).toUpperCase()}
         </span>
       </footer>
     </div>
