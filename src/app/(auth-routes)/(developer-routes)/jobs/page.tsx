@@ -9,6 +9,7 @@ import { JobCard } from '@/app/components/JobCard'
 
 export default function Jobs() {
   const [page, setPage] = useState(1)
+  const [jobFilteredByTitle, setJobFilteredByTitle] = useState('')
 
   const {
     data: jobs,
@@ -49,23 +50,40 @@ export default function Jobs() {
         <Input.Control
           type="text"
           placeholder="Encontre uma vaga pelo título"
+          onChange={(e) => setJobFilteredByTitle(e.target.value)}
         />
       </Input.Root>
 
-      <ul className="flex flex-col items-start gap-3 pt-4 md:grid md:grid-cols-2 3xl:grid-cols-3">
+      <ul className="relative flex flex-col items-start gap-3 pt-4 md:grid md:grid-cols-2 3xl:grid-cols-3">
         {allJobs.length > 0 &&
-          allJobs.map((job) => (
-            <JobCard
-              key={job.id}
-              company={job.companyName}
-              created_at={job.created_at}
-              title={job.title.charAt(0).toUpperCase() + job.title.slice(1)}
-              remuneration={job.remuneration}
-              workMode={job.workMode}
-              workSchedule={job.workSchedule}
-              hoursPerWeek={job.hoursPerWeek}
-            />
-          ))}
+          (() => {
+            let filteredJobs = allJobs
+
+            if (jobFilteredByTitle !== '') {
+              filteredJobs = allJobs.filter((job) =>
+                job.title.includes(jobFilteredByTitle.toLowerCase()),
+              )
+            }
+            if (filteredJobs.length === 0) {
+              return (
+                <p className="absolute m-auto w-full text-center text-lg font-semibold text-violet-600 lg:text-2xl">
+                  Oops... Nenhuma vaga encontrada 😞
+                </p>
+              )
+            }
+            return filteredJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                company={job.companyName}
+                created_at={job.created_at}
+                title={job.title.charAt(0).toUpperCase() + job.title.slice(1)}
+                remuneration={job.remuneration}
+                workMode={job.workMode}
+                workSchedule={job.workSchedule}
+                hoursPerWeek={job.hoursPerWeek}
+              />
+            ))
+          })()}
       </ul>
     </div>
   )

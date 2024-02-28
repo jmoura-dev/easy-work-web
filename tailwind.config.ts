@@ -10,6 +10,7 @@ const config: Config = {
         body: 'minmax(15rem, 20rem) 1fr',
         developer: '70% 30%',
         client: '30% 70%',
+        signIn: '40% 60%',
       },
       gridTemplateRows: {
         body: 'minmax(5rem, 6rem) 1fr',
@@ -28,6 +29,7 @@ const config: Config = {
       },
       screens: {
         '3xl': '1700px',
+        minimum: '404px',
       },
       keyframes: {
         slideDownAndFade: {

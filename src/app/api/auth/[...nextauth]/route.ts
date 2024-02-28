@@ -1,7 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { api } from '../../axios'
-import { getToken } from 'next-auth/jwt'
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [

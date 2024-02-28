@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export function SectionDeveloper() {
   return (
-    <div className="md:grid-cols-developer mt-5 flex md:grid md:px-2">
+    <div className="mt-5 flex md:grid md:grid-cols-developer md:px-2">
       <div className="flex flex-col space-y-5 bg-violet-600 p-2 md:rounded-bl-lg md:rounded-tl-lg lg:items-center lg:justify-center">
         <h2 className="border-b pb-1 font-mirza text-2xl font-semibold text-white md:pl-1">
           Para desenvolvedores

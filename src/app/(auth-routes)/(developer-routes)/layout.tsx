@@ -13,5 +13,9 @@ export default async function DeveloperLayoutProps({
     redirect('/')
   }
 
+  if (session && !session.user.developerId) {
+    redirect('/dashboard')
+  }
+
   return <>{children}</>
 }

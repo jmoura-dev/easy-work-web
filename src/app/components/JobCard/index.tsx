@@ -34,7 +34,7 @@ export function JobCard({
             W<span className="text-base font-normal">ork</span>
           </span>
         </div>
-        <div className="flex w-full flex-col divide-y divide-dashed divide-violet-500">
+        <div className="flex w-full flex-col gap-1 divide-y divide-dashed divide-violet-500">
           <h1 className="font-mirza text-2xl font-bold text-zinc-800 xl:text-3xl">
             {title}
           </h1>
