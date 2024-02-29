@@ -5,6 +5,7 @@ import * as Input from '@/app/components/Input'
 import { getJobs } from '@/data/jobs'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { DialogJob } from '@/app/components/DialogJob'
 import { JobCard } from '@/app/components/JobCard'
 
 export default function Jobs() {
@@ -78,7 +79,10 @@ export default function Jobs() {
                 created_at={job.created_at}
                 title={job.title.charAt(0).toUpperCase() + job.title.slice(1)}
                 remuneration={job.remuneration}
-                workMode={job.workMode}
+                description={job.description}
+                workMode={
+                  job.workMode.charAt(0).toUpperCase() + job.workMode.slice(1)
+                }
                 workSchedule={job.workSchedule}
                 hoursPerWeek={job.hoursPerWeek}
               />

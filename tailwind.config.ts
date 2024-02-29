@@ -25,7 +25,7 @@ const config: Config = {
         jobCard: '22.6rem',
       },
       fontSize: {
-        minimum: '10px',
+        minimum: '0.70rem',
       },
       screens: {
         '3xl': '1700px',

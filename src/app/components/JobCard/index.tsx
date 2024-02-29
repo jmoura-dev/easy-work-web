@@ -1,8 +1,8 @@
 import { Banknote, Clock9, Hourglass, Laptop } from 'lucide-react'
 import { JobDetail } from './JobDetail'
-import { JobAlert } from './JobAlert'
-import { formatDistanceToNowStrict } from 'date-fns'
+import { formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
+import { DialogJob } from '../DialogJob'
 
 export interface JobCardProps {
   title: string
@@ -11,6 +11,7 @@ export interface JobCardProps {
   workSchedule: string
   remuneration: number
   hoursPerWeek: number
+  description: string
   created_at: Date
 }
 
@@ -21,6 +22,7 @@ export function JobCard({
   workSchedule,
   remuneration,
   hoursPerWeek,
+  description,
   created_at,
 }: JobCardProps) {
   return (
@@ -56,10 +58,19 @@ export function JobCard({
       </div>
 
       <footer className="mt-5 flex items-center justify-between">
-        <JobAlert />
+        <DialogJob
+          title={title}
+          company={company}
+          created_at={created_at}
+          remuneration={remuneration}
+          description={description}
+          workMode={workMode}
+          workSchedule={workSchedule}
+          hoursPerWeek={hoursPerWeek}
+        />
         <span className="text-minimum font-bold text-green-700 xl:text-xs">
           {String(
-            formatDistanceToNowStrict(new Date(created_at), {
+            formatDistanceToNow(new Date(created_at), {
               addSuffix: true,
               locale: ptBR,
             }),

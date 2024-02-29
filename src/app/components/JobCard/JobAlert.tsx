@@ -16,7 +16,7 @@ export function JobAlert() {
       <AlertDialogTrigger className="rounded-md bg-gradient-to-r from-violet-900 to-violet-500/50 p-2 text-minimum font-bold text-white hover:bg-violet-700 xl:text-xs">
         CANDIDATAR-SE
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="animate-slideDownAndFade">
         <AlertDialogHeader>
           <AlertDialogTitle>
             <div className="mb-5 flex w-full flex-col items-center justify-center rounded-md font-mirza text-2xl font-bold text-violet-500">
