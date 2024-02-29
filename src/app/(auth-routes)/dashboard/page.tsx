@@ -89,6 +89,7 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      about={developer.about}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}
                       occupation_area={
@@ -139,6 +140,7 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      about={developer.about}
                       techs={developer.techs}
                       occupation_area={
                         developer.occupation_area.charAt(0).toUpperCase() +
@@ -189,6 +191,7 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      about={developer.about}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}
                       occupation_area={
