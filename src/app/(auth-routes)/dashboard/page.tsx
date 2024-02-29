@@ -8,12 +8,12 @@ import {
   CarouselPrevious,
 } from '@/app/components/ui/carousel'
 import * as Input from '@/app/components/Input'
-import { Card } from '@/app/components/UserCard'
 import { useQuery } from '@tanstack/react-query'
 import { getDevelopers } from '@/data/developers'
 import { Section } from '../../components/Section'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
+import { DialogUser } from '@/app/components/DialogUser'
 
 export default function Dashboard() {
   const [developerFilterByName, setDeveloperFilterByName] = useState('')
@@ -55,9 +55,6 @@ export default function Dashboard() {
           placeholder="Encontre um dev pelo nome"
           onChange={(e) => setDeveloperFilterByName(e.target.value)}
         />
-        <button className="rounded-md bg-violet-500 px-2 py-1 text-sm font-semibold text-zinc-200 hover:bg-violet-600">
-          Buscar
-        </button>
       </Input.Root>
 
       <Section title="Full-stacks">
@@ -90,7 +87,7 @@ export default function Dashboard() {
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
-                    <Card
+                    <DialogUser
                       name={developer.userName}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}
@@ -140,7 +137,7 @@ export default function Dashboard() {
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
-                    <Card
+                    <DialogUser
                       name={developer.userName}
                       techs={developer.techs}
                       occupation_area={
@@ -190,7 +187,7 @@ export default function Dashboard() {
                     key={developer.developerId}
                     className="mr-2 h-52 min-w-52 max-w-56 basis-1/2 rounded-md border border-violet-800/30 bg-violet-200 pl-px md:h-60 md:max-w-72 lg:h-64 lg:pl-0"
                   >
-                    <Card
+                    <DialogUser
                       name={developer.userName}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}

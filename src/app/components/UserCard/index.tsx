@@ -10,7 +10,7 @@ interface CardProps {
   available_for_contract: boolean
   techs: {
     name: string
-    id: number
+    id: string
   }[]
 }
 
@@ -24,7 +24,10 @@ export function Card({
   ...props
 }: CardProps) {
   return (
-    <div {...props} className="flex flex-col gap-3 p-2 md:p-3 lg:p-4">
+    <div
+      {...props}
+      className="flex h-full transform flex-col gap-3 transition-transform duration-200 md:p-3 lg:p-4 lg:hover:scale-95"
+    >
       <div className="mb-2 flex items-start justify-center gap-4">
         {avatar_url ? (
           <Image
@@ -73,9 +76,9 @@ export function Card({
             </li>
           </>
         ) : (
-          <p className="m-auto text-center text-sm font-semibold text-zinc-800">
+          <span className="whitespace-normal text-center text-sm font-semibold text-zinc-800">
             *Nenhuma habilidade adicionada
-          </p>
+          </span>
         )}
       </ul>
     </div>

@@ -9,7 +9,7 @@ interface DevelopersProps {
     price_per_hour: number
     techs: {
       name: string
-      id: number
+      id: string
     }[]
     userName: string
   }[]

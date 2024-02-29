@@ -5,7 +5,6 @@ import * as Input from '@/app/components/Input'
 import { getJobs } from '@/data/jobs'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { DialogJob } from '@/app/components/DialogJob'
 import { JobCard } from '@/app/components/JobCard'
 
 export default function Jobs() {

@@ -7,9 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { JobAlert } from '../JobCard/JobAlert'
+import { JobAlert } from './JobCard/JobAlert'
 import { Laptop, Banknote, Hourglass, Clock9 } from 'lucide-react'
-import { JobDetail } from '../JobCard/JobDetail'
+import { JobDetail } from './JobCard/JobDetail'
 
 interface DialogJobProps {
   title: string
