@@ -6,6 +6,7 @@ import { getJobs } from '@/data/jobs'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { JobCard } from '@/app/components/JobCard'
+import { createCandidature } from '@/data/candidatures'
 
 export default function Jobs() {
   const [page, setPage] = useState(1)
@@ -84,6 +85,7 @@ export default function Jobs() {
                 }
                 workSchedule={job.workSchedule}
                 hoursPerWeek={job.hoursPerWeek}
+                onClick={() => createCandidature(job.id)}
               />
             ))
           })()}

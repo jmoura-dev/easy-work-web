@@ -48,7 +48,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="lg:grid-cols-signIn grid">
+    <div className="grid lg:grid-cols-signIn">
       <Image
         src={DeveloperLogo}
         alt=""
@@ -122,7 +122,7 @@ export default function SignIn() {
           >
             Entrar
           </button>
-          <div className="minimum:flex-row mt-10 flex flex-col items-center justify-center gap-2">
+          <div className="mt-10 flex flex-col items-center justify-center gap-2 minimum:flex-row">
             <span className="text-zinc-700">Não possui uma conta?</span>
             <Link
               href="/signUp"

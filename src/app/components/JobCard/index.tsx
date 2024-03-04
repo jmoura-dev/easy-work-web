@@ -13,6 +13,7 @@ export interface JobCardProps {
   hoursPerWeek: number
   description: string
   created_at: Date
+  onClick: () => void
 }
 
 export function JobCard({
@@ -24,6 +25,7 @@ export function JobCard({
   hoursPerWeek,
   description,
   created_at,
+  onClick,
 }: JobCardProps) {
   return (
     <div className="m-auto flex w-full max-w-xl flex-col justify-evenly gap-2 rounded-lg border border-violet-800/60 bg-violet-200 p-3 shadow-md shadow-violet-400 lg:h-64 xl:h-72 2xl:h-80 3xl:max-w-none">
@@ -67,6 +69,7 @@ export function JobCard({
           workMode={workMode}
           workSchedule={workSchedule}
           hoursPerWeek={hoursPerWeek}
+          onClick={onClick}
         />
         <span className="text-minimum font-bold text-green-700 xl:text-xs">
           {String(

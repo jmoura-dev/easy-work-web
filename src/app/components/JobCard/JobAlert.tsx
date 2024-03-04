@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 
-export function JobAlert() {
+export function JobAlert({ ...props }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger className="rounded-md bg-gradient-to-r from-violet-900 to-violet-500/50 p-2 text-minimum font-bold text-white hover:bg-violet-700 xl:text-xs">
@@ -34,7 +34,10 @@ export function JobAlert() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-row items-start justify-between sm:justify-between">
-          <AlertDialogAction className="bg-violet-600 hover:bg-violet-700">
+          <AlertDialogAction
+            {...props}
+            className="bg-violet-600 hover:bg-violet-700"
+          >
             Confirmar
           </AlertDialogAction>
           <AlertDialogCancel className="m-0">Cancelar</AlertDialogCancel>

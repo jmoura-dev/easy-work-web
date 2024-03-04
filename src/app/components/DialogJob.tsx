@@ -20,6 +20,7 @@ interface DialogJobProps {
   remuneration: number
   description: string
   created_at: Date
+  onClick: () => void
 }
 
 export function DialogJob({
@@ -30,6 +31,7 @@ export function DialogJob({
   hoursPerWeek,
   remuneration,
   description,
+  onClick,
 }: DialogJobProps) {
   return (
     <Dialog>
@@ -76,7 +78,7 @@ export function DialogJob({
             {description}
           </div>
           <DialogFooter className="pt-6">
-            <JobAlert />
+            <JobAlert onClick={onClick} />
           </DialogFooter>
         </div>
       </DialogContent>
