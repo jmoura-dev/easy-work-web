@@ -5,9 +5,11 @@ import { redirect } from 'next/navigation'
 interface GetCandidaturesPropsResponse {
   candidatures: {
     id: string
+    companyName: string
+    title: string
     status: string
-    createdAt: Date
-    updatedAt: Date | null
+    created_at: Date
+    updated_at: Date
   }[]
 }
 
@@ -43,7 +45,6 @@ export async function createCandidature(jobId: string) {
   }
 
   const token = session.user.access_token
-  console.log(jobId)
 
   try {
     await api.post(
