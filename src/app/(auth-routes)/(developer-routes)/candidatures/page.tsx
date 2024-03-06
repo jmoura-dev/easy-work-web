@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { getCandidatures } from '@/data/candidatures'
 import { CandidatureCard } from '@/app/components/CandidatureCard'
 import { Search } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import { SkeletonCandidatures } from '@/app/components/SkeletonCandidatures'
 
 export default function Jobs() {
   const [page, setPage] = useState(1)
@@ -20,13 +22,13 @@ export default function Jobs() {
     queryKey: ['candidatures'],
     queryFn: () => getCandidatures(page),
   })
-
   if (isLoading) {
-    return <p>Carregando...</p>
+    return <SkeletonCandidatures />
   }
 
   if (isError) {
-    return <p>Ocorreu um erro ao carregar as vagas.</p>
+    alert('Erro ao carregar as vagas')
+    return redirect('/dashboard')
   }
 
   if (!candidatures) {

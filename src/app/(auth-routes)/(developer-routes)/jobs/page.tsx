@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { JobCard } from '@/app/components/JobCard'
 import { createCandidature } from '@/data/candidatures'
+import { SkeletonJobs } from '@/app/components/SkeletonJobs'
+import { redirect } from 'next/navigation'
 
 export default function Jobs() {
   const [page, setPage] = useState(1)
@@ -22,11 +24,12 @@ export default function Jobs() {
   })
 
   if (isLoading) {
-    return <p>Carregando...</p>
+    return <SkeletonJobs />
   }
 
   if (isError) {
-    return <p>Ocorreu um erro ao carregar as vagas.</p>
+    alert('Erro ao carregar as vagas')
+    return redirect('/dashboard')
   }
 
   if (!jobs) {

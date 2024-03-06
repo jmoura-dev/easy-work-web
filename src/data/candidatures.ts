@@ -1,4 +1,5 @@
 import { api } from '@/app/api/axios'
+import { AxiosError } from 'axios'
 import { getSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 
@@ -58,6 +59,20 @@ export async function createCandidature(jobId: string) {
     )
     alert('Candidatura criada com sucesso!')
   } catch (err) {
-    console.log(err)
+    const axiosError = err as AxiosError<any>
+    if (axiosError.response) {
+      const status = axiosError.response.status
+
+      switch (status) {
+        case 409:
+          alert(axiosError.response.data.message)
+          break
+        case 404:
+          alert(axiosError.response.data.message)
+          break
+        default:
+          alert('Internal server error')
+      }
+    }
   }
 }

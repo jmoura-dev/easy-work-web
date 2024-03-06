@@ -14,6 +14,8 @@ import { Section } from '../../components/Section'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 import { DialogUser } from '@/app/components/DialogUser'
+import { SkeletonDashboard } from '@/app/components/SkeletonDashboard'
+import { redirect } from 'next/navigation'
 
 export default function Dashboard() {
   const [developerFilterByName, setDeveloperFilterByName] = useState('')
@@ -28,11 +30,12 @@ export default function Dashboard() {
   })
 
   if (isLoading) {
-    return <p>Carregando...</p>
+    return <SkeletonDashboard />
   }
 
   if (isError) {
-    return <p>Ocorreu um erro ao carregar os desenvolvedores.</p>
+    alert('Erro ao carregar o dashboard')
+    return redirect('/signIn')
   }
 
   if (!developers) {
