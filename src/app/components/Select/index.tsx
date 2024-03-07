@@ -31,7 +31,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
             side="bottom"
             position="popper"
             sideOffset={4}
-            className="z-10 w-[--radix-select-trigger-width] animate-slideDownAndFade overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+            className="z-50 w-[--radix-select-trigger-width] animate-slideDownAndFade overflow-hidden rounded-lg border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-800"
           >
             <SelectPrimitive.Viewport className="cursor-pointer overflow-hidden">
               {children}

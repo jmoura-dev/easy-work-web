@@ -14,9 +14,9 @@ export function SocialMedia({ linkedIn, github, portfolio }: SocialMediaProps) {
         href={linkedIn}
         title="linkedIn"
         target="_blank"
-        className="flex items-center justify-center gap-1 rounded-md bg-blue-500 px-2 py-1 text-sm font-semibold text-zinc-100 hover:bg-blue-600"
+        className="flex items-center justify-center gap-0.5 rounded-md bg-blue-500 px-2 py-1 text-sm font-semibold text-zinc-100 hover:bg-blue-600"
       >
-        <Linkedin className="h-4 w-4" />
+        <Linkedin className="h-3 w-4 font-semibold" />
         LinkedIn
       </Link>
       <Link

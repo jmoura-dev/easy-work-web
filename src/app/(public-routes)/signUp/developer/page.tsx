@@ -21,7 +21,10 @@ const registerDeveloperSchema = z.object({
     .string()
     .min(6, { message: 'Digite no mínimo 6 caracteres para senha.' }),
   about: z.string().optional(),
-  price_per_hour: z.coerce.number().optional(),
+  price_per_hour: z.coerce
+    .number()
+    .max(100, { message: 'Valor máximo de R$ 100,00' })
+    .optional(),
   occupation_area: z.string(),
   available_for_contract: z.string().optional().default('false'),
 })
@@ -198,6 +201,11 @@ export default function RegisterDeveloper() {
                 {...register('price_per_hour')}
               />
             </Input.Root>
+            {errors.price_per_hour && (
+              <span className="text-sm font-semibold text-red-800">
+                {errors.price_per_hour.message}
+              </span>
+            )}
           </div>
         </div>
 
@@ -228,7 +236,7 @@ export default function RegisterDeveloper() {
               Fale um pouco sobre você
             </span>
           </label>
-          <Textarea id="bio" maxLength={150} {...register('about')} />
+          <Textarea id="bio" maxLength={500} {...register('about')} />
         </div>
 
         <footer className="flex items-center justify-end gap-12 pt-5">
