@@ -5,15 +5,15 @@ import { useFileInput } from './Root'
 import { useMemo } from 'react'
 
 export function ImagePreview() {
-  const { files } = useFileInput()
+  const { file } = useFileInput()
 
   const previewURL = useMemo(() => {
-    if (files.length === 0) {
+    if (!file) {
       return null
     }
 
-    return URL.createObjectURL(files[0])
-  }, [files])
+    return URL.createObjectURL(file)
+  }, [file])
 
   if (previewURL === null) {
     return (

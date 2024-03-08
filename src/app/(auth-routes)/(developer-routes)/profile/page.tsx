@@ -46,7 +46,7 @@ export default function Profile({ name }: DevelopeDetailsProps) {
     developerWithDetails.occupation_area.slice(1)
 
   return (
-    <div className="m-auto flex h-full max-w-5xl flex-col gap-3 lg:gap-8">
+    <div className="m-auto flex h-full max-w-5xl flex-col gap-3 rounded-md bg-violet-100 px-10 py-5 lg:gap-8">
       <div className="flex max-h-20 flex-1 md:max-h-44">
         <Image
           alt="imagem de perfil"

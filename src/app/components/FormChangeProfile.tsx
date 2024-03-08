@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import * as Input from '@/app/components/Input'
+import * as FileInput from '@/app/components/FileInput'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from './Textarea'
@@ -24,6 +25,7 @@ export interface FormChangeProfileProps {
 const registerDeveloperSchema = z.object({
   name: z.string().optional(),
   // password: z.string(),
+  avatar: z.custom((value) => value instanceof FileList),
   about: z.string().optional(),
   price_per_hour: z.coerce
     .number()
@@ -64,6 +66,7 @@ export function FormChangeProfile({
       techs: arrayTechNames,
     },
   })
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'techs',
@@ -80,6 +83,35 @@ export function FormChangeProfile({
 
   return (
     <form onSubmit={handleSubmit(handleChangeProfile)}>
+      <div className="lg:grid-cols-form flex flex-col gap-3 pt-5 lg:grid">
+        <label
+          htmlFor="photo"
+          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        >
+          Sua foto
+        </label>
+        <FileInput.Root className="flex flex-col gap-5 lg:flex-row lg:items-start">
+          <FileInput.ImagePreview />
+          <FileInput.Trigger />
+          <FileInput.Control {...register('avatar')} />
+        </FileInput.Root>
+      </div>
+
+      {/* <Controller
+            name="available_for_contract"
+            control={control}
+            render={({ field: { ref, onChange, value } }) => (
+              <Select
+                ref={ref}
+                placeholder={
+                  available_for_contract
+                    ? 'Sim, estou disponível!'
+                    : 'Não, apenas freelancer!'
+                }
+                onValueChange={onChange}
+                value={value}
+              > */}
+
       <div className="flex flex-col gap-2 ">
         <label className="text-sm font-medium text-zinc-700" htmlFor="name">
           Nome
@@ -203,23 +235,6 @@ export function FormChangeProfile({
         </div>
       </div>
 
-      {/* <div className="lg:grid-cols-form flex flex-col gap-3 pt-5 lg:grid">
-        <label
-          htmlFor="photo"
-          className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
-        >
-          Sua foto
-          <span className="block text-sm font-normal text-zinc-500">
-            Isso será exibido no seu perfil.
-          </span>
-        </label>
-        <FileInput.Root className="flex flex-col gap-5 lg:flex-row lg:items-start">
-          <FileInput.ImagePreview />
-          <FileInput.Trigger />
-          <FileInput.Control />
-        </FileInput.Root>
-      </div> */}
-
       <div className="flex flex-col gap-2 pt-5">
         <label
           htmlFor="bio"
@@ -266,7 +281,7 @@ export function FormChangeProfile({
             }
           }}
           disabled={lastTechName.trim() === ''}
-          className="m-auto mt-2 flex w-36 items-center gap-2 border-b border-violet-300 p-1 text-sm font-bold text-violet-600"
+          className="m-auto mt-2 flex w-36 items-center gap-2 border-b border-violet-300 p-1 text-sm font-bold text-violet-600 disabled:cursor-not-allowed disabled:text-red-800"
         >
           Nova habilidade
           <Plus width={18} height={18} />

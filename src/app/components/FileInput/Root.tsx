@@ -12,21 +12,21 @@ type RootProps = ComponentProps<'div'>
 
 type FileInputContextType = {
   id: string
-  files: File[]
-  onFilesSelected: (files: File[]) => void
+  file: File | undefined
+  onFileSelected: (files: File) => void
 }
 export const FileInputContext = createContext({} as FileInputContextType)
 
 export function Root(props: RootProps) {
   const id = useId()
-  const [files, setFile] = useState<File[]>([])
+  const [file, setFile] = useState<File>()
 
-  function onFilesSelected(files: File[]) {
-    setFile(files)
+  function onFileSelected(file: File) {
+    setFile(file)
   }
 
   return (
-    <FileInputContext.Provider value={{ id, files, onFilesSelected }}>
+    <FileInputContext.Provider value={{ id, file, onFileSelected }}>
       <div {...props} />
     </FileInputContext.Provider>
   )

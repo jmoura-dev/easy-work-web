@@ -6,25 +6,26 @@ import { useFileInput } from './Root'
 type ControlProps = InputHTMLAttributes<HTMLInputElement>
 
 const Control = forwardRef<HTMLInputElement, ControlProps>((props, ref) => {
-  const { id, onFilesSelected } = useFileInput()
+  const { id, onFileSelected } = useFileInput()
 
   function handleFilesSelected(event: ChangeEvent<HTMLInputElement>) {
     if (!event.target.files?.length) {
       return
     }
 
-    const files = Array.from(event.target.files)
+    const file = event.target.files[0]
 
-    onFilesSelected(files)
+    onFileSelected(file)
+    return file
   }
 
   return (
     <input
       ref={ref}
       type="file"
-      className="sr-only"
       id={id}
-      onChange={handleFilesSelected}
+      className="sr-only"
+      onChangeCapture={handleFilesSelected}
       {...props}
     />
   )
