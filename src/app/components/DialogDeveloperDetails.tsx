@@ -44,7 +44,7 @@ export function DialogDeveloperDetails({
           EDITAR PERFIL
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-screen animate-slideDownAndFade overflow-y-auto sm:rounded-none lg:max-w-3xl">
+      <DialogContent className="max-h-screen animate-slideDownAndFade overflow-y-auto sm:rounded-none lg:max-h-[98%] lg:max-w-3xl">
         <div className="mb-5 flex w-full flex-col items-center justify-center rounded-md font-mirza text-2xl font-bold text-violet-500">
           <span className="-ml-4">
             E<span className="text-base font-normal">asy</span>

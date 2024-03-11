@@ -8,7 +8,9 @@ import * as FileInput from '@/app/components/FileInput'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from './Textarea'
-import { Plus, X } from 'lucide-react'
+import { LockKeyhole, Plus, X } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { uploadAvatar } from '@/data/avatar'
 
 export interface FormChangeProfileProps {
   userName: string
@@ -23,21 +25,22 @@ export interface FormChangeProfileProps {
 }
 
 const registerDeveloperSchema = z.object({
-  name: z.string().optional(),
-  // password: z.string(),
+  // name: z.string().optional(),
+  // oldPassword: z.string().optional(),
+  // newPassword: z.string().optional(),
   avatar: z.custom((value) => value instanceof FileList),
-  about: z.string().optional(),
-  price_per_hour: z.coerce
-    .number()
-    .max(100, { message: 'Valor máximo de R$ 100,00' })
-    .optional(),
-  occupation_area: z.string().optional(),
-  available_for_contract: z.string().optional(),
-  techs: z.array(
-    z.object({
-      name: z.string(),
-    }),
-  ),
+  // about: z.string().optional(),
+  // price_per_hour: z.coerce
+  //   .number()
+  //   .max(100, { message: 'Valor máximo de R$ 100,00' })
+  //   .optional(),
+  // occupation_area: z.string().optional(),
+  // available_for_contract: z.string().optional(),
+  // techs: z.array(
+  //   z.object({
+  //     name: z.string(),
+  //   }),
+  // ),
 })
 
 type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
@@ -50,6 +53,20 @@ export function FormChangeProfile({
   price_per_hour,
   techs,
 }: FormChangeProfileProps) {
+  const { mutateAsync: uploadAvatarFn } = useMutation({
+    mutationFn: uploadAvatar,
+  })
+
+  async function handleUploadAvatar(data: RegisterDeveloperSchema) {
+    console.log(data.avatar[0], 'test')
+    try {
+      await uploadAvatarFn({ image: data.avatar[0] })
+      alert('Sucesso ao fazer upload da imagem')
+    } catch (err) {
+      alert('Erro ao fazer upload da image.')
+    }
+  }
+
   const arrayTechNames = techs.map((tech) => ({ name: tech.name }))
   if (arrayTechNames.length === 0) {
     arrayTechNames.push({ name: '' })
@@ -62,9 +79,9 @@ export function FormChangeProfile({
     control,
   } = useForm<RegisterDeveloperSchema>({
     resolver: zodResolver(registerDeveloperSchema),
-    defaultValues: {
-      techs: arrayTechNames,
-    },
+    // defaultValues: {
+    //   techs: arrayTechNames,
+    // },
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -72,18 +89,21 @@ export function FormChangeProfile({
     name: 'techs',
   })
 
-  const lastTechName = useWatch({
-    control,
-    name: `techs.${fields.length - 1}.name`,
-  })
+  // const lastTechName = useWatch({
+  //   control,
+  //   name: `techs.${fields.length - 1}.name`,
+  // })
 
-  async function handleChangeProfile(data: RegisterDeveloperSchema) {
-    console.log(data)
-  }
+  // async function handleChangeProfile(data: RegisterDeveloperSchema) {
+  //   console.log({
+  //     ...data,
+  //     avatar: data.avatar[0],
+  //   })
+  // }
 
   return (
-    <form onSubmit={handleSubmit(handleChangeProfile)}>
-      <div className="lg:grid-cols-form flex flex-col gap-3 pt-5 lg:grid">
+    <form onSubmit={handleSubmit(handleUploadAvatar)}>
+      <div className="lg:grid-cols-form mb-4 flex flex-col gap-3 pt-5 lg:grid">
         <label
           htmlFor="photo"
           className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
@@ -97,22 +117,12 @@ export function FormChangeProfile({
         </FileInput.Root>
       </div>
 
-      {/* <Controller
-            name="available_for_contract"
-            control={control}
-            render={({ field: { ref, onChange, value } }) => (
-              <Select
-                ref={ref}
-                placeholder={
-                  available_for_contract
-                    ? 'Sim, estou disponível!'
-                    : 'Não, apenas freelancer!'
-                }
-                onValueChange={onChange}
-                value={value}
-              > */}
+      <img
+        src={`${process.env.URL_DOMAIN}/a3a655b7-38e3-46d6-a169-d4923908a297-developers.jpg`}
+        alt=""
+      />
 
-      <div className="flex flex-col gap-2 ">
+      {/* <div className="flex flex-col gap-2 ">
         <label className="text-sm font-medium text-zinc-700" htmlFor="name">
           Nome
         </label>
@@ -132,25 +142,33 @@ export function FormChangeProfile({
 
       <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
         <div className="flex flex-col gap-2 pt-5">
-          <label className="text-sm font-medium text-zinc-700" htmlFor="name">
-            Senha
+          <label
+            className="text-sm font-medium text-zinc-700"
+            htmlFor="oldPassword"
+          >
+            Alterar Senha
           </label>
-          {/* <Input.Root>
+          <Input.Root>
             <Input.Prefix>
               <LockKeyhole className="h-5 w-5 text-zinc-500" />
             </Input.Prefix>
             <Input.Control
               type="password"
-              placeholder="Digite sua senha"
-              id="password"
-              {...register('password')}
+              placeholder="Digite sua senha atual"
+              id="oldPassword"
+              {...register('oldPassword')}
             />
           </Input.Root>
-          {errors.password && (
-            <span className="text-sm font-semibold text-red-800">
-              {errors.password.message}
-            </span>
-          )} */}
+          <Input.Root>
+            <Input.Prefix>
+              <LockKeyhole className="h-5 w-5 text-zinc-500" />
+            </Input.Prefix>
+            <Input.Control
+              type="password"
+              placeholder="Digite sua nova senha"
+              {...register('newPassword')}
+            />
+          </Input.Root>
         </div>
 
         <div className="flex flex-col gap-2 border-t pt-5 lg:border-none">
@@ -286,7 +304,7 @@ export function FormChangeProfile({
           Nova habilidade
           <Plus width={18} height={18} />
         </button>
-      </div>
+      </div> */}
 
       <button
         type="submit"

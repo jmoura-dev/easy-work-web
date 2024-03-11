@@ -10,6 +10,9 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    URL_DOMAIN: process.env.URL_DOMAIN,
+  },
 }
 
 export default nextConfig
