@@ -4,16 +4,17 @@ import { redirect } from 'next/navigation'
 
 interface DevelopersProps {
   developersWithTechs: {
+    developerId: string
+    avatarUrl: string | null
+    userName: string
     about: string
     available_for_contract: boolean
-    developerId: string
     occupation_area: string
     price_per_hour: number
     techs: {
       name: string
       id: string
     }[]
-    userName: string
   }[]
 }
 
@@ -26,6 +27,7 @@ export async function getDevelopers(): Promise<DevelopersProps> {
 interface DeveloperDetailsProps {
   developerWithDetails: {
     developerId: string
+    avatarUrl: string | null
     userName: string
     about: string
     available_for_contract: boolean

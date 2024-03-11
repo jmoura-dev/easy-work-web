@@ -19,9 +19,37 @@ import {
   CollapsibleContent,
 } from '@/app/components/ui/collapsible'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { getDeveloperDetails } from '@/data/developers'
+import { redirect } from 'next/navigation'
+import { SkeletonJobs } from '../SkeletonJobs'
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
+
+  const {
+    data: developer,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['getDeveloper'],
+    queryFn: getDeveloperDetails,
+  })
+
+  if (isLoading) {
+    return <SkeletonJobs />
+  }
+
+  if (isError) {
+    alert('Erro ao carregar perfil')
+    return redirect('/signIn')
+  }
+
+  if (!developer) {
+    return null
+  }
+
+  const { developerWithDetails } = developer
 
   function toggle() {
     if (isOpen) {
@@ -76,7 +104,21 @@ export function Sidebar() {
 
         <div className="mt-auto flex flex-col">
           <NavItem href="/" icon={Settings} title="Configurações" />
-          <Profile name="Jackson Moura" email="jackson@email.com" />
+          <Profile
+            name={
+              developerWithDetails.userName.charAt(0).toUpperCase() +
+              developerWithDetails.userName.slice(1)
+            }
+            occupation_area={
+              developerWithDetails.occupation_area.charAt(0).toUpperCase() +
+              developerWithDetails.occupation_area.slice(1)
+            }
+            avatarUrl={
+              developerWithDetails.avatarUrl
+                ? `${process.env.URL_DOMAIN}/${developerWithDetails.avatarUrl}`
+                : undefined
+            }
+          />
         </div>
       </CollapsibleContent>
     </Collapsible>

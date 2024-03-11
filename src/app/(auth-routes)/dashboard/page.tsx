@@ -25,7 +25,7 @@ export default function Dashboard() {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['developers'],
+    queryKey: ['getDevelopers'],
     queryFn: getDevelopers,
   })
 
@@ -43,6 +43,7 @@ export default function Dashboard() {
   }
 
   const { developersWithTechs } = developers
+  console.log(developersWithTechs)
 
   return (
     <div className="flex w-full flex-col gap-5">

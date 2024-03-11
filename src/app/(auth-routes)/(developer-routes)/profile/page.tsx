@@ -5,7 +5,7 @@ import { SkeletonJobs } from '@/app/components/SkeletonJobs'
 import { Tech } from '@/app/components/UserCard/Tech'
 import { getDeveloperDetails } from '@/data/developers'
 import { useQuery } from '@tanstack/react-query'
-import { Banknote, Wallet } from 'lucide-react'
+import { Banknote, User, Wallet } from 'lucide-react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
@@ -19,12 +19,14 @@ export default function Profile({ name }: DevelopeDetailsProps) {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['developers'],
+    queryKey: ['getDeveloper'],
     queryFn: getDeveloperDetails,
   })
 
   if (isLoading) {
-    return <SkeletonJobs />
+    return (
+      <div className="m-auto flex h-full max-w-5xl flex-col gap-3 rounded-md bg-violet-100 px-5 py-5 lg:gap-8 lg:px-10" />
+    )
   }
 
   if (isError) {
@@ -48,17 +50,21 @@ export default function Profile({ name }: DevelopeDetailsProps) {
   return (
     <div className="m-auto flex h-full max-w-5xl flex-col gap-3 rounded-md bg-violet-100 px-5 py-5 lg:gap-8 lg:px-10">
       <div className="flex max-h-20 flex-1 md:max-h-44">
-        <Image
-          alt="imagem de perfil"
-          src="https://github.com/jmoura-dev.png"
-          className="m-auto h-16 w-16 rounded-full md:h-20 md:w-20 lg:h-32 lg:w-32"
-          width={500}
-          height={500}
-          priority
-        />
+        {!developerWithDetails.avatarUrl ? (
+          <Image
+            alt="imagem de perfil"
+            src={`${process.env.URL_DOMAIN}/${developerWithDetails.avatarUrl}`}
+            className="m-auto h-16 w-16 rounded-full md:h-20 md:w-20 lg:h-32 lg:w-32"
+            width={500}
+            height={500}
+            priority
+          />
+        ) : (
+          <User className="m-auto h-14 w-14 rounded-full bg-violet-300 p-1 text-zinc-800 md:h-16 md:w-16 lg:h-28 lg:w-28" />
+        )}
       </div>
       <div className="flex flex-col items-center justify-start">
-        <h2 className="max-w-72 truncate font-mirza text-2xl font-semibold text-zinc-800 lg:max-w-full lg:text-3xl">
+        <h2 className="max-w-60 truncate font-mirza text-2xl font-semibold text-zinc-800 md:max-w-72 lg:max-w-full lg:text-3xl">
           {nameWithFirstLetterCapitalized}
         </h2>
         <span className="text-sm font-bold text-zinc-700 lg:text-base">
