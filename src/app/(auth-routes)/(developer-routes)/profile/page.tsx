@@ -9,11 +9,7 @@ import { Banknote, User, Wallet } from 'lucide-react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
-export interface DevelopeDetailsProps {
-  name: string
-}
-
-export default function Profile({ name }: DevelopeDetailsProps) {
+export default function Profile() {
   const {
     data: developer,
     isLoading,
@@ -24,9 +20,7 @@ export default function Profile({ name }: DevelopeDetailsProps) {
   })
 
   if (isLoading) {
-    return (
-      <div className="m-auto flex h-full max-w-5xl flex-col gap-3 rounded-md bg-violet-100 px-5 py-5 lg:gap-8 lg:px-10" />
-    )
+    return <SkeletonJobs />
   }
 
   if (isError) {
@@ -50,7 +44,7 @@ export default function Profile({ name }: DevelopeDetailsProps) {
   return (
     <div className="m-auto flex h-full max-w-5xl flex-col gap-3 rounded-md bg-violet-100 px-5 py-5 lg:gap-8 lg:px-10">
       <div className="flex max-h-20 flex-1 md:max-h-44">
-        {!developerWithDetails.avatarUrl ? (
+        {developerWithDetails.avatarUrl ? (
           <Image
             alt="imagem de perfil"
             src={`${process.env.URL_DOMAIN}/${developerWithDetails.avatarUrl}`}
@@ -109,6 +103,7 @@ export default function Profile({ name }: DevelopeDetailsProps) {
       <div className="m-auto flex w-full items-end lg:mr-0 lg:max-w-48 lg:items-end">
         <DialogDeveloperDetails
           userName={developerWithDetails.userName}
+          avatarUrl={developerWithDetails.avatarUrl}
           occupation_area={developerWithDetails.occupation_area}
           available_for_contract={developerWithDetails.available_for_contract}
           about={developerWithDetails.about}

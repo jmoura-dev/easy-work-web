@@ -4,18 +4,22 @@ import { User } from 'lucide-react'
 import { useFileInput } from './Root'
 import { useMemo } from 'react'
 
-export function ImagePreview() {
+interface ImagePreviewProps {
+  initialImageUrl?: string
+}
+
+export function ImagePreview({ initialImageUrl }: ImagePreviewProps) {
   const { file } = useFileInput()
 
   const previewURL = useMemo(() => {
     if (!file) {
-      return null
+      return initialImageUrl
     }
 
     return URL.createObjectURL(file)
-  }, [file])
+  }, [file, initialImageUrl])
 
-  if (previewURL === null) {
+  if (!initialImageUrl && !file) {
     return (
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-violet-50 dark:bg-violet-500/10">
         <User className="h-8 w-8 text-violet-500 dark:text-violet-300" />

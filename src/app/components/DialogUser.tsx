@@ -13,6 +13,7 @@ import { Wallet } from 'lucide-react'
 
 interface DialogUserProps {
   name: string
+  avatarUrl?: string
   about: string
   price_per_hour: number
   occupation_area: string
@@ -25,6 +26,7 @@ interface DialogUserProps {
 
 export function DialogUser({
   name,
+  avatarUrl,
   about,
   price_per_hour,
   occupation_area,
@@ -46,6 +48,7 @@ export function DialogUser({
         >
           <Card
             name={name}
+            avatarUrl={avatarUrl}
             techs={techs}
             available_for_contract={available_for_contract}
             occupation_area={occupation_area}

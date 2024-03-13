@@ -20,6 +20,7 @@ const registerDeveloperSchema = z.object({
   password: z
     .string()
     .min(6, { message: 'Digite no mínimo 6 caracteres para senha.' }),
+  avatar: z.custom((value) => value instanceof FileList),
   about: z.string().optional(),
   price_per_hour: z.coerce
     .number()
@@ -50,12 +51,14 @@ export default function RegisterDeveloper() {
       password: data.password,
       about: data.about,
     }
+
     const response = await api.post('/users', dataUser)
+    const userId = response.data.userId
 
     const isAvailableForContract = data.available_for_contract === 'true'
 
     const dataDeveloper = {
-      userId: response.data.userId,
+      userId,
       available_for_contract: isAvailableForContract,
       occupation_area: data.occupation_area,
       price_per_hour: data.price_per_hour,

@@ -11,6 +11,7 @@ import { FormChangeProfile } from './FormChangeProfile'
 
 interface DialogDeveloperDetailsProps {
   userName: string
+  avatarUrl: string | null
   about: string
   available_for_contract: boolean
   occupation_area: string
@@ -23,6 +24,7 @@ interface DialogDeveloperDetailsProps {
 
 export function DialogDeveloperDetails({
   userName,
+  avatarUrl,
   about,
   available_for_contract,
   occupation_area,
@@ -62,6 +64,7 @@ export function DialogDeveloperDetails({
         </DialogHeader>
         <FormChangeProfile
           userName={nameWithFirstLetterCapitalized}
+          avatarUrl={avatarUrl}
           about={about}
           price_per_hour={price_per_hour}
           available_for_contract={available_for_contract}

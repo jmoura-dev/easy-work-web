@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 interface CardProps {
   name: string
-  avatar_url?: string
+  avatarUrl?: string
   price_per_hour?: number
   occupation_area: string
   available_for_contract: boolean
@@ -16,7 +16,7 @@ interface CardProps {
 
 export function Card({
   name,
-  avatar_url,
+  avatarUrl,
   price_per_hour,
   occupation_area,
   available_for_contract,
@@ -29,9 +29,11 @@ export function Card({
       className="flex h-full transform flex-col gap-3 transition-transform duration-200 md:p-3 lg:p-4 lg:hover:scale-95"
     >
       <div className="mb-2 flex items-start justify-center gap-4">
-        {avatar_url ? (
+        {avatarUrl ? (
           <Image
-            src={avatar_url}
+            src={avatarUrl}
+            width={200}
+            height={200}
             alt=""
             className="h-10 w-10 rounded-full text-zinc-800 md:h-12 md:w-12 lg:h-14 lg:w-14"
           />

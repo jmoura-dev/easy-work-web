@@ -2,17 +2,16 @@
 
 import {
   AlignJustify,
-  Bell,
-  Briefcase,
   Computer,
   Home,
-  Settings,
+  Plus,
+  Search,
   User,
   WalletCards,
   X,
 } from 'lucide-react'
-import { NavItem } from './NavItem'
-import { Profile } from './Profile'
+import { NavItem } from './SidebarDeveloper/NavItem'
+import { Profile } from './SidebarDeveloper/Profile'
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -22,23 +21,14 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getDeveloperDetails } from '@/data/developers'
 import { redirect } from 'next/navigation'
-import { SkeletonJobs } from '../SkeletonJobs'
 
-export function Sidebar() {
+export function SidebarCompany() {
   const [isOpen, setIsOpen] = useState(true)
 
-  const {
-    data: developer,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: developer, isError } = useQuery({
     queryKey: ['getDeveloper'],
     queryFn: getDeveloperDetails,
   })
-
-  if (isLoading) {
-    return <SkeletonJobs />
-  }
 
   if (isError) {
     alert('Erro ao carregar perfil')
@@ -88,22 +78,15 @@ export function Sidebar() {
         className="flex flex-1 animate-slideDownAndFade flex-col data-[state=closed]:hidden lg:data-[state=closed]:flex"
       >
         <nav className="flex flex-col">
-          <h2 className="mb-6 ml-3 mt-5 w-14 border-b border-zinc-500 text-lg font-bold text-zinc-600">
-            Menu
-          </h2>
+          <div className="mb-6 ml-3 mt-5 w-14 text-lg font-bold text-zinc-600 lg:mb-2" />
           <NavItem href="/" icon={Home} title="Início" />
-          <NavItem href="/jobs" icon={Briefcase} title="Vagas" />
-          <NavItem
-            href="/candidatures"
-            icon={WalletCards}
-            title="Minhas candidaturas"
-          />
-          <NavItem href="/notifications" icon={Bell} title="Notificações" />
+          <NavItem href="/developers" icon={Search} title="Buscar talento" />
+          <NavItem href="/jobs" icon={WalletCards} title="Minhas vagas" />
           <NavItem href="/profile" icon={User} title="Perfil" />
         </nav>
 
         <div className="mt-auto flex flex-col">
-          <NavItem href="/" icon={Settings} title="Configurações" />
+          <NavItem href="/newJob" icon={Plus} title="Criar nova vaga" />
           <Profile
             name={
               developerWithDetails.userName.charAt(0).toUpperCase() +

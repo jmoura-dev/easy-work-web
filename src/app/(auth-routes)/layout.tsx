@@ -1,7 +1,8 @@
 import { getServerSession } from 'next-auth'
 import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
 import { redirect } from 'next/navigation'
-import { Sidebar } from '@/app/components/Sidebar'
+import { SidebarDeveloper } from '@/app/components/SidebarDeveloper'
+import { SidebarCompany } from '../components/SidebarCompany'
 
 export default async function DashboardLayoutProps({
   children,
@@ -14,9 +15,15 @@ export default async function DashboardLayoutProps({
     redirect('/')
   }
 
+  let isDeveloper = false
+
+  if (session.user.developerId) {
+    isDeveloper = true
+  }
+
   return (
     <div className="grid min-h-screen grid-rows-body bg-violet-50 lg:grid-cols-body">
-      <Sidebar />
+      {isDeveloper ? <SidebarDeveloper /> : <SidebarCompany />}
       <main className="row-start-2 min-h-screen overflow-x-hidden bg-violet-50 px-4 pb-12 pt-6 lg:col-start-2 lg:row-start-1">
         {children}
       </main>

@@ -14,6 +14,7 @@ import { uploadAvatar } from '@/data/avatar'
 
 export interface FormChangeProfileProps {
   userName: string
+  avatarUrl: string | null
   about: string
   available_for_contract: boolean
   occupation_area: string
@@ -25,28 +26,29 @@ export interface FormChangeProfileProps {
 }
 
 const registerDeveloperSchema = z.object({
-  // name: z.string().optional(),
-  // oldPassword: z.string().optional(),
-  // newPassword: z.string().optional(),
+  name: z.string().optional(),
+  oldPassword: z.string().optional(),
+  newPassword: z.string().optional(),
   avatar: z.custom((value) => value instanceof FileList),
-  // about: z.string().optional(),
-  // price_per_hour: z.coerce
-  //   .number()
-  //   .max(100, { message: 'Valor máximo de R$ 100,00' })
-  //   .optional(),
-  // occupation_area: z.string().optional(),
-  // available_for_contract: z.string().optional(),
-  // techs: z.array(
-  //   z.object({
-  //     name: z.string(),
-  //   }),
-  // ),
+  about: z.string().optional(),
+  price_per_hour: z.coerce
+    .number()
+    .max(100, { message: 'Valor máximo de R$ 100,00' })
+    .optional(),
+  occupation_area: z.string().optional(),
+  available_for_contract: z.string().optional(),
+  techs: z.array(
+    z.object({
+      name: z.string(),
+    }),
+  ),
 })
 
 type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
 
 export function FormChangeProfile({
   userName,
+  avatarUrl,
   about,
   occupation_area,
   available_for_contract,
@@ -58,7 +60,6 @@ export function FormChangeProfile({
   })
 
   async function handleUploadAvatar(data: RegisterDeveloperSchema) {
-    console.log(data.avatar[0], 'test')
     try {
       await uploadAvatarFn({ image: data.avatar[0] })
       alert('Sucesso ao fazer upload da imagem')
@@ -79,9 +80,9 @@ export function FormChangeProfile({
     control,
   } = useForm<RegisterDeveloperSchema>({
     resolver: zodResolver(registerDeveloperSchema),
-    // defaultValues: {
-    //   techs: arrayTechNames,
-    // },
+    defaultValues: {
+      techs: arrayTechNames,
+    },
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -89,17 +90,17 @@ export function FormChangeProfile({
     name: 'techs',
   })
 
-  // const lastTechName = useWatch({
-  //   control,
-  //   name: `techs.${fields.length - 1}.name`,
-  // })
+  const lastTechName = useWatch({
+    control,
+    name: `techs.${fields.length - 1}.name`,
+  })
 
-  // async function handleChangeProfile(data: RegisterDeveloperSchema) {
-  //   console.log({
-  //     ...data,
-  //     avatar: data.avatar[0],
-  //   })
-  // }
+  async function handleChangeProfile(data: RegisterDeveloperSchema) {
+    console.log({
+      ...data,
+      avatar: data.avatar[0],
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit(handleUploadAvatar)}>
@@ -111,18 +112,17 @@ export function FormChangeProfile({
           Sua foto
         </label>
         <FileInput.Root className="flex flex-col gap-5 lg:flex-row lg:items-start">
-          <FileInput.ImagePreview />
+          <FileInput.ImagePreview
+            initialImageUrl={
+              avatarUrl ? `${process.env.URL_DOMAIN}/${avatarUrl}` : undefined
+            }
+          />
           <FileInput.Trigger />
           <FileInput.Control {...register('avatar')} />
         </FileInput.Root>
       </div>
 
-      <img
-        src={`${process.env.URL_DOMAIN}/a3a655b7-38e3-46d6-a169-d4923908a297-developers.jpg`}
-        alt=""
-      />
-
-      {/* <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2 ">
         <label className="text-sm font-medium text-zinc-700" htmlFor="name">
           Nome
         </label>
@@ -293,7 +293,6 @@ export function FormChangeProfile({
         <button
           type="button"
           onClick={() => {
-            console.log(lastTechName)
             if (lastTechName.trim() !== '') {
               append({ name: '' })
             }
@@ -304,7 +303,7 @@ export function FormChangeProfile({
           Nova habilidade
           <Plus width={18} height={18} />
         </button>
-      </div> */}
+      </div>
 
       <button
         type="submit"

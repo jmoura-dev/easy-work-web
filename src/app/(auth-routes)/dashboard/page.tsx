@@ -43,7 +43,6 @@ export default function Dashboard() {
   }
 
   const { developersWithTechs } = developers
-  console.log(developersWithTechs)
 
   return (
     <div className="flex w-full flex-col gap-5">
@@ -93,6 +92,11 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      avatarUrl={
+                        developer.avatarUrl
+                          ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
+                          : undefined
+                      }
                       about={developer.about}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}
