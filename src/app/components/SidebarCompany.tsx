@@ -80,8 +80,12 @@ export function SidebarCompany() {
         <nav className="flex flex-col">
           <div className="mb-6 ml-3 mt-5 w-14 text-lg font-bold text-zinc-600 lg:mb-2" />
           <NavItem href="/" icon={Home} title="Início" />
-          <NavItem href="/developers" icon={Search} title="Buscar talento" />
-          <NavItem href="/jobs" icon={WalletCards} title="Minhas vagas" />
+          <NavItem
+            href="/find-developer"
+            icon={Search}
+            title="Buscar talento"
+          />
+          <NavItem href="/my-jobs" icon={WalletCards} title="Minhas vagas" />
           <NavItem href="/profile" icon={User} title="Perfil" />
         </nav>
 

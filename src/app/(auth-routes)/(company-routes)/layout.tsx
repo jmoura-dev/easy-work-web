@@ -13,9 +13,9 @@ export default async function CompanyLayoutProps({
     redirect('/')
   }
 
-  if (session && !session.user.companyId) {
-    redirect('/dashboard')
-  }
+  // if (session && !session.user.companyId) {
+  //   redirect('/dashboard')
+  // }
 
   return <>{children}</>
 }
