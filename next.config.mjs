@@ -4,12 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'github.com',
+        hostname: 'pub-68dc3f8180aa4075afc2795966a9c582.r2.dev',
         port: '',
-        pathname: '/jmoura-dev.png',
+        pathname: '/**',
       },
     ],
-    domains: ['pub-68dc3f8180aa4075afc2795966a9c582.r2.dev'],
   },
   env: {
     URL_DOMAIN: process.env.URL_DOMAIN,

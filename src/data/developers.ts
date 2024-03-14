@@ -2,7 +2,7 @@ import { api } from '@/app/api/axios'
 import { getSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 
-interface DevelopersProps {
+export interface DevelopersProps {
   developersWithTechs: {
     developerId: string
     avatarUrl: string | null
@@ -20,6 +20,35 @@ interface DevelopersProps {
 
 export async function getDevelopers(): Promise<DevelopersProps> {
   const response = await api.get('/developers/list')
+
+  return response.data
+}
+
+interface DevelopersFiltersProps {
+  name?: string
+  page: number
+  occupation_area?: string
+  techs: {
+    name: string
+  }[]
+}
+
+export async function searchDevelopersByFilters({
+  name,
+  occupation_area,
+  techs,
+  page,
+}: DevelopersFiltersProps): Promise<DevelopersProps> {
+  const techNames = techs.map((tech) => tech.name)
+
+  const params = new URLSearchParams({
+    page: String(page),
+    name: name || '',
+    occupation_area: occupation_area || '',
+    techs: techNames.join(','),
+  })
+
+  const response = await api.get(`/developers/list?${params}`)
 
   return response.data
 }

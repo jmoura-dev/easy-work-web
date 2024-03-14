@@ -32,6 +32,7 @@ export function DialogUser({
   occupation_area,
   available_for_contract,
   techs,
+  ...props
 }: DialogUserProps) {
   const socials = {
     linkedIn: 'https://www.linkedin.com/in/jackson-moura-a43350246/',
@@ -44,7 +45,7 @@ export function DialogUser({
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="h-full w-full bg-violet-200 hover:bg-violet-200"
+          className="h-52 w-full min-w-52 max-w-56 bg-violet-200 hover:bg-violet-200 md:max-w-72 md:p-3 lg:h-64 lg:p-4"
         >
           <Card
             name={name}
@@ -53,6 +54,7 @@ export function DialogUser({
             available_for_contract={available_for_contract}
             occupation_area={occupation_area}
             price_per_hour={price_per_hour}
+            {...props}
           />
         </Button>
       </DialogTrigger>

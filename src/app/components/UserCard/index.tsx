@@ -26,7 +26,7 @@ export function Card({
   return (
     <div
       {...props}
-      className="flex h-full transform flex-col gap-3 transition-transform duration-200 md:p-3 lg:p-4 lg:hover:scale-95"
+      className="flex h-full transform flex-col gap-3 transition-transform duration-200 lg:hover:scale-95"
     >
       <div className="mb-2 flex items-start justify-center gap-4">
         {avatarUrl ? (
