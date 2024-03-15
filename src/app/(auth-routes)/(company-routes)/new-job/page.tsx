@@ -1,3 +1,3 @@
-export function NewJob() {
+export default function NewJob() {
   return <div>New job page</div>
 }

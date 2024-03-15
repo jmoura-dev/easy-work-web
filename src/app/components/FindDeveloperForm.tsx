@@ -2,7 +2,7 @@
 
 import * as Input from '@/app/components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { Select } from './Select'
@@ -10,9 +10,10 @@ import { SelectItem } from './Select/SelectItem'
 import { Trash2 } from 'lucide-react'
 import { DialogUser } from './DialogUser'
 import { searchDevelopersByFilters } from '@/data/developers'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { redirect } from 'next/navigation'
 import { SkeletonDashboard } from './SkeletonDashboard'
+import { getTechnologies } from '@/data/technologies'
 
 interface DevelopersProps {
   developerId: string
@@ -46,21 +47,21 @@ export function FindDeveloperForm() {
   const [developers, setDevelopers] = useState<DevelopersProps[]>([])
 
   const {
+    data: allTechnologies,
+    isError: isErrorTechnology,
+    isLoading,
+  } = useQuery({
+    queryKey: ['getTechnologies'],
+    queryFn: getTechnologies,
+  })
+
+  const {
     mutateAsync: searchDevelopersFn,
     isPending,
     isError,
   } = useMutation({
     mutationFn: searchDevelopersByFilters,
   })
-
-  const techsToTest = [
-    { name: 'Typescript', id: 1 },
-    { name: 'Docker', id: 2 },
-    { name: 'Spring Boot', id: 3 },
-    { name: 'Spring Boot', id: 4 },
-    { name: 'Spring Boot', id: 5 },
-    { name: 'Spring Boot', id: 6 },
-  ]
 
   const handleFocus = () => {
     setIsFocused(true)
@@ -71,15 +72,6 @@ export function FindDeveloperForm() {
       setIsFocused(false)
     }, 100)
   }
-
-  const filteredTechs = useMemo(() => {
-    if (!techInputValue) {
-      return techsToTest
-    }
-    return techsToTest.filter((tech) =>
-      tech.name.toLowerCase().includes(techInputValue.toLowerCase()),
-    )
-  }, [techInputValue, techsToTest])
 
   const { register, handleSubmit, control } = useForm<SearchDeveloperSchema>({
     resolver: zodResolver(searchDeveloperSchema),
@@ -96,6 +88,25 @@ export function FindDeveloperForm() {
     defaultValue: [],
   })
 
+  if (isLoading) {
+    return <SkeletonDashboard />
+  }
+
+  if (isErrorTechnology) {
+    alert('Faça login para continuar navegando')
+    return redirect('/signIn')
+  }
+
+  if (!allTechnologies) {
+    return null
+  }
+
+  const technologies = allTechnologies.technologies
+
+  const filteredTechnologies = technologies.filter((item) =>
+    item.name.toLowerCase().includes(techInputValue.toLowerCase()),
+  )
+
   function handleTechClick(techName: string) {
     const doesTechnologyAlreadyAdded = technologiesAlreadyAdded.find(
       (tech) => tech.name === techName,
@@ -109,9 +120,11 @@ export function FindDeveloperForm() {
   }
 
   async function handleSearchDevelopers(data: SearchDeveloperSchema) {
-    console.log(data)
-
     try {
+      if (data.occupation_area === 'any') {
+        data.occupation_area = ''
+      }
+
       const response = await searchDevelopersFn({
         name: data.name,
         occupation_area: data.occupation_area,
@@ -174,6 +187,7 @@ export function FindDeveloperForm() {
                   <SelectItem text="FullStack" value="fullstack" />
                   <SelectItem text="Front-end" value="frontend" />
                   <SelectItem text="Back-end" value="backend" />
+                  <SelectItem text="Qualquer" value="any" />
                 </Select>
               )}
             />
@@ -197,7 +211,7 @@ export function FindDeveloperForm() {
             />
             {isFocused && (
               <div className="absolute z-10 flex max-h-36 w-full flex-col gap-1 divide-y divide-zinc-100 overflow-y-auto rounded-bl-md rounded-br-md bg-zinc-300 py-1">
-                {filteredTechs.map((item) => (
+                {filteredTechnologies.map((item) => (
                   <button
                     key={item.id}
                     type="button"
@@ -207,7 +221,7 @@ export function FindDeveloperForm() {
                     {item.name}
                   </button>
                 ))}
-                {filteredTechs.length === 0 && (
+                {filteredTechnologies.length === 0 && (
                   <p className="m-auto p-1 text-sm font-semibold text-violet-600">
                     Habilidade não encontrada
                   </p>
