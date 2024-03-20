@@ -19,7 +19,7 @@ export default async function DashboardLayoutProps({
 
   return (
     <div className="grid min-h-screen grid-rows-body bg-violet-50 lg:grid-cols-body">
-      {role !== 'developer' ? <SidebarDeveloper /> : <SidebarCompany />}
+      {role === 'developer' ? <SidebarDeveloper /> : <SidebarCompany />}
       <main className="row-start-2 min-h-screen overflow-x-hidden bg-violet-50 px-4 pb-12 pt-6 lg:col-start-2 lg:row-start-1">
         {children}
       </main>

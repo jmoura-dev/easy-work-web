@@ -4,11 +4,11 @@ import Image from 'next/image'
 
 export interface ProfileProps {
   name: string
-  occupation_area: string
   avatarUrl?: string
+  role: string
 }
 
-export function Profile({ name, occupation_area, avatarUrl }: ProfileProps) {
+export function Profile({ name, role, avatarUrl }: ProfileProps) {
   return (
     <div className="mt-4 flex items-center gap-3 border-t border-zinc-300 pb-1 pt-6">
       {avatarUrl ? (
@@ -27,7 +27,7 @@ export function Profile({ name, occupation_area, avatarUrl }: ProfileProps) {
       <div className="flex flex-1 flex-col truncate">
         <span className="truncate font-semibold text-zinc-800">{name}</span>
         <span className="truncate text-sm font-semibold text-zinc-600">
-          {occupation_area}
+          {role}
         </span>
       </div>
       <ButtonLogout />

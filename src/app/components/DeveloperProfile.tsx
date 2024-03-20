@@ -1,15 +1,15 @@
 'use client'
 
-import { DialogDeveloperDetails } from '@/app/components/DialogDeveloperDetails'
-import { SkeletonJobs } from '@/app/components/SkeletonJobs'
-import { Tech } from '@/app/components/UserCard/Tech'
 import { getDeveloperDetails } from '@/data/developers'
 import { useQuery } from '@tanstack/react-query'
-import { Banknote, User, Wallet } from 'lucide-react'
-import Image from 'next/image'
+import { SkeletonJobs } from './SkeletonJobs'
 import { redirect } from 'next/navigation'
+import Image from 'next/image'
+import { Banknote, User, Wallet } from 'lucide-react'
+import { Tech } from './UserCard/Tech'
+import { DialogDeveloperDetails } from './DialogDeveloperDetails'
 
-export default function Profile() {
+export function DeveloperProfile() {
   const {
     data: developer,
     isLoading,

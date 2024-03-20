@@ -19,15 +19,15 @@ import {
 } from '@/app/components/ui/collapsible'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getDeveloperDetails } from '@/data/developers'
 import { redirect } from 'next/navigation'
+import { getCompanyDetails } from '@/data/companies'
 
 export function SidebarCompany() {
   const [isOpen, setIsOpen] = useState(true)
 
-  const { data: developer, isError } = useQuery({
-    queryKey: ['getDeveloper'],
-    queryFn: getDeveloperDetails,
+  const { data: company, isError } = useQuery({
+    queryKey: ['getCompany'],
+    queryFn: getCompanyDetails,
   })
 
   if (isError) {
@@ -35,11 +35,11 @@ export function SidebarCompany() {
     return redirect('/signIn')
   }
 
-  if (!developer) {
+  if (!company) {
     return null
   }
 
-  const { developerWithDetails } = developer
+  const { companyWithDetails } = company
 
   function toggle() {
     if (isOpen) {
@@ -93,16 +93,13 @@ export function SidebarCompany() {
           <NavItem href="/newJob" icon={Plus} title="Criar nova vaga" />
           <Profile
             name={
-              developerWithDetails.userName.charAt(0).toUpperCase() +
-              developerWithDetails.userName.slice(1)
+              companyWithDetails.userName.charAt(0).toUpperCase() +
+              companyWithDetails.userName.slice(1)
             }
-            occupation_area={
-              developerWithDetails.occupation_area.charAt(0).toUpperCase() +
-              developerWithDetails.occupation_area.slice(1)
-            }
+            role="Empresa"
             avatarUrl={
-              developerWithDetails.avatarUrl
-                ? `${process.env.URL_DOMAIN}/${developerWithDetails.avatarUrl}`
+              companyWithDetails.avatarUrl
+                ? `${process.env.URL_DOMAIN}/${companyWithDetails.avatarUrl}`
                 : undefined
             }
           />

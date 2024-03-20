@@ -33,3 +33,24 @@ export async function getJobs(page: number): Promise<GetJobsPropsResponse> {
 
   return response.data
 }
+
+export async function getJobsByCompany(): Promise<GetJobsPropsResponse> {
+  const session = await getSession()
+  const page = 1
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const userId = session.user.userId
+
+  const token = session.user.access_token
+
+  const response = await api.get(`/jobs/${userId}?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}

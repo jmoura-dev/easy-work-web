@@ -96,10 +96,7 @@ export function SidebarDeveloper() {
               developerWithDetails.userName.charAt(0).toUpperCase() +
               developerWithDetails.userName.slice(1)
             }
-            occupation_area={
-              developerWithDetails.occupation_area.charAt(0).toUpperCase() +
-              developerWithDetails.occupation_area.slice(1)
-            }
+            role="Desenvolvedor"
             avatarUrl={
               developerWithDetails.avatarUrl
                 ? `${process.env.URL_DOMAIN}/${developerWithDetails.avatarUrl}`

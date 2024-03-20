@@ -76,6 +76,10 @@ export async function getDeveloperDetails(): Promise<DeveloperDetailsProps> {
     redirect('/signIn')
   }
 
+  if (!session.user.developerId) {
+    location.reload()
+  }
+
   const token = session.user.access_token
   const userId = session.user.userId
 
