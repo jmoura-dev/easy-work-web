@@ -7,7 +7,7 @@ import * as Input from '@/app/components/Input'
 import * as FileInput from '@/app/components/FileInput'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
-import { Textarea } from './Textarea'
+import { Textarea } from '../Textarea'
 import { LockKeyhole, Plus, X } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { uploadAvatar } from '@/data/avatar'
@@ -25,7 +25,9 @@ export interface FormChangeProfileProps {
   }[]
 }
 
-const registerDeveloperSchema = z.object({
+// Falta atualizar
+
+const updateDeveloperSchema = z.object({
   name: z.string().optional(),
   oldPassword: z.string().optional(),
   newPassword: z.string().optional(),
@@ -44,7 +46,7 @@ const registerDeveloperSchema = z.object({
   ),
 })
 
-type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
+type UpdateDeveloperSchema = z.infer<typeof updateDeveloperSchema>
 
 export function FormChangeProfile({
   userName,
@@ -59,7 +61,7 @@ export function FormChangeProfile({
     mutationFn: uploadAvatar,
   })
 
-  async function handleUploadAvatar(data: RegisterDeveloperSchema) {
+  async function handleUploadAvatar(data: UpdateDeveloperSchema) {
     try {
       await uploadAvatarFn({ image: data.avatar[0] })
       alert('Sucesso ao fazer upload da imagem')
@@ -78,8 +80,8 @@ export function FormChangeProfile({
     handleSubmit,
     formState: { errors, isSubmitting },
     control,
-  } = useForm<RegisterDeveloperSchema>({
-    resolver: zodResolver(registerDeveloperSchema),
+  } = useForm<UpdateDeveloperSchema>({
+    resolver: zodResolver(updateDeveloperSchema),
     defaultValues: {
       techs: arrayTechNames,
     },
@@ -95,7 +97,7 @@ export function FormChangeProfile({
     name: `techs.${fields.length - 1}.name`,
   })
 
-  async function handleChangeProfile(data: RegisterDeveloperSchema) {
+  async function handleChangeProfile(data: UpdateDeveloperSchema) {
     console.log({
       ...data,
       avatar: data.avatar[0],

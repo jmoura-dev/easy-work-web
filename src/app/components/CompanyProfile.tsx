@@ -1,11 +1,13 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { User, Wallet, Banknote } from 'lucide-react'
+import { User, MapPin, Link as LinkLucide } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { SkeletonJobs } from './SkeletonJobs'
 import { getCompanyDetails } from '@/data/companies'
 import Image from 'next/image'
+import Link from 'next/link'
+import { DialogCompanyDetails } from './DialogCompanyDetails'
 
 export function CompanyProfile() {
   const {
@@ -52,30 +54,48 @@ export function CompanyProfile() {
           <User className="m-auto h-14 w-14 rounded-full bg-violet-300 p-1 text-zinc-800 md:h-16 md:w-16 lg:h-28 lg:w-28" />
         )}
       </div>
-      <div className="flex flex-col items-center justify-start">
-        <h2 className="max-w-60 truncate font-mirza text-2xl font-semibold text-zinc-800 md:max-w-72 lg:max-w-full lg:text-3xl">
-          {nameWithFirstLetterCapitalized}
-        </h2>
-        <span className="text-sm font-bold text-zinc-700 lg:text-base">
-          {companyWithDetails.state}
-        </span>
-      </div>
+      <h2 className="max-w-60 truncate text-center font-mirza text-2xl font-semibold text-zinc-800 md:max-w-72 lg:max-w-full lg:text-3xl">
+        {nameWithFirstLetterCapitalized}
+      </h2>
 
-      <div className="my-2 flex justify-between text-sm font-semibold text-zinc-800 lg:text-base">
+      <div className="my-2 flex flex-col gap-2 text-sm font-semibold text-zinc-800 lg:text-base">
         <p className="flex items-center gap-1">
-          <Wallet width={20} />
-          {companyWithDetails.city ? 'Freela/Contrato' : 'Apenas freelancer'}
+          <MapPin className="text-zinc-600" width={20} />
+          {`Estado: ${companyWithDetails.state ? companyWithDetails.state : 'N/Informado'}`}
         </p>
         <p className="flex items-center gap-1">
-          <Banknote width={20} />
-          R$:
-          {companyWithDetails.site_url}
+          <MapPin className="text-zinc-600" width={20} />
+          {`Cidade: ${companyWithDetails.city ? companyWithDetails.city : 'N/Informado'}`}
         </p>
       </div>
 
       <div className="mb-3 mt-2 rounded-md border-b border-violet-400 p-2 text-sm font-semibold text-zinc-700 lg:text-base">
         {companyWithDetails.about}
       </div>
+
+      <div className="m-auto flex border-b border-zinc-600 text-center text-base font-semibold text-violet-800">
+        <Link
+          className="flex gap-1.5"
+          href={
+            companyWithDetails.site_url ? companyWithDetails.site_url : '/error'
+          }
+          target="_blank"
+        >
+          <LinkLucide width={18} />
+          Acesse nosso site oficial
+        </Link>
+      </div>
+
+      <footer className="m-auto flex w-full items-end lg:mr-0 lg:max-w-48 lg:items-end">
+        <DialogCompanyDetails
+          userName={companyWithDetails.userName}
+          avatarUrl={companyWithDetails.avatarUrl}
+          about={companyWithDetails.about}
+          state={companyWithDetails.state ?? undefined}
+          city={companyWithDetails.city ?? undefined}
+          site_url={companyWithDetails.site_url ?? undefined}
+        />
+      </footer>
     </div>
   )
 }
