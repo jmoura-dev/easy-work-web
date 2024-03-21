@@ -8,7 +8,8 @@ import * as FileInput from '@/app/components/FileInput'
 import { Textarea } from '../Textarea'
 import { Link, LockKeyhole, MapPin } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
-import { uploadAvatar } from '@/data/avatar'
+import { updateCompany } from '@/data/companies'
+import { useRouter } from 'next/navigation'
 
 export interface FormChangeProfileProps {
   userName: string
@@ -18,8 +19,6 @@ export interface FormChangeProfileProps {
   city?: string
   site_url?: string
 }
-
-// Falta atualizar
 
 const updateCompanySchema = z.object({
   name: z.string().optional(),
@@ -42,16 +41,18 @@ export function FormChangeCompanyProfile({
   city,
   site_url,
 }: FormChangeProfileProps) {
-  const { mutateAsync: uploadAvatarFn } = useMutation({
-    mutationFn: uploadAvatar,
+  const router = useRouter()
+  const { mutateAsync: updateCompanyFn } = useMutation({
+    mutationFn: updateCompany,
   })
 
-  async function handleUploadAvatar(data: UpdateCompanySchema) {
+  async function handleUpdateCompany(data: UpdateCompanySchema) {
     try {
-      await uploadAvatarFn({ image: data.avatar[0] })
-      alert('Sucesso ao fazer upload da imagem')
+      await updateCompanyFn(data)
+      alert('Sucesso ao atualizar o perfil')
+      router.replace('/dashboard')
     } catch (err) {
-      alert('Erro ao fazer upload da image.')
+      alert('Erro ao atualizar o perfil')
     }
   }
 
@@ -63,15 +64,8 @@ export function FormChangeCompanyProfile({
     resolver: zodResolver(updateCompanySchema),
   })
 
-  async function handleChangeProfile(data: UpdateCompanySchema) {
-    console.log({
-      ...data,
-      avatar: data.avatar[0],
-    })
-  }
-
   return (
-    <form onSubmit={handleSubmit(handleUploadAvatar)}>
+    <form onSubmit={handleSubmit(handleUpdateCompany)}>
       <div className="lg:grid-cols-form mb-4 flex flex-col gap-3 pt-5 lg:grid">
         <label
           htmlFor="photo"

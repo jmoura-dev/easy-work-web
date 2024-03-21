@@ -10,7 +10,8 @@ import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '../Textarea'
 import { LockKeyhole, Plus, X } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
-import { uploadAvatar } from '@/data/avatar'
+import { updateDeveloper } from '@/data/developers'
+import { useRouter } from 'next/navigation'
 
 export interface FormChangeProfileProps {
   userName: string
@@ -24,8 +25,6 @@ export interface FormChangeProfileProps {
     id: string
   }[]
 }
-
-// Falta atualizar
 
 const updateDeveloperSchema = z.object({
   name: z.string().optional(),
@@ -57,16 +56,32 @@ export function FormChangeProfile({
   price_per_hour,
   techs,
 }: FormChangeProfileProps) {
-  const { mutateAsync: uploadAvatarFn } = useMutation({
-    mutationFn: uploadAvatar,
+  const router = useRouter()
+
+  const { mutateAsync: updateDeveloperFn } = useMutation({
+    mutationFn: updateDeveloper,
   })
 
-  async function handleUploadAvatar(data: UpdateDeveloperSchema) {
+  async function handleUpdateDeveloper(data: UpdateDeveloperSchema) {
+    let isAvailable: boolean
+
+    if (data.available_for_contract === 'true') {
+      isAvailable = true
+    } else {
+      isAvailable = false
+    }
+
+    const dataToUpdate = {
+      ...data,
+      available_for_contract: isAvailable,
+    }
+
     try {
-      await uploadAvatarFn({ image: data.avatar[0] })
-      alert('Sucesso ao fazer upload da imagem')
+      await updateDeveloperFn(dataToUpdate)
+      alert('Sucesso ao atualizar o perfil')
+      router.replace('/dashboard')
     } catch (err) {
-      alert('Erro ao fazer upload da image.')
+      alert('Erro ao atualizar o perfil')
     }
   }
 
@@ -97,15 +112,8 @@ export function FormChangeProfile({
     name: `techs.${fields.length - 1}.name`,
   })
 
-  async function handleChangeProfile(data: UpdateDeveloperSchema) {
-    console.log({
-      ...data,
-      avatar: data.avatar[0],
-    })
-  }
-
   return (
-    <form onSubmit={handleSubmit(handleUploadAvatar)}>
+    <form onSubmit={handleSubmit(handleUpdateDeveloper)}>
       <div className="lg:grid-cols-form mb-4 flex flex-col gap-3 pt-5 lg:grid">
         <label
           htmlFor="photo"

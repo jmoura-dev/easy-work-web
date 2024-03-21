@@ -91,3 +91,68 @@ export async function getDeveloperDetails(): Promise<DeveloperDetailsProps> {
 
   return response.data
 }
+
+interface UpdateDeveloperRequest {
+  name?: string
+  avatar?: FileList
+  oldPassword?: string
+  newPassword?: string
+  about?: string
+  price_per_hour?: number
+  occupation_area?: string
+  available_for_contract?: boolean
+}
+
+export async function updateDeveloper({
+  name,
+  avatar,
+  oldPassword,
+  newPassword,
+  about,
+  price_per_hour,
+  occupation_area,
+  available_for_contract,
+}: UpdateDeveloperRequest) {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const token = session.user.access_token
+  const userId = session.user.userId
+  let avatarId
+
+  if (avatar && avatar.length > 0) {
+    const formData = new FormData()
+    formData.append('file', avatar[0])
+
+    const response = await api.post('/avatar', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    avatarId = response.data.avatarId
+  }
+
+  await api.put(
+    `/users/${userId}`,
+    { name, oldPassword, newPassword, avatarId, about },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  await api.put(
+    '/developers/',
+    { price_per_hour, occupation_area, available_for_contract },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+}
