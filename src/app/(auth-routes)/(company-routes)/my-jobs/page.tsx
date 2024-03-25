@@ -1,20 +1,24 @@
 'use client'
 
 import * as Input from '@/app/components/Input'
+import { MyJobCard } from '@/app/components/MyJobCard'
 import { SkeletonJobs } from '@/app/components/SkeletonJobs'
-import { getJobsByCompany } from '@/data/jobs'
+import { getJobsWithCandidaturesAmount } from '@/data/jobs'
 import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { useState } from 'react'
 
 export default function MyJobs() {
+  const [jobFilteredByTitle, setJobFilteredByTitle] = useState<string>('')
+
   const {
     data: jobs,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['getJobs'],
-    queryFn: getJobsByCompany,
+    queryKey: ['getJobsWithCandidaturesAmount'],
+    queryFn: getJobsWithCandidaturesAmount,
   })
 
   if (isLoading) {
@@ -30,11 +34,11 @@ export default function MyJobs() {
     return null
   }
 
-  const { jobs: allJobs } = jobs
+  const { jobsWithCandidaturesAmount: allJobs } = jobs
 
   return (
     <div>
-      <h1 className="text-center font-mirza text-2xl font-semibold text-zinc-800 lg:text-3xl 2xl:text-4xl">
+      <h1 className="mb-10 text-center font-mirza text-2xl font-semibold text-zinc-800 lg:text-3xl 2xl:text-4xl">
         Veja suas vagas por ordem de inscrição
       </h1>
 
@@ -48,12 +52,42 @@ export default function MyJobs() {
         <Input.Control
           type="text"
           placeholder="Encontre sua vaga pelo título"
+          onChange={(e) => setJobFilteredByTitle(e.target.value)}
         />
       </Input.Root>
 
-      {allJobs.map((job) => (
-        <p key={job.id}>Hello</p>
-      ))}
+      <ul className="relative grid gap-4 xl:grid-cols-2">
+        {allJobs.length > 0 &&
+          (() => {
+            let filteredJobs = allJobs
+
+            if (jobFilteredByTitle !== '') {
+              filteredJobs = allJobs.filter((job) =>
+                job.title.includes(jobFilteredByTitle.toLowerCase()),
+              )
+            }
+            if (filteredJobs.length === 0) {
+              return (
+                <p className="absolute m-auto w-full text-center text-lg font-semibold text-violet-600 lg:text-2xl">
+                  Oops... Nenhuma vaga encontrada 😞
+                </p>
+              )
+            }
+            return filteredJobs.map((job) => (
+              <MyJobCard
+                key={job.id}
+                title={job.title}
+                description={job.description}
+                workMode={job.workMode}
+                workSchedule={job.workSchedule}
+                remuneration={job.remuneration}
+                hoursPerWeek={job.hoursPerWeek}
+                candidaturesAmount={job.candidaturesAmount}
+                createdAt={job.created_at}
+              />
+            ))
+          })()}
+      </ul>
     </div>
   )
 }

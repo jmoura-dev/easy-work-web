@@ -54,3 +54,36 @@ export async function getJobsByCompany(): Promise<GetJobsPropsResponse> {
 
   return response.data
 }
+
+interface GetJobsWithCandidaturesAmountPropsResponse {
+  jobsWithCandidaturesAmount: {
+    id: string
+    title: string
+    description: string
+    workMode: string
+    workSchedule: string
+    remuneration: number
+    hoursPerWeek: number
+    created_at: Date
+    candidaturesAmount: number
+  }[]
+}
+
+export async function getJobsWithCandidaturesAmount(): Promise<GetJobsWithCandidaturesAmountPropsResponse> {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const userId = session.user.userId
+  const token = session.user.access_token
+
+  const response = await api.get(`/jobs/${userId}/candidatures/amount`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}

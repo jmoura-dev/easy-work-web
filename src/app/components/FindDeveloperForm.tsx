@@ -120,6 +120,14 @@ export function FindDeveloperForm() {
   }
 
   async function handleSearchDevelopers(data: SearchDeveloperSchema) {
+    if (
+      data.name === '' &&
+      data.occupation_area === '' &&
+      data.techs.length === 0
+    ) {
+      return alert('Preencha ao menos um campo para usar o filtro avançado.')
+    }
+
     try {
       if (data.occupation_area === 'any') {
         data.occupation_area = ''

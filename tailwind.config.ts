@@ -9,6 +9,7 @@ const config: Config = {
       gridTemplateColumns: {
         body: 'minmax(15rem, 20rem) 1fr',
         developer: '70% 30%',
+        jobCard: '70% 30%',
         client: '30% 70%',
         signIn: '40% 60%',
       },

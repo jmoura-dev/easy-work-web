@@ -82,7 +82,7 @@ export function CompanyProfile() {
           target="_blank"
         >
           <LinkLucide width={18} />
-          Acesse nosso site oficial
+          Site oficial
         </Link>
       </div>
 
