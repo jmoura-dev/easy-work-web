@@ -92,6 +92,26 @@ export async function getDeveloperDetails(): Promise<DeveloperDetailsProps> {
   return response.data
 }
 
+export async function getDeveloperByUserId(
+  userId: string,
+): Promise<DeveloperDetailsProps> {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const token = session.user.access_token
+
+  const response = await api.get(`/developers/${userId}/details`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
 interface UpdateDeveloperRequest {
   name?: string
   avatar?: FileList

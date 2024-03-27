@@ -84,6 +84,7 @@ export default function MyJobs() {
                 hoursPerWeek={job.hoursPerWeek}
                 candidaturesAmount={job.candidaturesAmount}
                 createdAt={job.created_at}
+                candidatures={job.candidatures}
               />
             ))
           })()}

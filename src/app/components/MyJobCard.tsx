@@ -1,6 +1,7 @@
 import { formatDistanceToNow } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 import { Banknote, Clock9, Hourglass, Laptop } from 'lucide-react'
+import { DialogMyJobs } from './DialogMyJobs'
 
 export interface CandidatureCardProps {
   title: string
@@ -11,17 +12,23 @@ export interface CandidatureCardProps {
   hoursPerWeek: number
   createdAt: Date
   candidaturesAmount: number
+  candidatures: {
+    userId: string
+    userName: string
+    occupation_area: string
+  }[]
 }
 
 export function MyJobCard({
   title,
   description,
-  createdAt,
   workMode,
   workSchedule,
   remuneration,
   hoursPerWeek,
+  createdAt,
   candidaturesAmount,
+  candidatures,
 }: CandidatureCardProps) {
   const createdAtFormatted = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
@@ -44,7 +51,7 @@ export function MyJobCard({
         </h2>
       </div>
 
-      <div className="grid-cols-jobCard grid w-full px-2">
+      <div className="grid w-full grid-cols-jobCard px-2 md:grid-cols-developer">
         <p className="line-clamp-4 max-h-24 text-white">{description}</p>
         <div className="ml-auto flex flex-col text-sm font-semibold text-zinc-200">
           <span className="flex items-center gap-1">
@@ -66,7 +73,7 @@ export function MyJobCard({
         </div>
       </div>
 
-      <div className="mt-2 flex w-full justify-between px-2 gap-2">
+      <div className="mt-2 flex w-full items-center justify-between gap-2 px-2">
         <div className="flex w-full max-w-xl flex-col items-start gap-1 lg:flex-row lg:justify-between">
           <span
             title="última atualização"
@@ -76,7 +83,7 @@ export function MyJobCard({
           </span>
           <span
             title="candidaturas"
-            className="flex justify-end gap-1 text-sm font-semibold text-zinc-200"
+            className="flex justify-end gap-1 text-xs font-semibold text-zinc-200 md:text-sm"
           >
             <span className="border-b text-white">
               {candidaturesAmount === 0 ? 'Sem' : candidaturesAmount}
@@ -85,9 +92,7 @@ export function MyJobCard({
           </span>
         </div>
         <div className="flex">
-          <button className="m-1 ml-auto flex h-full w-28 transform items-center rounded-md bg-gradient-to-r from-violet-900 to-violet-500/50 px-2 text-xs font-bold text-white transition-transform duration-200 hover:scale-95 hover:bg-violet-700 hover:text-white">
-            Ver candidatos
-          </button>
+          <DialogMyJobs candidatures={candidatures} />
         </div>
       </div>
     </div>

@@ -90,7 +90,7 @@ export function SidebarCompany() {
         </nav>
 
         <div className="mt-auto flex flex-col">
-          <NavItem href="/newJob" icon={Plus} title="Criar nova vaga" />
+          <NavItem href="/new-job" icon={Plus} title="Criar nova vaga" />
           <Profile
             name={
               companyWithDetails.userName.charAt(0).toUpperCase() +

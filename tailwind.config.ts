@@ -9,7 +9,7 @@ const config: Config = {
       gridTemplateColumns: {
         body: 'minmax(15rem, 20rem) 1fr',
         developer: '70% 30%',
-        jobCard: '70% 30%',
+        jobCard: '60% 40%',
         client: '30% 70%',
         signIn: '40% 60%',
       },
@@ -40,6 +40,9 @@ const config: Config = {
       },
       animation: {
         slideDownAndFade: 'slideDownAndFade 0.3s linear',
+      },
+      zIndex: {
+        '100': '100',
       },
     },
   },

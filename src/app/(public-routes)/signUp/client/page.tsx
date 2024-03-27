@@ -5,13 +5,7 @@ import * as FileInput from '@/app/components/FileInput'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  Link2,
-  Link as LucideLink,
-  LockKeyhole,
-  Mail,
-  MapPin,
-} from 'lucide-react'
+import { Link2, LockKeyhole, Mail, MapPin } from 'lucide-react'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
 import { api } from '@/app/api/axios'
@@ -23,7 +17,6 @@ const registerCompanySchema = z.object({
   email: z.string().email(),
   password: z.string().min(6, { message: 'Digite no mínimo 6 caracteres' }),
   about: z.string().optional(),
-  cnpj: z.string().min(14),
   city: z.string().optional(),
   state: z.string().optional(),
   site_url: z.string().optional(),
@@ -53,7 +46,6 @@ export default function RegisterCompany() {
 
     const dataCompany = {
       userId: response.data.userId,
-      cnpj: data.cnpj,
       city: data.city,
       state: data.state,
       site_url: data.site_url,
@@ -125,22 +117,6 @@ export default function RegisterCompany() {
               />
             </Input.Root>
           </div>
-        </div>
-
-        <div className="flex flex-col gap-2 pt-5">
-          <label className="text-sm font-medium text-zinc-700" htmlFor="cnpj">
-            CNPJ
-          </label>
-          <Input.Root>
-            <Input.Prefix>
-              <LucideLink className="h-5 w-5 text-zinc-500" />
-            </Input.Prefix>
-            <Input.Control
-              placeholder="Para registro único"
-              id="cnpj"
-              {...register('cnpj')}
-            />
-          </Input.Root>
         </div>
 
         <div className="lg:grid-cols-form flex flex-col gap-3 pt-5 lg:grid">

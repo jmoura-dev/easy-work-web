@@ -66,6 +66,11 @@ interface GetJobsWithCandidaturesAmountPropsResponse {
     hoursPerWeek: number
     created_at: Date
     candidaturesAmount: number
+    candidatures: {
+      userId: string
+      userName: string
+      occupation_area: string
+    }[]
   }[]
 }
 
@@ -84,6 +89,51 @@ export async function getJobsWithCandidaturesAmount(): Promise<GetJobsWithCandid
       Authorization: `Bearer ${token}`,
     },
   })
+
+  return response.data
+}
+
+interface CreateNewJobProps {
+  title: string
+  description: string
+  workMode: string
+  workSchedule: string
+  remuneration: number
+  hoursPerWeek: number
+}
+
+export async function createNewJob({
+  title,
+  description,
+  workMode,
+  workSchedule,
+  remuneration,
+  hoursPerWeek,
+}: CreateNewJobProps) {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const token = session.user.access_token
+
+  const response = await api.post(
+    '/jobs',
+    {
+      title,
+      description,
+      workMode,
+      workSchedule,
+      remuneration,
+      hoursPerWeek,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 
   return response.data
 }
