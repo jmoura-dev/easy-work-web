@@ -39,7 +39,7 @@ export default function MyJobs() {
   return (
     <div>
       <h1 className="mb-10 text-center font-mirza text-2xl font-semibold text-zinc-800 lg:text-3xl 2xl:text-4xl">
-        Veja suas vagas por ordem de inscrição
+        Veja os detalhes de suas vagas e seus respectivos candidatos
       </h1>
 
       <Input.Root

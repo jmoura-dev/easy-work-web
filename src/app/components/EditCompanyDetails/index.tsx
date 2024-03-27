@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dialog'
 import { FormChangeProfile } from './FormChangeProfile'
 
-interface DialogDeveloperDetailsProps {
+interface EditDeveloperDetailsProps {
   userName: string
   avatarUrl: string | null
   about: string
@@ -22,7 +22,7 @@ interface DialogDeveloperDetailsProps {
   }[]
 }
 
-export function DialogDeveloperDetails({
+export function EditDeveloperDetails({
   userName,
   avatarUrl,
   about,
@@ -30,7 +30,7 @@ export function DialogDeveloperDetails({
   occupation_area,
   price_per_hour,
   techs,
-}: DialogDeveloperDetailsProps) {
+}: EditDeveloperDetailsProps) {
   const nameWithFirstLetterCapitalized =
     userName.charAt(0).toUpperCase() + userName.slice(1)
   const occupationAreaWithFirstLetterCapitalized =

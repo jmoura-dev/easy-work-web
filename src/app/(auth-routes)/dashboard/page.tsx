@@ -105,6 +105,9 @@ export default function Dashboard() {
                         developer.occupation_area.slice(1)
                       }
                       price_per_hour={developer.price_per_hour}
+                      github={developer.github}
+                      linkedin={developer.linkedin}
+                      portfolio={developer.portfolio}
                       key={developer.developerId}
                     />
                   </CarouselItem>
@@ -156,6 +159,9 @@ export default function Dashboard() {
                       }
                       available_for_contract={developer.available_for_contract}
                       price_per_hour={developer.price_per_hour}
+                      github={developer.github}
+                      linkedin={developer.linkedin}
+                      portfolio={developer.portfolio}
                       key={developer.developerId}
                     />
                   </CarouselItem>
@@ -207,6 +213,9 @@ export default function Dashboard() {
                         developer.occupation_area.slice(1)
                       }
                       price_per_hour={developer.price_per_hour}
+                      github={developer.github}
+                      linkedin={developer.linkedin}
+                      portfolio={developer.portfolio}
                       key={developer.developerId}
                     />
                   </CarouselItem>

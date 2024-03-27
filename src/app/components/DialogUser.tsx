@@ -18,6 +18,9 @@ interface DialogUserProps {
   price_per_hour: number
   occupation_area: string
   available_for_contract: boolean
+  linkedin: string | null
+  github: string | null
+  portfolio: string | null
   techs: {
     id: string
     name: string
@@ -31,15 +34,12 @@ export function DialogUser({
   price_per_hour,
   occupation_area,
   available_for_contract,
+  linkedin,
+  github,
+  portfolio,
   techs,
   ...props
 }: DialogUserProps) {
-  const socials = {
-    linkedIn: 'https://www.linkedin.com/in/jackson-moura-a43350246/',
-    github: 'https://github.com/jmoura-dev',
-    portfolio: undefined,
-  }
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -114,9 +114,9 @@ export function DialogUser({
               Redes sociais para contato
             </h2>
             <SocialMedia
-              github={socials.github}
-              linkedIn={socials.linkedIn}
-              portfolio={socials.portfolio}
+              github={github}
+              linkedIn={linkedin}
+              portfolio={portfolio}
             />
           </div>
         </div>

@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import { Banknote, User, Wallet } from 'lucide-react'
 import { Tech } from './UserCard/Tech'
-import { DialogDeveloperDetails } from './DialogDeveloperDetails'
+import { EditDeveloperDetails } from './EditCompanyDetails'
 
 export function DeveloperProfile() {
   const {
@@ -101,7 +101,7 @@ export function DeveloperProfile() {
       </ul>
 
       <div className="m-auto flex w-full items-end lg:mr-0 lg:max-w-48 lg:items-end">
-        <DialogDeveloperDetails
+        <EditDeveloperDetails
           userName={developerWithDetails.userName}
           avatarUrl={developerWithDetails.avatarUrl}
           occupation_area={developerWithDetails.occupation_area}

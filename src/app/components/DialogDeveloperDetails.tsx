@@ -12,7 +12,6 @@ import { Tech } from './UserCard/Tech'
 import { SocialMedia } from './SocialMedia'
 import { Wallet } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
-import { SkeletonDashboard } from './SkeletonDashboard'
 import { redirect } from 'next/navigation'
 import { getDeveloperByUserId } from '@/data/developers'
 import { useState } from 'react'
@@ -24,6 +23,9 @@ interface DialogDeveloperDetailsProps {
   price_per_hour: number
   occupation_area: string
   available_for_contract: boolean
+  linkedin: string | null
+  github: string | null
+  portfolio: string | null
   techs: {
     id: string
     name: string
@@ -38,12 +40,6 @@ export function DialogDeveloperDetails({
   param,
 }: DialogDeveloperDetailsRequest) {
   const [developer, setDeveloper] = useState<DialogDeveloperDetailsProps>()
-
-  const socials = {
-    linkedIn: 'https://www.linkedin.com/in/jackson-moura-a43350246/',
-    github: 'https://github.com/jmoura-dev',
-    portfolio: undefined,
-  }
 
   async function handleSearchDevelopers(userId: string) {
     try {
@@ -65,10 +61,6 @@ export function DialogDeveloperDetails({
     mutationFn: getDeveloperByUserId,
   })
 
-  if (isPending) {
-    return <SkeletonDashboard />
-  }
-
   if (isError) {
     alert('Erro ao carregar desenvolvedor')
     return redirect('/dashboard')
@@ -79,15 +71,16 @@ export function DialogDeveloperDetails({
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="ml-auto mt-3 flex h-7 w-full bg-violet-600/90 text-white hover:bg-violet-700 hover:text-white"
+          className="mt-4 flex h-7 w-full bg-violet-600/80 text-white hover:bg-violet-700 hover:text-white"
           onClick={() => handleSearchDevelopers(param)}
+          disabled={isPending}
         >
           Detalhes
         </Button>
       </DialogTrigger>
 
       {developer && (
-        <DialogContent className="animate-slideDownAndFade lg:max-w-2xl">
+        <DialogContent className="max-h-screen animate-slideDownAndFade overflow-y-auto lg:max-w-2xl">
           <div className="mb-3 flex w-full flex-col items-center justify-center rounded-md font-mirza text-2xl font-bold text-violet-500">
             <span className="-ml-4">
               E<span className="text-base font-normal">asy</span>
@@ -144,9 +137,9 @@ export function DialogDeveloperDetails({
                 Redes sociais para contato
               </h2>
               <SocialMedia
-                github={socials.github}
-                linkedIn={socials.linkedIn}
-                portfolio={socials.portfolio}
+                github={developer.github}
+                linkedIn={developer.linkedin}
+                portfolio={developer.portfolio}
               />
             </div>
           </div>

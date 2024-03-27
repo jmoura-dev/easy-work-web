@@ -11,6 +11,9 @@ export interface DevelopersProps {
     available_for_contract: boolean
     occupation_area: string
     price_per_hour: number
+    linkedin: string | null
+    github: string | null
+    portfolio: string | null
     techs: {
       name: string
       id: string
@@ -62,6 +65,9 @@ interface DeveloperDetailsProps {
     available_for_contract: boolean
     occupation_area: string
     price_per_hour: number
+    linkedin: string | null
+    github: string | null
+    portfolio: string | null
     techs: {
       name: string
       id: string
