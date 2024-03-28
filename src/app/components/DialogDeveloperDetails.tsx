@@ -48,7 +48,7 @@ export function DialogDeveloperDetails({
       if (response.developerWithDetails) {
         return setDeveloper(response.developerWithDetails)
       }
-    } catch (err) {
+    } catch {
       return alert('Erro ao buscar desenvolvedores.')
     }
   }
@@ -71,7 +71,7 @@ export function DialogDeveloperDetails({
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="mt-4 flex h-7 w-full bg-violet-600/80 text-white hover:bg-violet-700 hover:text-white"
+          className="mt-4 flex h-7 border-b border-violet-700 text-violet-800 hover:bg-violet-500 hover:text-white"
           onClick={() => handleSearchDevelopers(param)}
           disabled={isPending}
         >

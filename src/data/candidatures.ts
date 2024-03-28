@@ -76,3 +76,64 @@ export async function createCandidature(jobId: string) {
     }
   }
 }
+
+interface GetCandidatureByIdProps {
+  candidature: {
+    id: string
+    status: string
+    created_at: Date
+    updated_at: Date
+  }
+}
+
+export async function getCandidatureById(
+  candidatureId: string,
+): Promise<GetCandidatureByIdProps> {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const token = session.user.access_token
+
+  const response = await api.get(`/candidatures/${candidatureId}/details`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+interface updateStatusCandidatureProps {
+  candidatureId: string
+  status: string
+}
+
+export async function updateStatusCandidature({
+  candidatureId,
+  status,
+}: updateStatusCandidatureProps) {
+  const session = await getSession()
+
+  if (!session) {
+    redirect('/signIn')
+  }
+
+  const token = session.user.access_token
+
+  const response = await api.patch(
+    `/candidatures/${candidatureId}`,
+    {
+      status,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}

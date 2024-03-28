@@ -7,9 +7,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { DialogDeveloperDetails } from './DialogDeveloperDetails'
+import { DialogUpdateStatusJob } from './DialogUpdateStatusJob'
 
 interface DialogMyJobsProps {
   candidatures: {
+    candidatureId: string
+    status: string
     userId: string
     userName: string
     occupation_area: string
@@ -36,21 +39,29 @@ export function DialogMyJobs({ candidatures }: DialogMyJobsProps) {
             W<span className="text-base font-normal">ork</span>
           </span>
         </div>
-        <DialogHeader className="mb-2 divide-y divide-dashed divide-violet-500 rounded-md bg-violet-200 p-2">
+        <DialogHeader className="mb-2 flex divide-y divide-dashed divide-violet-500 rounded-md bg-violet-200 p-2">
           {candidatures.length === 0 ? (
             <p className="m-auto flex">Nenhuma candidatura até o momento...</p>
           ) : (
             candidatures.map((item) => (
-              <div key={item.userId}>
-                <DialogTitle className="flex justify-center text-xl">
-                  {item.userName.charAt(0).toUpperCase() +
-                    item.userName.slice(1)}
-                </DialogTitle>
-                <p className="flex w-full justify-center text-xs font-semibold text-zinc-700 xl:text-sm">
-                  {item.occupation_area.charAt(0).toUpperCase() +
-                    item.occupation_area.slice(1)}
-                </p>
-                <DialogDeveloperDetails param={item.userId} />
+              <div key={item.userId} className="flex w-full flex-col gap-2">
+                <div>
+                  <DialogTitle className="flex justify-center text-xl">
+                    {item.userName.charAt(0).toUpperCase() +
+                      item.userName.slice(1)}
+                  </DialogTitle>
+                  <p className="flex w-full justify-center text-xs font-semibold text-zinc-700 xl:text-sm">
+                    {item.occupation_area.charAt(0).toUpperCase() +
+                      item.occupation_area.slice(1)}
+                  </p>
+                </div>
+                <span className="m-auto flex max-w-96 truncate rounded-md border-b border-violet-600 p-1 text-xs font-semibold text-zinc-800 xl:text-sm">
+                  {`Status: ${item.status}`}
+                </span>
+                <div className="flex items-center justify-between">
+                  <DialogUpdateStatusJob param={item.candidatureId} />
+                  <DialogDeveloperDetails param={item.userId} />
+                </div>
               </div>
             ))
           )}

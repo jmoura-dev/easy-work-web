@@ -67,6 +67,8 @@ interface GetJobsWithCandidaturesAmountPropsResponse {
     created_at: Date
     candidaturesAmount: number
     candidatures: {
+      candidatureId: string
+      status: string
       userId: string
       userName: string
       occupation_area: string
