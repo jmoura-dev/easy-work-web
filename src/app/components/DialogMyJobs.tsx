@@ -55,7 +55,7 @@ export function DialogMyJobs({ candidatures }: DialogMyJobsProps) {
                       item.occupation_area.slice(1)}
                   </p>
                 </div>
-                <span className="m-auto flex max-w-96 truncate rounded-md border-b border-violet-600 p-1 text-xs font-semibold text-zinc-800 xl:text-sm">
+                <span className="m-auto flex max-w-96 rounded-md border-b border-violet-600 p-1 text-xs font-semibold text-zinc-800 xl:text-sm">
                   {`Status: ${item.status}`}
                 </span>
                 <div className="flex items-center justify-between">

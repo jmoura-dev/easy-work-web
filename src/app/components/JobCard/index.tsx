@@ -39,7 +39,7 @@ export function JobCard({
           </span>
         </div>
         <div className="flex w-full flex-col gap-1 divide-y divide-dashed divide-violet-500">
-          <h1 className="font-mirza text-2xl font-bold text-zinc-800 xl:text-3xl">
+          <h1 className="max-w-60 truncate font-mirza text-xl font-bold text-zinc-800 md:max-w-64 lg:max-w-72 lg:text-2xl xl:max-w-96 xl:text-3xl">
             {title}
           </h1>
           <p className="flex w-full justify-center text-sm font-semibold text-zinc-700 xl:text-base">
