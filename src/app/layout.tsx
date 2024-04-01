@@ -4,6 +4,7 @@ import './globals.css'
 import NextAuthSessionProvider from '@/providers/sessionProvider'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/react-query'
+import { TechnologiesContextProvider } from '@/providers/technologiesProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 const mirza = Mirza({
@@ -26,9 +27,11 @@ export default function RootLayout({
     <html lang="en" className={(inter.className, mirza.variable)}>
       <body className="light antialiased">
         <NextAuthSessionProvider>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
+          <TechnologiesContextProvider>
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </TechnologiesContextProvider>
         </NextAuthSessionProvider>
       </body>
     </html>

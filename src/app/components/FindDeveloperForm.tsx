@@ -2,7 +2,7 @@
 
 import * as Input from '@/app/components/Input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { Select } from './Select'
@@ -10,10 +10,10 @@ import { SelectItem } from './Select/SelectItem'
 import { Trash2 } from 'lucide-react'
 import { DialogUser } from './DialogUser'
 import { searchDevelopersByFilters } from '@/data/developers'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { redirect } from 'next/navigation'
 import { SkeletonDashboard } from './SkeletonDashboard'
-import { getTechnologies } from '@/data/technologies'
+import { TechnologiesContext } from '@/providers/technologiesProvider'
 
 interface DevelopersProps {
   developerId: string
@@ -23,6 +23,9 @@ interface DevelopersProps {
   available_for_contract: boolean
   occupation_area: string
   price_per_hour: number
+  linkedin: string | null
+  github: string | null
+  portfolio: string | null
   techs: {
     name: string
     id: string
@@ -46,14 +49,7 @@ export function FindDeveloperForm() {
   const [isFocused, setIsFocused] = useState(false)
   const [developers, setDevelopers] = useState<DevelopersProps[]>([])
 
-  const {
-    data: allTechnologies,
-    isError: isErrorTechnology,
-    isLoading,
-  } = useQuery({
-    queryKey: ['getTechnologies'],
-    queryFn: getTechnologies,
-  })
+  const { allTechnologies: technologies } = useContext(TechnologiesContext)
 
   const {
     mutateAsync: searchDevelopersFn,
@@ -87,21 +83,6 @@ export function FindDeveloperForm() {
     name: 'techs',
     defaultValue: [],
   })
-
-  if (isLoading) {
-    return <SkeletonDashboard />
-  }
-
-  if (isErrorTechnology) {
-    alert('Faça login para continuar navegando')
-    return redirect('/signIn')
-  }
-
-  if (!allTechnologies) {
-    return null
-  }
-
-  const technologies = allTechnologies.technologies
 
   const filteredTechnologies = technologies.filter((item) =>
     item.name.toLowerCase().includes(techInputValue.toLowerCase()),
@@ -276,6 +257,9 @@ export function FindDeveloperForm() {
             name={developer.userName}
             occupation_area={developer.occupation_area}
             price_per_hour={developer.price_per_hour}
+            linkedin={developer.linkedin}
+            github={developer.github}
+            portfolio={developer.portfolio}
             techs={developer.techs}
           />
         ))}

@@ -2,17 +2,27 @@
 
 import * as Input from '@/app/components/Input'
 import * as FileInput from '@/app/components/FileInput'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useFieldArray, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LockKeyhole, Mail } from 'lucide-react'
+import {
+  Github,
+  Link2,
+  Linkedin,
+  LockKeyhole,
+  Mail,
+  Trash2,
+} from 'lucide-react'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
-import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
 import { useRouter } from 'next/navigation'
+import { useContext, useState } from 'react'
+import { TechnologiesContext } from '@/providers/technologiesProvider'
+import { useMutation } from '@tanstack/react-query'
+import { registerNewDeveloper } from '@/data/developers'
 
 const registerDeveloperSchema = z.object({
   name: z.string().min(3, { message: 'O nome precisa ter ao menos 3 letras.' }),
@@ -27,13 +37,24 @@ const registerDeveloperSchema = z.object({
     .max(100, { message: 'Valor máximo de R$ 100,00' })
     .optional(),
   occupation_area: z.string(),
+  linkedin: z.string().optional(),
+  github: z.string().optional(),
+  portfolio: z.string().optional(),
   available_for_contract: z.string().optional().default('false'),
+  techs: z.array(
+    z.object({
+      name: z.string(),
+    }),
+  ),
 })
 
 type RegisterDeveloperSchema = z.infer<typeof registerDeveloperSchema>
 
 export default function RegisterDeveloper() {
-  const router = useRouter()
+  const [techInputValue, setTechInputValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+
+  const { allTechnologies } = useContext(TechnologiesContext)
 
   const {
     register,
@@ -42,29 +63,65 @@ export default function RegisterDeveloper() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterDeveloperSchema>({
     resolver: zodResolver(registerDeveloperSchema),
+    defaultValues: {
+      techs: [],
+    },
   })
 
-  async function registerNewDeveloper(data: RegisterDeveloperSchema) {
-    const dataUser = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      about: data.about,
+  console.log(errors)
+
+  const router = useRouter()
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setIsFocused(false)
+    }, 100)
+  }
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'techs',
+  })
+
+  const technologiesAlreadyAdded = useWatch({
+    control,
+    name: 'techs',
+    defaultValue: [],
+  })
+
+  const filteredTechnologies = allTechnologies.filter((item) =>
+    item.name.toLowerCase().includes(techInputValue.toLowerCase()),
+  )
+
+  function handleTechClick(techName: string) {
+    const doesTechnologyAlreadyAdded = technologiesAlreadyAdded.find(
+      (tech) => tech.name === techName,
+    )
+
+    if (doesTechnologyAlreadyAdded) {
+      return alert('Tecnologia já foi adicionada')
     }
+    append({ name: techName })
+    setTechInputValue('')
+  }
 
-    const response = await api.post('/users', dataUser)
-    const userId = response.data.userId
+  const { mutateAsync: registerNewDeveloperFn } = useMutation({
+    mutationFn: registerNewDeveloper,
+  })
 
-    const isAvailableForContract = data.available_for_contract === 'true'
-
-    const dataDeveloper = {
-      userId,
-      available_for_contract: isAvailableForContract,
-      occupation_area: data.occupation_area,
-      price_per_hour: data.price_per_hour,
+  async function handleRegisterNewDeveloper(data: RegisterDeveloperSchema) {
+    try {
+      await registerNewDeveloperFn(data)
+      alert('Desenvolvedor criado com sucesso')
+      return router.replace('/signIn')
+    } catch (err) {
+      console.error(err)
+      return alert('Erro ao se registrar')
     }
-    await api.post('/developers', dataDeveloper)
-    router.replace('/signIn')
   }
 
   return (
@@ -74,7 +131,7 @@ export default function RegisterDeveloper() {
         Encontre as melhores oportunidades como desenvolvedor
       </h1>
       <form
-        onSubmit={handleSubmit(registerNewDeveloper)}
+        onSubmit={handleSubmit(handleRegisterNewDeveloper)}
         className="flex flex-col gap-5 divide-y divide-zinc-200"
       >
         <div className="flex flex-col gap-2 ">
@@ -84,6 +141,7 @@ export default function RegisterDeveloper() {
           <Input.Root>
             <Input.Control
               placeholder="Ex: Jackson Moura"
+              id="name"
               {...register('name')}
             />
           </Input.Root>
@@ -113,7 +171,10 @@ export default function RegisterDeveloper() {
 
         <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2">
           <div className="flex flex-col gap-2 pt-5">
-            <label className="text-sm font-medium text-zinc-700" htmlFor="name">
+            <label
+              className="text-sm font-medium text-zinc-700"
+              htmlFor="password"
+            >
               Senha
             </label>
             <Input.Root>
@@ -225,8 +286,113 @@ export default function RegisterDeveloper() {
           <FileInput.Root className="flex flex-col gap-5 lg:flex-row lg:items-start">
             <FileInput.ImagePreview />
             <FileInput.Trigger />
-            <FileInput.Control />
+            <FileInput.Control {...register('avatar')} />
           </FileInput.Root>
+        </div>
+
+        <div className="flex flex-col gap-5 pt-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex w-full flex-col gap-2">
+            <label
+              className="text-sm font-medium text-zinc-700"
+              htmlFor="linkedin"
+            >
+              Redes sociais
+            </label>
+            <Input.Root>
+              <Input.Prefix className="text-sm font-semibold text-zinc-500">
+                <Linkedin width={18} />
+              </Input.Prefix>
+              <Input.Control
+                type="url"
+                placeholder="Digite seu linkedIn(URL)"
+                id="linkedin"
+                {...register('linkedin')}
+              />
+            </Input.Root>
+          </div>
+
+          <div className="flex w-full gap-2">
+            <Input.Root>
+              <Input.Prefix className="text-sm font-semibold text-zinc-500">
+                <Github width={18} />
+              </Input.Prefix>
+              <Input.Control
+                type="url"
+                placeholder="Digite seu Github(URL)"
+                {...register('github')}
+              />
+            </Input.Root>
+          </div>
+
+          <div className="flex w-full gap-2">
+            <Input.Root>
+              <Input.Prefix className="text-sm font-semibold text-zinc-500">
+                <Link2 />
+              </Input.Prefix>
+              <Input.Control
+                type="url"
+                placeholder="Digite seu portfólio(URL)"
+                {...register('portfolio')}
+              />
+            </Input.Root>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 pt-5">
+          <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            Habilidades
+          </h2>
+
+          <div className="relative max-w-48">
+            <input
+              type="text"
+              onFocus={handleFocus}
+              onChange={(e) => setTechInputValue(e.target.value)}
+              placeholder="Digite uma tecnologia"
+              onBlur={handleBlur}
+              className="'focus-within:border-violet-400 w-full rounded-md border border-zinc-300 bg-transparent p-2 shadow-sm
+          outline-violet-300 focus-within:ring-4 focus-within:ring-violet-100"
+            />
+            {isFocused && (
+              <div className="absolute z-10 flex max-h-36 w-full flex-col gap-1 divide-y divide-zinc-100 overflow-y-auto rounded-bl-md rounded-br-md bg-zinc-300 py-1">
+                {filteredTechnologies.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleTechClick(item.name)}
+                    className="text-base font-semibold text-violet-500"
+                  >
+                    {item.name}
+                  </button>
+                ))}
+                {filteredTechnologies.length === 0 && (
+                  <p className="m-auto p-1 text-sm font-semibold text-violet-600">
+                    Habilidade não encontrada
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
+          <ul className="flex flex-wrap gap-1 rounded-md bg-violet-300/20 p-2">
+            {fields.map((item, index) => (
+              <li
+                key={item.id}
+                className="flex items-center justify-evenly rounded-md bg-transparent px-1 text-sm font-semibold text-zinc-800"
+              >
+                <div
+                  className="flex max-w-28 items-center gap-2 truncate rounded-md bg-violet-700 px-2 py-1 text-sm font-semibold text-zinc-300 outline-none"
+                  {...register(`techs.${index}.name`)}
+                >
+                  {item.name}
+
+                  <button type="button" onClick={() => remove(index)}>
+                    <Trash2 width={16} height={16} />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="flex flex-col gap-2 pt-5">

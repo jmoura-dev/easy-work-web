@@ -182,3 +182,76 @@ export async function updateDeveloper({
     },
   )
 }
+
+interface RegisterNewDeveloperProps {
+  name: string
+  email: string
+  password: string
+  avatar?: FileList
+  about?: string
+  price_per_hour?: number
+  occupation_area: string
+  available_for_contract: string
+  linkedin?: string
+  github?: string
+  portfolio?: string
+  techs: {
+    name: string
+  }[]
+}
+
+export async function registerNewDeveloper(data: RegisterNewDeveloperProps) {
+  let avatarId
+
+  console.log('aqui')
+
+  if (data.avatar && data.avatar.length > 0) {
+    const formData = new FormData()
+    formData.append('file', data.avatar[0])
+
+    const response = await api.post('/avatar', formData)
+
+    avatarId = response.data.avatarId
+  }
+
+  console.log('aqui1')
+
+  const dataUser = {
+    name: data.name,
+    email: data.email,
+    avatarId,
+    password: data.password,
+    about: data.about,
+  }
+
+  const response = await api.post('/users', dataUser)
+  const userId = response.data.userId
+
+  console.log('aqui2')
+
+  const isAvailableForContract = data.available_for_contract === 'true'
+
+  const dataDeveloper = {
+    userId,
+    available_for_contract: isAvailableForContract,
+    occupation_area: data.occupation_area,
+    price_per_hour: data.price_per_hour,
+    linkedin: data.linkedin,
+    github: data.github,
+    portfolio: data.portfolio,
+  }
+
+  await api.post('/developers', dataDeveloper)
+
+  console.log('aqui3')
+
+  if (data.techs.length > 0) {
+    await Promise.all(
+      data.techs.map(async (tech) => {
+        return api.post(`/developer-technology/${userId}`, {
+          technologyName: tech.name,
+        })
+      }),
+    )
+  }
+}

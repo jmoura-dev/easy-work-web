@@ -57,7 +57,7 @@ export function SidebarCompany() {
           <div>
             <h2 className="text-lg font-bold text-zinc-700 ">Easy-work</h2>
             <p className="text-sm font-semibold text-zinc-800">
-              Encontre sua vaga
+              Encontre o talento perfeito
             </p>
           </div>
         </div>

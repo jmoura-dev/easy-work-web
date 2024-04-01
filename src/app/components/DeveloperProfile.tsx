@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import { Banknote, User, Wallet } from 'lucide-react'
 import { Tech } from './UserCard/Tech'
-import { EditDeveloperDetails } from './EditCompanyDetails'
+import { EditDeveloperDetails } from './EditDeveloperDetails'
 
 export function DeveloperProfile() {
   const {
