@@ -16,6 +16,9 @@ interface EditDeveloperDetailsProps {
   available_for_contract: boolean
   occupation_area: string
   price_per_hour?: number
+  linkedin: string | null
+  github: string | null
+  portfolio: string | null
   techs: {
     name: string
     id: string
@@ -29,6 +32,9 @@ export function EditDeveloperDetails({
   available_for_contract,
   occupation_area,
   price_per_hour,
+  linkedin,
+  github,
+  portfolio,
   techs,
 }: EditDeveloperDetailsProps) {
   const nameWithFirstLetterCapitalized =
@@ -69,6 +75,9 @@ export function EditDeveloperDetails({
           price_per_hour={price_per_hour}
           available_for_contract={available_for_contract}
           occupation_area={occupationAreaWithFirstLetterCapitalized}
+          linkedin={linkedin}
+          github={github}
+          portfolio={portfolio}
           techs={techs}
         />
       </DialogContent>

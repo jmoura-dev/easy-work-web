@@ -9,7 +9,7 @@ export interface SocialMediaProps {
 
 export function SocialMedia({ linkedIn, github, portfolio }: SocialMediaProps) {
   return (
-    <div className="flex items-center justify-around gap-2">
+    <div className="m-auto flex w-full items-center justify-around gap-0.5">
       <Link
         href={linkedIn ?? '/error'}
         title="linkedIn"

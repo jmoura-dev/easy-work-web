@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Banknote, User, Wallet } from 'lucide-react'
 import { Tech } from './UserCard/Tech'
 import { EditDeveloperDetails } from './EditDeveloperDetails'
+import { SocialMedia } from './SocialMedia'
 
 export function DeveloperProfile() {
   const {
@@ -86,7 +87,7 @@ export function DeveloperProfile() {
         {developerWithDetails.about}
       </div>
 
-      <ul className="flex flex-wrap lg:mt-3">
+      <ul className="flex flex-wrap rounded-md border-b border-violet-400 pb-5 lg:mt-3">
         {developerWithDetails.techs.length > 0 ? (
           <li className="flex w-full flex-wrap justify-evenly gap-2 text-sm">
             {developerWithDetails.techs.map((tech) => (
@@ -100,15 +101,24 @@ export function DeveloperProfile() {
         )}
       </ul>
 
+      <SocialMedia
+        linkedIn={developerWithDetails.linkedin}
+        github={developerWithDetails.github}
+        portfolio={developerWithDetails.portfolio}
+      />
+
       <div className="m-auto flex w-full items-end lg:mr-0 lg:max-w-48 lg:items-end">
         <EditDeveloperDetails
           userName={developerWithDetails.userName}
           avatarUrl={developerWithDetails.avatarUrl}
           occupation_area={developerWithDetails.occupation_area}
           available_for_contract={developerWithDetails.available_for_contract}
-          about={developerWithDetails.about}
-          techs={developerWithDetails.techs}
           price_per_hour={developerWithDetails.price_per_hour}
+          about={developerWithDetails.about}
+          linkedin={developerWithDetails.linkedin}
+          github={developerWithDetails.github}
+          portfolio={developerWithDetails.portfolio}
+          techs={developerWithDetails.techs}
         />
       </div>
     </div>

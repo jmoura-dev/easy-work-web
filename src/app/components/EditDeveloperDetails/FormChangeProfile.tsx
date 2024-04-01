@@ -8,7 +8,7 @@ import * as FileInput from '@/app/components/FileInput'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '../Textarea'
-import { LockKeyhole, Plus, X } from 'lucide-react'
+import { Github, Link2, Linkedin, LockKeyhole, Plus, X } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { updateDeveloper } from '@/data/developers'
 import { useRouter } from 'next/navigation'
@@ -20,6 +20,9 @@ export interface FormChangeProfileProps {
   available_for_contract: boolean
   occupation_area: string
   price_per_hour?: number
+  linkedin: string | null
+  github: string | null
+  portfolio: string | null
   techs: {
     name: string
     id: string
@@ -38,6 +41,9 @@ const updateDeveloperSchema = z.object({
     .optional(),
   occupation_area: z.string().optional(),
   available_for_contract: z.string().optional(),
+  linkedin: z.string().optional(),
+  github: z.string().optional(),
+  portfolio: z.string().optional(),
   techs: z.array(
     z.object({
       name: z.string(),
@@ -54,6 +60,9 @@ export function FormChangeProfile({
   occupation_area,
   available_for_contract,
   price_per_hour,
+  linkedin,
+  github,
+  portfolio,
   techs,
 }: FormChangeProfileProps) {
   const router = useRouter()
@@ -313,6 +322,57 @@ export function FormChangeProfile({
           Nova habilidade
           <Plus width={18} height={18} />
         </button>
+      </div>
+
+      <div className="flex flex-col gap-2 pt-5">
+        <div className="flex w-full flex-col gap-2">
+          <label
+            className="text-sm font-medium text-zinc-700"
+            htmlFor="linkedin"
+          >
+            Redes sociais
+          </label>
+          <Input.Root>
+            <Input.Prefix className="text-sm font-semibold text-zinc-500">
+              <Linkedin width={18} />
+            </Input.Prefix>
+            <Input.Control
+              type="url"
+              defaultValue={linkedin ?? undefined}
+              placeholder="Digite seu linkedIn(URL)"
+              id="linkedin"
+              {...register('linkedin')}
+            />
+          </Input.Root>
+        </div>
+
+        <div className="flex w-full gap-2">
+          <Input.Root>
+            <Input.Prefix className="text-sm font-semibold text-zinc-500">
+              <Github width={18} />
+            </Input.Prefix>
+            <Input.Control
+              type="url"
+              defaultValue={github ?? undefined}
+              placeholder="Digite seu Github(URL)"
+              {...register('github')}
+            />
+          </Input.Root>
+        </div>
+
+        <div className="flex w-full gap-2">
+          <Input.Root>
+            <Input.Prefix className="text-sm font-semibold text-zinc-500">
+              <Link2 />
+            </Input.Prefix>
+            <Input.Control
+              type="url"
+              defaultValue={portfolio ?? undefined}
+              placeholder="Digite seu portfólio(URL)"
+              {...register('portfolio')}
+            />
+          </Input.Root>
+        </div>
       </div>
 
       <button
