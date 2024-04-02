@@ -16,13 +16,14 @@ interface GetJobsPropsResponse {
   }[]
 }
 
-export async function getJobs(page: number): Promise<GetJobsPropsResponse> {
+export async function getJobs(): Promise<GetJobsPropsResponse> {
   const session = await getSession()
 
   if (!session) {
     redirect('/signIn')
   }
 
+  const page = 1
   const token = session.user.access_token
 
   const response = await api.get(`/jobs/fetch/list?page=${page}`, {

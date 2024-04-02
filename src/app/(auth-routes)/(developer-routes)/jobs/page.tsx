@@ -11,7 +11,6 @@ import { SkeletonJobs } from '@/app/components/SkeletonJobs'
 import { redirect } from 'next/navigation'
 
 export default function Jobs() {
-  const [page, setPage] = useState(1)
   const [jobFilteredByTitle, setJobFilteredByTitle] = useState('')
 
   const {
@@ -20,7 +19,7 @@ export default function Jobs() {
     isError,
   } = useQuery({
     queryKey: ['jobs'],
-    queryFn: () => getJobs(page),
+    queryFn: getJobs,
   })
 
   if (isLoading) {

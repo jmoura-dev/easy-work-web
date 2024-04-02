@@ -2,7 +2,6 @@
 
 import {
   AlignJustify,
-  Computer,
   Home,
   Plus,
   Search,
@@ -53,9 +52,15 @@ export function SidebarCompany() {
     <Collapsible className="fixed left-0 right-0 top-0 z-20 flex flex-col bg-violet-50 p-4 data-[state=open]:bottom-0 lg:bottom-0 lg:right-auto lg:h-auto lg:w-80 lg:border-r">
       <div className="flex items-center justify-between border-b border-zinc-400 pb-6 lg:mb-8">
         <div className="flex items-center gap-2">
-          <Computer className="h-10 w-8 rounded bg-zinc-200 px-1 text-zinc-700" />
-          <div>
-            <h2 className="text-lg font-bold text-zinc-700 ">Easy-work</h2>
+          <div className="pl-4">
+            <div className="flex w-full font-mirza text-3xl font-bold text-violet-500">
+              <span className="-mt-2">
+                E<span className="text-base font-normal">asy</span>
+              </span>
+              <span>
+                W<span className="text-base font-normal">ork</span>
+              </span>
+            </div>
             <p className="text-sm font-semibold text-zinc-800">
               Encontre o talento perfeito
             </p>

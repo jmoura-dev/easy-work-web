@@ -10,7 +10,6 @@ import { redirect } from 'next/navigation'
 import { SkeletonCandidatures } from '@/app/components/SkeletonCandidatures'
 
 export default function Jobs() {
-  const [page, setPage] = useState(1)
   const [candidatureFilteredByTitle, setCandidatureFilteredByTitle] =
     useState('')
 
@@ -20,7 +19,7 @@ export default function Jobs() {
     isError,
   } = useQuery({
     queryKey: ['candidatures'],
-    queryFn: () => getCandidatures(page),
+    queryFn: getCandidatures,
   })
   if (isLoading) {
     return <SkeletonCandidatures />

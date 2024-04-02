@@ -14,15 +14,14 @@ interface GetCandidaturesPropsResponse {
   }[]
 }
 
-export async function getCandidatures(
-  page: number,
-): Promise<GetCandidaturesPropsResponse> {
+export async function getCandidatures(): Promise<GetCandidaturesPropsResponse> {
   const session = await getSession()
 
   if (!session) {
     redirect('/signIn')
   }
 
+  const page = 1
   const token = session.user.access_token
   const userId = session.user.userId
 
