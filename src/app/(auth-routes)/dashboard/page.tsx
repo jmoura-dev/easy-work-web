@@ -151,6 +151,11 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      avatarUrl={
+                        developer.avatarUrl
+                          ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
+                          : undefined
+                      }
                       about={developer.about}
                       techs={developer.techs}
                       occupation_area={
@@ -205,6 +210,11 @@ export default function Dashboard() {
                   >
                     <DialogUser
                       name={developer.userName}
+                      avatarUrl={
+                        developer.avatarUrl
+                          ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
+                          : undefined
+                      }
                       about={developer.about}
                       techs={developer.techs}
                       available_for_contract={developer.available_for_contract}

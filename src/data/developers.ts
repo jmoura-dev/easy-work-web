@@ -127,6 +127,9 @@ interface UpdateDeveloperRequest {
   price_per_hour?: number
   occupation_area?: string
   available_for_contract?: boolean
+  techs: {
+    name: string
+  }[]
 }
 
 export async function updateDeveloper({
@@ -138,6 +141,7 @@ export async function updateDeveloper({
   price_per_hour,
   occupation_area,
   available_for_contract,
+  techs,
 }: UpdateDeveloperRequest) {
   const session = await getSession()
 
@@ -181,6 +185,16 @@ export async function updateDeveloper({
       },
     },
   )
+
+  await api.put(
+    `/developer-technology/${userId}/update`,
+    { techs },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 }
 
 interface RegisterNewDeveloperProps {
@@ -203,8 +217,6 @@ interface RegisterNewDeveloperProps {
 export async function registerNewDeveloper(data: RegisterNewDeveloperProps) {
   let avatarId
 
-  console.log('aqui')
-
   if (data.avatar && data.avatar.length > 0) {
     const formData = new FormData()
     formData.append('file', data.avatar[0])
@@ -213,8 +225,6 @@ export async function registerNewDeveloper(data: RegisterNewDeveloperProps) {
 
     avatarId = response.data.avatarId
   }
-
-  console.log('aqui1')
 
   const dataUser = {
     name: data.name,
@@ -226,8 +236,6 @@ export async function registerNewDeveloper(data: RegisterNewDeveloperProps) {
 
   const response = await api.post('/users', dataUser)
   const userId = response.data.userId
-
-  console.log('aqui2')
 
   const isAvailableForContract = data.available_for_contract === 'true'
 
@@ -242,8 +250,6 @@ export async function registerNewDeveloper(data: RegisterNewDeveloperProps) {
   }
 
   await api.post('/developers', dataDeveloper)
-
-  console.log('aqui3')
 
   if (data.techs.length > 0) {
     await Promise.all(

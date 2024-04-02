@@ -8,10 +8,12 @@ import * as FileInput from '@/app/components/FileInput'
 import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Textarea } from '../Textarea'
-import { Github, Link2, Linkedin, LockKeyhole, Plus, X } from 'lucide-react'
+import { Github, Link2, Linkedin, LockKeyhole, Trash2 } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { updateDeveloper } from '@/data/developers'
 import { useRouter } from 'next/navigation'
+import { useContext, useState } from 'react'
+import { TechnologiesContext } from '@/providers/technologiesProvider'
 
 export interface FormChangeProfileProps {
   userName: string
@@ -65,7 +67,60 @@ export function FormChangeProfile({
   portfolio,
   techs,
 }: FormChangeProfileProps) {
+  const [techInputValue, setTechInputValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+  const { allTechnologies } = useContext(TechnologiesContext)
+
   const router = useRouter()
+
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setIsFocused(false)
+    }, 100)
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    control,
+  } = useForm<UpdateDeveloperSchema>({
+    resolver: zodResolver(updateDeveloperSchema),
+    defaultValues: {
+      techs,
+    },
+  })
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'techs',
+  })
+
+  const technologiesAlreadyAdded = useWatch({
+    control,
+    name: 'techs',
+    defaultValue: [],
+  })
+
+  const filteredTechnologies = allTechnologies.filter((item) =>
+    item.name.toLowerCase().includes(techInputValue.toLowerCase()),
+  )
+
+  function handleTechClick(techName: string) {
+    const doesTechnologyAlreadyAdded = technologiesAlreadyAdded.find(
+      (tech) => tech.name === techName,
+    )
+
+    if (doesTechnologyAlreadyAdded) {
+      return alert('Tecnologia já foi adicionada')
+    }
+    append({ name: techName })
+    setTechInputValue('')
+  }
 
   const { mutateAsync: updateDeveloperFn } = useMutation({
     mutationFn: updateDeveloper,
@@ -93,33 +148,6 @@ export function FormChangeProfile({
       alert('Erro ao atualizar o perfil')
     }
   }
-
-  const arrayTechNames = techs.map((tech) => ({ name: tech.name }))
-  if (arrayTechNames.length === 0) {
-    arrayTechNames.push({ name: '' })
-  }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    control,
-  } = useForm<UpdateDeveloperSchema>({
-    resolver: zodResolver(updateDeveloperSchema),
-    defaultValues: {
-      techs: arrayTechNames,
-    },
-  })
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'techs',
-  })
-
-  const lastTechName = useWatch({
-    control,
-    name: `techs.${fields.length - 1}.name`,
-  })
 
   return (
     <form onSubmit={handleSubmit(handleUpdateDeveloper)}>
@@ -287,41 +315,66 @@ export function FormChangeProfile({
         />
       </div>
 
-      <div className="mt-6 flex flex-col gap-3">
-        <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-          Habilidades
-        </h2>
-        <ul className="flex flex-wrap justify-evenly gap-1">
+      <div className="flex flex-col gap-3 pt-5">
+        <div>
+          <h2 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            Habilidades
+          </h2>
+          <span className="block text-sm font-normal text-zinc-500">
+            Selecione habilidades que deseja adicionar.
+          </span>
+        </div>
+
+        <div className="relative max-w-48">
+          <input
+            type="text"
+            onFocus={handleFocus}
+            onChange={(e) => setTechInputValue(e.target.value)}
+            placeholder="Digite uma tecnologia"
+            onBlur={handleBlur}
+            className="'focus-within:border-violet-400 w-full rounded-md border border-zinc-300 bg-transparent p-2 shadow-sm
+          outline-violet-300 focus-within:ring-4 focus-within:ring-violet-100"
+          />
+          {isFocused && (
+            <div className="absolute z-10 flex max-h-36 w-full flex-col gap-1 divide-y divide-zinc-100 overflow-y-auto rounded-bl-md rounded-br-md bg-zinc-300 py-1">
+              {filteredTechnologies.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => handleTechClick(item.name)}
+                  className="text-base font-semibold text-violet-500"
+                >
+                  {item.name}
+                </button>
+              ))}
+              {filteredTechnologies.length === 0 && (
+                <p className="m-auto p-1 text-sm font-semibold text-violet-600">
+                  Habilidade não encontrada
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+
+        <ul className="flex flex-wrap gap-1 rounded-md bg-violet-300/20 p-2">
           {fields.map((item, index) => (
             <li
               key={item.id}
-              className="flex items-center justify-evenly rounded-md border border-dashed border-violet-800 bg-violet-100 px-1 text-sm font-semibold text-zinc-800"
+              className="flex items-center rounded-md bg-transparent px-1 text-sm font-semibold text-zinc-800"
             >
-              <input
-                className="max-w-28 truncate bg-violet-100 outline-none"
+              <div
+                className="flex max-w-28 items-center gap-2 truncate rounded-md bg-violet-700 px-2 py-1 text-sm font-semibold text-zinc-300 outline-none"
                 {...register(`techs.${index}.name`)}
-                required
-                readOnly={index !== fields.length - 1}
-              />
-              <button type="button" onClick={() => remove(index)}>
-                <X width={16} height={16} />
-              </button>
+              >
+                {item.name}
+
+                <button type="button" onClick={() => remove(index)}>
+                  <Trash2 width={16} height={16} />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
-        <button
-          type="button"
-          onClick={() => {
-            if (lastTechName.trim() !== '') {
-              append({ name: '' })
-            }
-          }}
-          disabled={lastTechName.trim() === ''}
-          className="m-auto mt-2 flex w-36 items-center gap-2 border-b border-violet-300 p-1 text-sm font-bold text-violet-600 disabled:cursor-not-allowed disabled:text-red-800"
-        >
-          Nova habilidade
-          <Plus width={18} height={18} />
-        </button>
       </div>
 
       <div className="flex flex-col gap-2 pt-5">

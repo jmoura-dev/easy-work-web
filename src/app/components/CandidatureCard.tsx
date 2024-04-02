@@ -48,7 +48,7 @@ export function CandidatureCard({
         </div>
       </div>
 
-      <p className="max-w-72 truncate text-white">
+      <p className="text-white">
         <strong>Status -</strong> {status}
       </p>
       <div className="ml-auto flex flex-col">

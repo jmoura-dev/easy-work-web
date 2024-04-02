@@ -68,8 +68,6 @@ export default function RegisterDeveloper() {
     },
   })
 
-  console.log(errors)
-
   const router = useRouter()
 
   const handleFocus = () => {
