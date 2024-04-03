@@ -8,9 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link2, LockKeyhole, Mail, MapPin } from 'lucide-react'
 import { Textarea } from '@/app/components/Textarea'
 import Link from 'next/link'
-import { api } from '@/app/api/axios'
 import { ButtonLogo } from '@/app/components/ButtonLogo'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
+import { registerNewCompany } from '@/data/companies'
+import { useMutation } from '@tanstack/react-query'
 
 const registerCompanySchema = z.object({
   name: z.string(),
@@ -35,23 +38,36 @@ export default function RegisterCompany() {
     resolver: zodResolver(registerCompanySchema),
   })
 
-  async function registerNewCompany(data: RegisterCompanySchema) {
-    const dataUser = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      about: data.about,
-    }
-    const response = await api.post('/users', dataUser)
+  const { mutateAsync: registerNewCompanyFn } = useMutation({
+    mutationFn: registerNewCompany,
+  })
 
-    const dataCompany = {
-      userId: response.data.userId,
-      city: data.city,
-      state: data.state,
-      site_url: data.site_url,
+  async function handleRegisterNewCompany(data: RegisterCompanySchema) {
+    try {
+      await registerNewCompanyFn(data)
+      toast.success('Empresa criada com sucesso', {
+        position: 'top-center',
+      })
+      return router.replace('/signIn')
+    } catch (err) {
+      const axiosError = err as AxiosError<any>
+      if (axiosError.response) {
+        const status = axiosError.response.status
+        console.error(axiosError.response)
+
+        switch (status) {
+          case 409:
+            toast.error('Este e-mail já está em uso.', {
+              position: 'top-center',
+            })
+            break
+          default:
+            toast.error('Internal server error', {
+              position: 'top-center',
+            })
+        }
+      }
     }
-    await api.post('/companies', dataCompany)
-    router.replace('/signIn')
   }
 
   return (
@@ -61,7 +77,7 @@ export default function RegisterCompany() {
         Encontre o desenvolvedor ideal para seu projeto ou empresa
       </h1>
       <form
-        onSubmit={handleSubmit(registerNewCompany)}
+        onSubmit={handleSubmit(handleRegisterNewCompany)}
         className="flex flex-col gap-5 divide-y divide-zinc-200"
       >
         <div className="flex flex-col gap-2 ">

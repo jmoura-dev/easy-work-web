@@ -48,6 +48,42 @@ interface UpdateCompanyRequest {
   site_url?: string
 }
 
+interface RegisterNewCompanyProps {
+  name: string
+  email: string
+  password: string
+  about?: string
+  city?: string
+  state?: string
+  site_url?: string
+}
+
+export async function registerNewCompany({
+  name,
+  email,
+  password,
+  about,
+  city,
+  state,
+  site_url,
+}: RegisterNewCompanyProps) {
+  const dataUser = {
+    name,
+    email,
+    password,
+    about,
+  }
+  const response = await api.post('/users', dataUser)
+
+  const dataCompany = {
+    userId: response.data.userId,
+    city,
+    state,
+    site_url,
+  }
+  await api.post('/companies', dataCompany)
+}
+
 export async function updateCompany({
   name,
   avatar,

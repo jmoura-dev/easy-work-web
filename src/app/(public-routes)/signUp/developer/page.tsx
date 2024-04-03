@@ -24,6 +24,7 @@ import { TechnologiesContext } from '@/providers/technologiesProvider'
 import { useMutation } from '@tanstack/react-query'
 import { registerNewDeveloper } from '@/data/developers'
 import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
 
 const registerDeveloperSchema = z.object({
   name: z.string().min(3, { message: 'O nome precisa ter ao menos 3 letras.' }),
@@ -122,10 +123,23 @@ export default function RegisterDeveloper() {
       })
       return router.replace('/signIn')
     } catch (err) {
-      console.error(err)
-      return toast.error('Erro ao se registrar', {
-        position: 'top-center',
-      })
+      const axiosError = err as AxiosError<any>
+      if (axiosError.response) {
+        const status = axiosError.response.status
+        console.error(axiosError.response)
+
+        switch (status) {
+          case 409:
+            toast.error('Este e-mail já está em uso.', {
+              position: 'top-center',
+            })
+            break
+          default:
+            toast.error('Internal server error', {
+              position: 'top-center',
+            })
+        }
+      }
     }
   }
 
