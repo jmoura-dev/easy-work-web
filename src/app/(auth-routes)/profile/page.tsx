@@ -1,4 +1,4 @@
-import { nextAuthOptions } from '@/app/api/auth/[...nextauth/]/route'
+import { nextAuthOptions } from '@/lib/auth'
 import { CompanyProfile } from '@/app/components/CompanyProfile'
 import { DeveloperProfile } from '@/app/components/DeveloperProfile'
 import { getServerSession } from 'next-auth'

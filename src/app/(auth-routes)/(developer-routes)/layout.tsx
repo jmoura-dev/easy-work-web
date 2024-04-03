@@ -1,5 +1,5 @@
+import { nextAuthOptions } from '@/lib/auth'
 import { getServerSession } from 'next-auth'
-import { nextAuthOptions } from '../../api/auth/[...nextauth/]/route'
 import { redirect } from 'next/navigation'
 
 export default async function DeveloperLayoutProps({
