@@ -105,7 +105,7 @@ export function DeveloperProfile() {
       </ul>
 
       <SocialMedia
-        linkedIn={developerWithDetails.linkedin}
+        linkedin={developerWithDetails.linkedin}
         github={developerWithDetails.github}
         portfolio={developerWithDetails.portfolio}
       />
