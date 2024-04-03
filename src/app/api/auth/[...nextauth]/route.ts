@@ -1,8 +1,8 @@
-import NextAuth, { NextAuthOptions } from 'next-auth'
+import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { api } from '@/app/api/axios'
 
-export const nextAuthOptions: NextAuthOptions = {
+export const nextAuthOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
