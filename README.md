@@ -1,5 +1,4 @@
-- English description 🇺🇸
-
+### English description
 # Easy-Work-WEB
 - Creation of a platform to advertise developer vacancies and developers looking for freelancers;
 
@@ -30,11 +29,10 @@
 - pnpm i/npm i
 - pnpm dev/npm run dev
 
-- MIT License ⚖️
 
 
-- Descrição em pt-br 🇧🇷
 
+### Descrição em pt-br
 # Easy-Work-WEB
 - Criação de plataforma para divulgação de vagas de desenvolvedores e desenvolvedores em busca de freelancers;
 
@@ -75,3 +73,6 @@
 ![Captura de tela 2024-04-03 203017](https://github.com/jmoura-dev/easy-work-web/assets/72841857/b029b85c-8466-4935-a510-f5e2e2562bb4)
 ![Captura de tela 2024-04-03 203027](https://github.com/jmoura-dev/easy-work-web/assets/72841857/0116d5b9-c022-45c0-96e5-dedb870dd9b5)
 ![Captura de tela 2024-04-03 203052](https://github.com/jmoura-dev/easy-work-web/assets/72841857/a5bcc25f-8a8e-4071-86e7-e1917a46250b)
+
+
+### MIT License ⚖️
