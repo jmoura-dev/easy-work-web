@@ -23,6 +23,7 @@ import { useContext, useState } from 'react'
 import { TechnologiesContext } from '@/providers/technologiesProvider'
 import { useMutation } from '@tanstack/react-query'
 import { registerNewDeveloper } from '@/data/developers'
+import { toast } from 'react-toastify'
 
 const registerDeveloperSchema = z.object({
   name: z.string().min(3, { message: 'O nome precisa ter ao menos 3 letras.' }),
@@ -101,7 +102,9 @@ export default function RegisterDeveloper() {
     )
 
     if (doesTechnologyAlreadyAdded) {
-      return alert('Tecnologia já foi adicionada')
+      return toast.warn('Tecnologia já foi adicionada', {
+        position: 'top-right',
+      })
     }
     append({ name: techName })
     setTechInputValue('')
@@ -114,11 +117,15 @@ export default function RegisterDeveloper() {
   async function handleRegisterNewDeveloper(data: RegisterDeveloperSchema) {
     try {
       await registerNewDeveloperFn(data)
-      alert('Desenvolvedor criado com sucesso')
+      toast.success('Desenvolvedor criado com sucesso', {
+        position: 'top-center',
+      })
       return router.replace('/signIn')
     } catch (err) {
       console.error(err)
-      return alert('Erro ao se registrar')
+      return toast.error('Erro ao se registrar', {
+        position: 'top-center',
+      })
     }
   }
 

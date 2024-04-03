@@ -126,6 +126,9 @@ interface UpdateDeveloperRequest {
   about?: string
   price_per_hour?: number
   occupation_area?: string
+  linkedin?: string
+  github?: string
+  portfolio?: string
   available_for_contract?: boolean
   techs: {
     name: string
@@ -140,6 +143,9 @@ export async function updateDeveloper({
   about,
   price_per_hour,
   occupation_area,
+  linkedin,
+  github,
+  portfolio,
   available_for_contract,
   techs,
 }: UpdateDeveloperRequest) {
@@ -178,7 +184,14 @@ export async function updateDeveloper({
 
   await api.put(
     '/developers/',
-    { price_per_hour, occupation_area, available_for_contract },
+    {
+      price_per_hour,
+      occupation_area,
+      linkedin,
+      github,
+      portfolio,
+      available_for_contract,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,

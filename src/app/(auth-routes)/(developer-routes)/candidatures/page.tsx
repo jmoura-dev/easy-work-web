@@ -8,6 +8,7 @@ import { CandidatureCard } from '@/app/components/CandidatureCard'
 import { Search } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { SkeletonCandidatures } from '@/app/components/SkeletonCandidatures'
+import { toast } from 'react-toastify'
 
 export default function Jobs() {
   const [candidatureFilteredByTitle, setCandidatureFilteredByTitle] =
@@ -26,7 +27,9 @@ export default function Jobs() {
   }
 
   if (isError) {
-    alert('Erro ao carregar as vagas')
+    toast.warn('Erro ao carregar as vagas', {
+      position: 'top-right',
+    })
     return redirect('/dashboard')
   }
 

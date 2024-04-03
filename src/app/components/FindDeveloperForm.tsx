@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query'
 import { redirect } from 'next/navigation'
 import { SkeletonDashboard } from './SkeletonDashboard'
 import { TechnologiesContext } from '@/providers/technologiesProvider'
+import { toast } from 'react-toastify'
 
 interface DevelopersProps {
   developerId: string
@@ -94,7 +95,9 @@ export function FindDeveloperForm() {
     )
 
     if (doesTechnologyAlreadyAdded) {
-      return alert('Tecnologia já foi adicionada')
+      return toast.warn('Tecnologia já foi adicionada', {
+        position: 'top-right',
+      })
     }
     append({ name: techName })
     setTechInputValue('')
@@ -106,7 +109,12 @@ export function FindDeveloperForm() {
       data.occupation_area === '' &&
       data.techs.length === 0
     ) {
-      return alert('Preencha ao menos um campo para usar o filtro avançado.')
+      return toast.warn(
+        'Preencha ao menos um campo para usar o filtro avançado.',
+        {
+          position: 'top-right',
+        },
+      )
     }
 
     try {
@@ -123,7 +131,9 @@ export function FindDeveloperForm() {
 
       return setDevelopers(response.developersWithTechs)
     } catch (err) {
-      return alert('Erro ao buscar desenvolvedores.')
+      return toast.error('Erro ao buscar desenvolvedores.', {
+        position: 'top-center',
+      })
     }
   }
 
@@ -132,7 +142,9 @@ export function FindDeveloperForm() {
   }
 
   if (isError) {
-    alert('Erro ao carregar o dashboard')
+    toast.error('Erro ao carregar o dashboard', {
+      position: 'top-center',
+    })
     return redirect('/signIn')
   }
 

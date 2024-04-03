@@ -10,6 +10,7 @@ import { Link, LockKeyhole, MapPin } from 'lucide-react'
 import { useMutation } from '@tanstack/react-query'
 import { updateCompany } from '@/data/companies'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export interface FormChangeProfileProps {
   userName: string
@@ -49,10 +50,14 @@ export function FormChangeCompanyProfile({
   async function handleUpdateCompany(data: UpdateCompanySchema) {
     try {
       await updateCompanyFn(data)
-      alert('Sucesso ao atualizar o perfil')
+      toast.success('Sucesso ao atualizar o perfil', {
+        position: 'top-center',
+      })
       router.replace('/dashboard')
     } catch (err) {
-      alert('Erro ao atualizar o perfil')
+      toast.error('Erro ao atualizar o perfil', {
+        position: 'top-center',
+      })
     }
   }
 

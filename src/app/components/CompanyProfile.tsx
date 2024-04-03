@@ -8,6 +8,7 @@ import { getCompanyDetails } from '@/data/companies'
 import Image from 'next/image'
 import Link from 'next/link'
 import { DialogCompanyDetails } from './DialogCompanyDetails'
+import { toast } from 'react-toastify'
 
 export function CompanyProfile() {
   const {
@@ -24,7 +25,9 @@ export function CompanyProfile() {
   }
 
   if (isError) {
-    alert('Erro ao carregar perfil')
+    toast.error('Erro ao carregar perfil', {
+      position: 'top-center',
+    })
     return redirect('/dashboard')
   }
 

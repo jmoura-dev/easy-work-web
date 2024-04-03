@@ -115,7 +115,7 @@ export function DialogUser({
             </h2>
             <SocialMedia
               github={github}
-              linkedIn={linkedin}
+              linkedin={linkedin}
               portfolio={portfolio}
             />
           </div>

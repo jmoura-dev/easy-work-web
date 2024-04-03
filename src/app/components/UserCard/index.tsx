@@ -45,19 +45,19 @@ export function Card({
           <div className="max-w-24 truncate text-zinc-700 hover:border-b hover:border-zinc-400 hover:text-zinc-800 lg:max-w-28 lg:text-xl">
             {name && name.charAt(0).toUpperCase() + name.slice(1)}
           </div>
-          <span className="flex items-center gap-1 rounded-md bg-zinc-300 px-1.5 py-0.5 text-sm text-violet-600">
+          <span className="flex items-center justify-center gap-1 rounded-md bg-zinc-300 px-1.5 py-0.5 text-sm text-violet-600">
             <Computer className="h-4 w-4" />
-            {occupation_area}
+            {occupation_area.charAt(0).toUpperCase() + occupation_area.slice(1)}
           </span>
         </span>
       </div>
 
       <div className="flex flex-col items-center gap-0.5">
-        <span className="flex items-center justify-start gap-1 rounded-md bg-zinc-500/70 px-1.5 py-0.5 text-sm text-violet-200">
+        <span className="flex items-center justify-start gap-1 rounded-md border-b border-violet-500 px-1.5 py-0.5 text-sm text-violet-600">
           <Wallet className="h-4 w-4" />
           {available_for_contract ? 'Freela/Contrato' : 'Apenas freelancer'}
         </span>
-        <span className="flex items-center gap-1 rounded-md bg-zinc-500/70 px-1 py-0.5 text-sm text-violet-200">
+        <span className="flex items-center gap-1 rounded-md border-b border-violet-500 px-1 py-0.5 text-sm text-violet-600">
           R$:{' '}
           {price_per_hour ? price_per_hour.toFixed(2) + '/hr' : 'N/Informado'}
         </span>

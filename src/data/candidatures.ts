@@ -2,6 +2,7 @@ import { api } from '@/app/api/axios'
 import { AxiosError } from 'axios'
 import { getSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 interface GetCandidaturesPropsResponse {
   candidatures: {
@@ -56,7 +57,9 @@ export async function createCandidature(jobId: string) {
         },
       },
     )
-    alert('Candidatura criada com sucesso!')
+    return toast.success('Candidatura criada com sucesso!', {
+      position: 'top-center',
+    })
   } catch (err) {
     const axiosError = err as AxiosError<any>
     if (axiosError.response) {
@@ -64,13 +67,19 @@ export async function createCandidature(jobId: string) {
 
       switch (status) {
         case 409:
-          alert(axiosError.response.data.message)
+          toast.error(axiosError.response.data.message, {
+            position: 'top-center',
+          })
           break
         case 404:
-          alert(axiosError.response.data.message)
+          toast.error(axiosError.response.data.message, {
+            position: 'top-center',
+          })
           break
         default:
-          alert('Internal server error')
+          toast.error('Internal server error', {
+            position: 'top-center',
+          })
       }
     }
   }

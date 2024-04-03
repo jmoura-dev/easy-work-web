@@ -13,6 +13,7 @@ import { Select } from '@/app/components/Select'
 import { SelectItem } from '@/app/components/Select/SelectItem'
 import { Banknote, Clock3 } from 'lucide-react'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 const createNewJobSchema = z.object({
   title: z
@@ -70,10 +71,14 @@ export default function NewJob() {
     })
 
     try {
-      alert('Vaga criada com sucesso!')
+      toast.success('Vaga criada com sucesso!', {
+        position: 'top-center',
+      })
       router.replace('/dashboard')
     } catch (err) {
-      alert('Erro ao criar vaga')
+      toast.error('Erro ao criar vaga', {
+        position: 'top-center',
+      })
       router.replace('/dashboard')
     }
   }

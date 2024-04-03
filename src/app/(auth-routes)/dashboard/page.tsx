@@ -16,6 +16,7 @@ import { useState } from 'react'
 import { DialogUser } from '@/app/components/DialogUser'
 import { SkeletonDashboard } from '@/app/components/SkeletonDashboard'
 import { redirect } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export default function Dashboard() {
   const [developerFilterByName, setDeveloperFilterByName] = useState('')
@@ -34,7 +35,9 @@ export default function Dashboard() {
   }
 
   if (isError) {
-    alert('Erro ao carregar o dashboard')
+    toast.error('Erro ao carregar o dashboard', {
+      position: 'top-right',
+    })
     return redirect('/signIn')
   }
 

@@ -9,6 +9,7 @@ import { JobCard } from '@/app/components/JobCard'
 import { createCandidature } from '@/data/candidatures'
 import { SkeletonJobs } from '@/app/components/SkeletonJobs'
 import { redirect } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export default function Jobs() {
   const [jobFilteredByTitle, setJobFilteredByTitle] = useState('')
@@ -27,7 +28,9 @@ export default function Jobs() {
   }
 
   if (isError) {
-    alert('Erro ao carregar as vagas')
+    toast.warn('Erro ao carregar as vagas', {
+      position: 'top-right',
+    })
     return redirect('/dashboard')
   }
 

@@ -9,6 +9,7 @@ import { Banknote, User, Wallet } from 'lucide-react'
 import { Tech } from './UserCard/Tech'
 import { EditDeveloperDetails } from './EditDeveloperDetails'
 import { SocialMedia } from './SocialMedia'
+import { toast } from 'react-toastify'
 
 export function DeveloperProfile() {
   const {
@@ -25,7 +26,9 @@ export function DeveloperProfile() {
   }
 
   if (isError) {
-    alert('Erro ao carregar perfil')
+    toast.error('Erro ao carregar perfil', {
+      position: 'top-center',
+    })
     return redirect('/dashboard')
   }
 

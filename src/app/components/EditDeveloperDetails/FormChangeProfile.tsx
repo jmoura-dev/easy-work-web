@@ -15,6 +15,8 @@ import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { TechnologiesContext } from '@/providers/technologiesProvider'
 
+import { toast } from 'react-toastify'
+
 export interface FormChangeProfileProps {
   userName: string
   avatarUrl: string | null
@@ -116,7 +118,9 @@ export function FormChangeProfile({
     )
 
     if (doesTechnologyAlreadyAdded) {
-      return alert('Tecnologia já foi adicionada')
+      return toast.warn('Tecnologia já foi adicionada', {
+        position: 'top-center',
+      })
     }
     append({ name: techName })
     setTechInputValue('')
@@ -142,10 +146,14 @@ export function FormChangeProfile({
 
     try {
       await updateDeveloperFn(dataToUpdate)
-      alert('Sucesso ao atualizar o perfil')
+      toast.success('Sucesso ao atualizar o perfil', {
+        position: 'top-center',
+      })
       router.replace('/dashboard')
     } catch (err) {
-      alert('Erro ao atualizar o perfil')
+      return toast.warn('Erro ao atualizar o perfil', {
+        position: 'top-center',
+      })
     }
   }
 

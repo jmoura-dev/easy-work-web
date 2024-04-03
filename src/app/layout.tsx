@@ -5,6 +5,8 @@ import NextAuthSessionProvider from '@/providers/sessionProvider'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/react-query'
 import { TechnologiesContextProvider } from '@/providers/technologiesProvider'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 const inter = Inter({ subsets: ['latin'] })
 const mirza = Mirza({
@@ -28,6 +30,7 @@ export default function RootLayout({
       <body className="light antialiased">
         <NextAuthSessionProvider>
           <TechnologiesContextProvider>
+            <ToastContainer />
             <QueryClientProvider client={queryClient}>
               {children}
             </QueryClientProvider>

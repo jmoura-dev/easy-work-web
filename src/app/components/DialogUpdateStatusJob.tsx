@@ -19,6 +19,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Textarea } from './Textarea'
+import { toast } from 'react-toastify'
 
 interface DialogUpdateStatusJobRequest {
   param: string
@@ -66,7 +67,9 @@ export function DialogUpdateStatusJob({ param }: DialogUpdateStatusJobRequest) {
 
       return setCandidature(response.candidature)
     } catch {
-      return alert('Erro ao buscar candidatura.')
+      return toast.error('Erro ao buscar candidatura.', {
+        position: 'top-center',
+      })
     }
   }
 
@@ -75,7 +78,9 @@ export function DialogUpdateStatusJob({ param }: DialogUpdateStatusJobRequest) {
   })
 
   if (isErrorGetCandidature) {
-    alert('Erro ao buscar candidatura')
+    toast.error('Erro ao buscar candidatura', {
+      position: 'top-center',
+    })
     return redirect('/dashboard')
   }
 
@@ -83,7 +88,9 @@ export function DialogUpdateStatusJob({ param }: DialogUpdateStatusJobRequest) {
     status,
   }: UpdateStatusCandidatureSchema) {
     if (!candidature) {
-      return alert('Candidatura não existe.')
+      return toast.warn('Candidatura não existe.', {
+        position: 'top-right',
+      })
     }
 
     try {
@@ -91,14 +98,20 @@ export function DialogUpdateStatusJob({ param }: DialogUpdateStatusJobRequest) {
         status,
         candidatureId: candidature.id,
       })
-      return alert('Status alterado com sucesso.')
+      return toast.success('Status alterado com sucesso.', {
+        position: 'top-center',
+      })
     } catch {
-      return alert('Erro ao buscar candidatura.')
+      return toast.error('Erro ao buscar candidatura.', {
+        position: 'top-center',
+      })
     }
   }
 
   if (isError) {
-    alert('Erro ao atualizar status')
+    toast.error('Erro ao atualizar status', {
+      position: 'top-center',
+    })
     return redirect('/dashboard')
   }
 

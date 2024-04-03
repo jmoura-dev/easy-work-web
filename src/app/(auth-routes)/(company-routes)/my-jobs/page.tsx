@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Search } from 'lucide-react'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function MyJobs() {
   const [jobFilteredByTitle, setJobFilteredByTitle] = useState<string>('')
@@ -26,7 +27,9 @@ export default function MyJobs() {
   }
 
   if (isError) {
-    alert('Erro ao carregar as vagas')
+    toast.warn('Erro ao carregar as vagas', {
+      position: 'top-right',
+    })
     return redirect('/dashboard')
   }
 

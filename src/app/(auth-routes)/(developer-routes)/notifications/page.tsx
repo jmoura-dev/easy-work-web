@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { getNotifications } from '@/data/notifications'
 import { SkeletonCandidatures } from '@/app/components/SkeletonCandidatures'
 import { NotificationCard } from '@/app/components/NotificationCard'
+import { toast } from 'react-toastify'
 
 export default function Notifications() {
   const {
@@ -21,7 +22,9 @@ export default function Notifications() {
   }
 
   if (isError) {
-    alert('Erro ao carregar as notificações')
+    toast.warn('Erro ao carregar as notificações', {
+      position: 'top-right',
+    })
     return redirect('/dashboard')
   }
 

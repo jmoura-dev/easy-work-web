@@ -4,6 +4,7 @@
     "hookform",
     "linkedin",
     "tailwindcss",
-    "tanstack"
+    "tanstack",
+    "toastify"
   ]
 }

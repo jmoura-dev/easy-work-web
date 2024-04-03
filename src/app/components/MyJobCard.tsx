@@ -62,7 +62,7 @@ export function MyJobCard({
           </span>
           <span className="flex items-center gap-1">
             <Hourglass width={16} />
-            {workSchedule}
+            {workSchedule.charAt(0).toUpperCase() + workSchedule.slice(1)}
           </span>
           <span className="flex items-center gap-1">
             <Banknote width={16} />

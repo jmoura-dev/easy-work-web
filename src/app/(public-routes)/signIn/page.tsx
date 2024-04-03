@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import DeveloperLogo from '@/assets/developers.jpg'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 const registerDeveloperSchema = z.object({
   email: z.string().email(),
@@ -40,7 +41,9 @@ export default function SignIn() {
     })
 
     if (result?.error) {
-      alert('Email e/ou senha invalido(s)')
+      toast.warn('Email e/ou senha invalido(s)', {
+        position: 'top-right',
+      })
       console.error(result.error)
       return
     }

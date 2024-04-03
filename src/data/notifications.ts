@@ -2,6 +2,7 @@ import { api } from '@/app/api/axios'
 import { AxiosError } from 'axios'
 import { getSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 interface GetNotificationsPropsResponse {
   notifications: {
@@ -52,7 +53,9 @@ export async function readNotification(notificationId: string) {
       },
     )
 
-    return alert('Notificação salva como "vista"')
+    return toast.success('Notificação salva como "vista"', {
+      position: 'top-center',
+    })
   } catch (err) {
     const axiosError = err as AxiosError<any>
     console.error(axiosError)
@@ -62,10 +65,14 @@ export async function readNotification(notificationId: string) {
 
       switch (status) {
         case 404:
-          alert(axiosError.response.data.message)
+          toast.error(axiosError.response.data.message, {
+            position: 'top-center',
+          })
           break
         default:
-          alert('Internal server error')
+          toast.error('Internal server error', {
+            position: 'top-center',
+          })
       }
     }
   }

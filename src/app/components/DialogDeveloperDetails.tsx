@@ -15,6 +15,7 @@ import { useMutation } from '@tanstack/react-query'
 import { redirect } from 'next/navigation'
 import { getDeveloperByUserId } from '@/data/developers'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface DialogDeveloperDetailsProps {
   userName: string
@@ -49,7 +50,9 @@ export function DialogDeveloperDetails({
         return setDeveloper(response.developerWithDetails)
       }
     } catch {
-      return alert('Erro ao buscar desenvolvedores.')
+      return toast.error('Erro ao buscar desenvolvedores.', {
+        position: 'top-center',
+      })
     }
   }
 
@@ -62,7 +65,9 @@ export function DialogDeveloperDetails({
   })
 
   if (isError) {
-    alert('Erro ao carregar desenvolvedor')
+    toast.error('Erro ao carregar desenvolvedor', {
+      position: 'top-center',
+    })
     return redirect('/dashboard')
   }
 
@@ -138,7 +143,7 @@ export function DialogDeveloperDetails({
               </h2>
               <SocialMedia
                 github={developer.github}
-                linkedIn={developer.linkedin}
+                linkedin={developer.linkedin}
                 portfolio={developer.portfolio}
               />
             </div>

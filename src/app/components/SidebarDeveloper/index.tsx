@@ -20,6 +20,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { getDeveloperDetails } from '@/data/developers'
 import { redirect } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 export function SidebarDeveloper() {
   const [isOpen, setIsOpen] = useState(true)
@@ -30,7 +31,9 @@ export function SidebarDeveloper() {
   })
 
   if (isError) {
-    alert('Erro ao carregar perfil')
+    toast.error('Erro ao carregar perfil', {
+      position: 'top-center',
+    })
     return redirect('/signIn')
   }
 
