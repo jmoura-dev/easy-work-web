@@ -3,7 +3,7 @@ import Client from '@/assets/client.jpg'
 
 export function SectionClient() {
   return (
-    <div className="md:grid-cols-client mt-5 flex md:grid md:px-2">
+    <div className="mt-5 flex md:grid md:grid-cols-client md:px-2">
       <Image
         src={Client}
         alt=""
