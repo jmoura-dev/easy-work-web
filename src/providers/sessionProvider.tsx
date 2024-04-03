@@ -11,6 +11,8 @@ export default function NextAuthSessionProvider({
   children,
 }: NextAuthSessionProviderProps) {
   return (
-    <SessionProvider basePath="../app/api/auth">{children}</SessionProvider>
+    <SessionProvider basePath="/src/app/(auth-routes)/dashboard">
+      {children}
+    </SessionProvider>
   )
 }
