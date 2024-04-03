@@ -29,12 +29,12 @@
 - pnpm i/npm i
 - pnpm dev/npm run dev
 
-
+### ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ###
 
 
 ### Descrição em pt-br
 # Easy-Work-WEB
-- Criação de plataforma para divulgação de vagas de desenvolvedores e desenvolvedores em busca de freelancers;
+- Criação de uma plataforma para divulgação de vagas de desenvolvedores e desenvolvedores em busca de freelancers;
 
 ### Principais tecnologias:
 - **Reactjs**, **Nextjs**, **TailwindCss**, **NextAuth**, **TypeScript**, **React Query(tanstack)**, **React-hook-form**;
