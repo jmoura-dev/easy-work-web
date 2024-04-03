@@ -1,8 +1,8 @@
-import NextAuth, { NextAuthOptions } from 'next-auth'
+import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { api } from '@/app/api/axios'
 
-const nextAuthOptions: NextAuthOptions = {
+export const nextAuthOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -59,7 +59,3 @@ const nextAuthOptions: NextAuthOptions = {
     },
   },
 }
-
-const handler = NextAuth(nextAuthOptions)
-
-export { handler as GET, handler as POST, nextAuthOptions }

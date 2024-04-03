@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { SidebarDeveloper } from '@/app/components/SidebarDeveloper'
 import { SidebarCompany } from '../components/SidebarCompany'
-import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route'
+import { nextAuthOptions } from '@/lib/auth'
 
 export default async function DashboardLayoutProps({
   children,
