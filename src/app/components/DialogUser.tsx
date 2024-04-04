@@ -13,7 +13,7 @@ import { Wallet } from 'lucide-react'
 
 interface DialogUserProps {
   name: string
-  avatarUrl?: string
+  avatarUrl: string | null
   about: string
   price_per_hour: number
   occupation_area: string

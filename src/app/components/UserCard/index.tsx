@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 interface CardProps {
   name: string
-  avatarUrl?: string
+  avatarUrl: string | null
   price_per_hour?: number
   occupation_area: string
   available_for_contract: boolean

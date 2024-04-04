@@ -246,7 +246,7 @@ export default function NewJob() {
           </label>
           <Textarea
             id="description"
-            maxLength={150}
+            maxLength={300}
             {...register('description')}
           />
           {errors.description && (

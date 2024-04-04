@@ -98,7 +98,7 @@ export default function Dashboard() {
                       avatarUrl={
                         developer.avatarUrl
                           ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
-                          : undefined
+                          : null
                       }
                       about={developer.about}
                       techs={developer.techs}
@@ -157,7 +157,7 @@ export default function Dashboard() {
                       avatarUrl={
                         developer.avatarUrl
                           ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
-                          : undefined
+                          : null
                       }
                       about={developer.about}
                       techs={developer.techs}
@@ -216,7 +216,7 @@ export default function Dashboard() {
                       avatarUrl={
                         developer.avatarUrl
                           ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
-                          : undefined
+                          : null
                       }
                       about={developer.about}
                       techs={developer.techs}

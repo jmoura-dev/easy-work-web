@@ -229,7 +229,7 @@ export default function RegisterCompany() {
             className="w-32 rounded-md bg-green-400 py-2 font-semibold text-white hover:bg-green-500 disabled:cursor-not-allowed disabled:bg-green-950/40"
             disabled={isSubmitting}
           >
-            Registrar
+            {!isSubmitting ? 'Registrar' : 'Carregando...'}
           </button>
         </footer>
       </form>
