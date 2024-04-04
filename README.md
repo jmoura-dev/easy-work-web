@@ -63,6 +63,9 @@
 - pnpm i/npm i
 -pnpm dev/npm run dev/yarn dev
 
+### Link deploy
+https://easy-work-web.vercel.app/
+
 ### Algumas páginas/some pages
 ![Captura de tela 2024-04-03 200604](https://github.com/jmoura-dev/easy-work-web/assets/72841857/3dbc56f1-7826-49ce-bd4b-0ae6369f6944)
 ![Captura de tela 2024-04-03 200625](https://github.com/jmoura-dev/easy-work-web/assets/72841857/c6122850-3f07-46b0-83be-ac75e50d627c)
