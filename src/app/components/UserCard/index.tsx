@@ -31,7 +31,7 @@ export function Card({
       <div className="mb-2 flex items-start justify-center gap-4">
         {avatarUrl ? (
           <Image
-            src={`${process.env.URL_DOMAIN}/${avatarUrl}`}
+            src={avatarUrl}
             width={200}
             height={200}
             alt=""

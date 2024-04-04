@@ -264,7 +264,11 @@ export function FindDeveloperForm() {
         {developers.map((developer) => (
           <DialogUser
             key={developer.developerId}
-            avatarUrl={developer.avatarUrl}
+            avatarUrl={
+              developer.avatarUrl
+                ? `${process.env.URL_DOMAIN}/${developer.avatarUrl}`
+                : null
+            }
             about={developer.about}
             available_for_contract={developer.available_for_contract}
             name={developer.userName}
