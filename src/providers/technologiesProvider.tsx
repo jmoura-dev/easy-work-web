@@ -124,7 +124,7 @@ export function TechnologiesContextProvider({
     { name: 'Selenium', id: 101 },
     { name: 'Cucumber', id: 102 },
     { name: 'Jasmine', id: 103 },
-    { name: 'Nodejs', id: 103 },
+    { name: 'Nodejs', id: 104 },
   ]
 
   const [allTechnologies, setAllTechnologies] =
