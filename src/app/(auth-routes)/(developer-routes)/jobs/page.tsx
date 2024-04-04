@@ -88,7 +88,10 @@ export default function Jobs() {
                 workMode={
                   job.workMode.charAt(0).toUpperCase() + job.workMode.slice(1)
                 }
-                workSchedule={job.workSchedule}
+                workSchedule={
+                  job.workSchedule.charAt(0).toUpperCase() +
+                  job.workSchedule.slice(1)
+                }
                 hoursPerWeek={job.hoursPerWeek}
                 onClick={() => createCandidature(job.id)}
               />
